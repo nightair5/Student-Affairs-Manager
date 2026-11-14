@@ -3,7 +3,7 @@ import {locateSourceQuote,locateOwnedSourceQuote} from './source-text-index.mjs'
 import {parseDirectSourceTime} from './direct-source-time.mjs'
 import {deadlineRangeRoleIssue} from './deadline-range-role.mjs'
 import {SEMANTIC_NOTICE_VERSION} from './semantic-notice-contract-v3-2-0.mjs'
-import {SOURCE_DAY_PATTERN,channelOwnedWindow,combineExplicitWindowEntries,contextualEventDay,mergeHeadingWindowIntoDelivery,modelCitedContextYear,modelOwnedSharedDay,modelSummarySharedEventDay,ownedAgendaTime,sameBuildingLocation,sourceChannelClosingDeadline,sourceConditionClauses,sourceEvidenceCondition,sourceEventDuration,sourceModelComposedEventTime,sourceOpenEndedWindow,sourceSummaryDeliveryWindow,sourceSummaryOptionalMaterial,systemAvailabilityAsInformation} from './semantic-source-context.mjs'
+import {SOURCE_DAY_PATTERN,channelOwnedWindow,combineExplicitWindowEntries,contextualEventDay,mergeHeadingWindowIntoDelivery,modelCitedContextYear,modelOwnedSharedDay,modelSummarySharedEventDay,scopedEventDay,ownedAgendaTime,sameBuildingLocation,sourceChannelClosingDeadline,sourceConditionClauses,sourceEvidenceCondition,sourceEventDuration,sourceModelComposedEventTime,sourceOpenEndedWindow,sourceSummaryDeliveryWindow,sourceSummaryOptionalMaterial,systemAvailabilityAsInformation} from './semantic-source-context.mjs'
 import {declaredTaskChoices,combineSupportedChoices,expandSupportedSingleChoices,sharedDocumentScope,sourceBackedChoicePairs,sourceBackedEventChoices,sourceCandidateTime,sourceFormContext,sourceSupportedDependency} from './semantic-relations.mjs'
 import {itemPolarity} from './semantic-item-polarity.mjs'
 import {applySemanticActorRelations} from './semantic-actor-relations.mjs'
@@ -28,6 +28,7 @@ export const SEMANTIC_MATTER_COMPILER_VERSION='semantic-notice-compiler-1.0.30'
 export const SEMANTIC_PRESERVATION_COMPILER_VERSION='semantic-notice-compiler-1.0.31'
 export const SEMANTIC_ROLE_SCOPE_COMPILER_VERSION='semantic-notice-compiler-1.0.32'
 export const SEMANTIC_PARTICIPATION_COMPILER_VERSION='semantic-notice-compiler-1.0.38'
+export const SEMANTIC_SCOPE_REPAIR_COMPILER_VERSION='semantic-notice-compiler-1.0.39'
 // Full-width ASCII maps one UTF-16 unit to one unit; source offsets remain valid.
 const foldWidth = value => value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const hasLiteral = (source,value) => Boolean(value && compact(source).includes(compact(value)))
@@ -367,8 +368,9 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
   // Upgrading the opt-in environment must not disable v1.0.29 for old clients.
   const goalContextV129=goalContract&&(goalContextVersion==='1.0.29'||goalContextVersion==='1.0.30'||preservationEnabled)
   const goalContextEnabled=goalContract&&(goalContextVersion==='1.0.28'||goalContextV129)
-  const participationEnabled=preservationEnabled&&participationScopeVersion==='1.0.0'
-  const compilerVersion=participationEnabled?SEMANTIC_PARTICIPATION_COMPILER_VERSION:preservationEnabled&&roleResolutionVersion==='1.0.0'?SEMANTIC_ROLE_SCOPE_COMPILER_VERSION:preservationEnabled?SEMANTIC_PRESERVATION_COMPILER_VERSION:matterEnabled?SEMANTIC_MATTER_COMPILER_VERSION:goalContextV129?SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION:goalContextEnabled?SEMANTIC_GOAL_CONTEXT_COMPILER_VERSION:goalContract?SEMANTIC_GOAL_COMPILER_VERSION:SEMANTIC_COMPILER_VERSION
+  const scopeRepairEnabled=preservationEnabled&&participationScopeVersion==='1.1.0'
+  const participationEnabled=preservationEnabled&&(participationScopeVersion==='1.0.0'||scopeRepairEnabled)
+  const compilerVersion=scopeRepairEnabled?SEMANTIC_SCOPE_REPAIR_COMPILER_VERSION:participationEnabled?SEMANTIC_PARTICIPATION_COMPILER_VERSION:preservationEnabled&&roleResolutionVersion==='1.0.0'?SEMANTIC_ROLE_SCOPE_COMPILER_VERSION:preservationEnabled?SEMANTIC_PRESERVATION_COMPILER_VERSION:matterEnabled?SEMANTIC_MATTER_COMPILER_VERSION:goalContextV129?SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION:goalContextEnabled?SEMANTIC_GOAL_CONTEXT_COMPILER_VERSION:goalContract?SEMANTIC_GOAL_COMPILER_VERSION:SEMANTIC_COMPILER_VERSION
   if (!object(raw) || !Array.isArray(raw.items) || !Array.isArray(raw.materials) || typeof raw.topic !== 'string' || !['action','event','information','mixed'].includes(raw.kind) || raw.items.length>20 || raw.materials.length>60) {
     return {result:null,audit:{compilerVersion,rootFailure:true,losses:[{layer:'SCHEMA',reason:'INVALID_SEMANTIC_ROOT'}]}}
   }
@@ -476,9 +478,10 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     // remains a condition, rather than disappearing with the invitation.
     const interestSignal=participationEnabled&&/(?:有意愿|有意向|有意|感兴趣|自愿|愿意|欢迎|希望参加)/u.test(groundedCondition)
     const scopedInterestOnly=interestSignal&&!isEventEligibility(groundedCondition)
-    const interestOnly=participantInterest||scopedInterestOnly||/^(?:两场|各场|所有活动)?(?:均)?(?:面向|欢迎)?(?:所有)?(?:有意向|感兴趣|自愿|愿意参加)(?:的)?(?:同学|学生|人员|者)?(?:参加|参与)?$/u.test(groundedCondition)
+    const repairInterest=scopeRepairEnabled&&/^(?:想|希望|愿意)(?:参加|参与)(?:者|的?(?:同学|学生|人员))$/u.test(groundedCondition)
+    const interestOnly=participantInterest||scopedInterestOnly||repairInterest||/^(?:两场|各场|所有活动)?(?:均)?(?:面向|欢迎)?(?:所有)?(?:有意向|感兴趣|自愿|愿意参加)(?:的)?(?:同学|学生|人员|者)?(?:参加|参与)?$/u.test(groundedCondition)
     const hasEligibility=!interestOnly&&(/(?:面向|仅限|符合条件|符合资格|不符合|必须具备|须具备|已完成|完成.{0,12}(?:培训|课程|考核))/u.test(groundedCondition)||interestSignal&&isEventEligibility(groundedCondition))
-    const voluntary=groundedCondition&&!hasEligibility&&(participantInterest||scopedInterestOnly||/有意向|感兴趣|自愿|欢迎|如(?:想|有意)|愿意|希望参加/u.test(groundedCondition))?groundedCondition:''
+    const voluntary=groundedCondition&&!hasEligibility&&(participantInterest||scopedInterestOnly||repairInterest||/有意向|感兴趣|自愿|欢迎|如(?:想|有意)|愿意|希望参加/u.test(groundedCondition))?groundedCondition:''
     const approvedBefore=conditionParts.supported.length===1&&/^[^，,。；;]{1,24}(?:审核|审批|确认|批复)(?:通过|完成)$/u.test(groundedCondition)&&/^后/u.test(source.slice(conditionParts.supported[0].end))
     const prerequisite=groundedCondition&&((list(item.dependsOn,20,40).some(key=>activeTaskKeys.has(key))&&/^(?:完成|填写|提交|办理|通过|取得|先).+后$/u.test(groundedCondition))||/^[^，,。；;]{1,24}(?:批复|审批|批准|审核|确认|同意|反馈|公布|发布)后$/u.test(groundedCondition)||approvedBefore)?groundedCondition+(approvedBefore?'后':''):''
     const firstCondition=groundedCondition.split(/[；;，,]/u)[0]
@@ -486,7 +489,8 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     const citedChoice=/^[^，,。；;\n]{2,24}的$/u.test(firstCondition)&&!/(?:同学|学生|人员|团队|成员|队伍|者)的$/u.test(firstCondition)&&conditionParts.supported.some(span=>span.literal===firstCondition&&/^[，,]\s*(?:才|另|再|还)?(?:须|需|应|请|必须)/u.test(source.slice(span.end)))
     const needExpression=/^(?:如需|如有需要|有需要|有需求)/u.test(firstCondition)||/^(?:需要|需)[^，,。；;]{1,30}(?:同学|学生|小组|队伍|人员|者)$/u.test(firstCondition)||namedNeed||citedChoice
     const personalNeed=groundedCondition&&!hasEligibility&&!voluntary&&!prerequisite&&needExpression?groundedCondition:''
-    const condition=voluntary||prerequisite||personalNeed?'':groundedCondition
+    const sameGoalContext=scopeRepairEnabled&&item.assignment?.scope==='audience'&&groundedCondition&&!/(?:仅限|只有|必须|资格|符合|已完成|入选|经审核)/u.test(groundedCondition)&&Array.isArray(raw.goals)&&raw.goals.some(goal=>compact(goal?.title)===compact(groundedCondition)&&Array.isArray(goal.taskKeys)&&goal.taskKeys.includes(item.key)&&locateSourceQuote(text(goal.evidence,500),source))
+    const condition=voluntary||prerequisite||personalNeed||sameGoalContext?'':groundedCondition
     // The model may put an explicit naming/marking instruction directly on
     // a task. Retain it only when it can be uniquely located and its owner is
     // unambiguous; never copy a paper-only rule onto an electronic delivery.
@@ -521,10 +525,14 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const wrongChannelScope=conflictingDeliveryScope(source,channelInSource,supportedForm||item.title)
       const supportedChannel=wrongChannelScope?'':channelInSource
       const location=text(item.location,160),supportedLocation=sourceLocation(ownText,location,item.title,ownText)
+      // A counter or office visited to collect something is a location.  Do
+      // not silently label it as a submission destination just because the
+      // model placed that literal in the channel field.
+      const pickupLocation=scopeRepairEnabled&&supportedChannel&&/^(?:领取|领用|取回|取件)$/u.test(action)&&!/@|https?:\/\//iu.test(supportedChannel)&&['到','前往','至','在'].some(prefix=>compact(ownText).includes(compact(prefix+supportedChannel)))&&compact(ownText).includes(compact(supportedChannel+action))?supportedChannel:''
       if(channel&&!supportedChannel)note('CHANNEL',item.key,wrongChannelScope?'CHANNEL_OTHER_DELIVERY_SCOPE':'CHANNEL_NOT_SOURCE_GROUNDED')
       if(deliveryForm&&!supportedForm)note('DELIVERY',item.key,'DELIVERY_FORM_NOT_SOURCE_GROUNDED')
       if(location&&!supportedLocation)note('LOCATION',item.key,'TASK_LOCATION_NOT_OWNER_GROUNDED')
-      baseLines=[inferredAction?'':text(item.description,500),inferredAction?'原文行动：'+ownText:'',supportedForm?'交付形式：'+supportedForm:'',supportedChannel?'提交渠道：'+supportedChannel:'',supportedLocation&&compact(supportedLocation)!==compact(supportedChannel)?'地点：'+supportedLocation:'',condition?'适用条件待确认：'+condition:'',personalNeed?'按需办理：'+personalNeed:'',prerequisite?'前置事项：'+prerequisite:'',voluntary?'参加说明：'+voluntary:''].filter(Boolean)
+      baseLines=[inferredAction?'':text(item.description,500),inferredAction?'原文行动：'+ownText:'',supportedForm?'交付形式：'+supportedForm:'',supportedChannel&&!pickupLocation?'提交渠道：'+supportedChannel:'',pickupLocation?'地点：'+pickupLocation:supportedLocation&&compact(supportedLocation)!==compact(supportedChannel)?'地点：'+supportedLocation:'',condition?'适用条件待确认：'+condition:'',personalNeed?'按需办理：'+personalNeed:'',prerequisite?'前置事项：'+prerequisite:'',voluntary?'参加说明：'+voluntary:''].filter(Boolean)
       const title=inferredAction?'处理'+target:recoveredEvidence&&!assignmentEvidenceRecovered?(target.startsWith(action)?target:action+target):text(item.title,80)
       entity={tempId,parentTempId:null,hierarchyType:'task',title,actionVerb:inferredAction?'处理':action,actionObject:target,description:'',completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:[...new Set(ids)],confidence:.8,inferenceLevel:recoveredEvidence?'strong_inference':'explicit',userConfirmationRequired:Boolean(condition||personalNeed)||recoveredEvidence||polarity==='uncertain',selected:!condition&&!personalNeed&&!recoveredEvidence&&polarity!=='uncertain'}
       applyTaskRequirements(entity,baseLines,requirements,item.key)
@@ -665,13 +673,14 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
         const day=matches.length===1?matches[0]:matches.length===2&&/\d/u.test(matches[0][0])
           &&/^[（(]\s*(?:本周|下周|周|星期)[一二三四五六日天]\s*[）)]\s*$/u.test(foldedPrefix.slice(matches[0].index+matches[0][0].length))?matches[0]:null
         const sameDayAnchor=goalContextV129&&kind==='task'&&entry.role==='deadline'?explicitSameDayAnchor(source,span):null
-        const anchored=kind==='event'?(contextualEventDay(source,span,item)||owned?.day||sharedDay||composed?.day||(goalContract?modelSummarySharedEventDay(source,span,item,raw.items,raw.summary):null)):sameDayAnchor||(day?{start:span.start-localPrefix.length+day.index,end:span.start-localPrefix.length+day.index+day[0].length}:null)
+        const anchored=kind==='event'?(contextualEventDay(source,span,item)||(scopeRepairEnabled?scopedEventDay(source,span,item,raw.items):null)||owned?.day||sharedDay||composed?.day||(goalContract?modelSummarySharedEventDay(source,span,item,raw.items,raw.summary):null)):sameDayAnchor||(day?{start:span.start-localPrefix.length+day.index,end:span.start-localPrefix.length+day.index+day[0].length}:null)
         if(!anchored){
           // Keep a source-backed clock as text when the day is unknown. It is
           // not a calendar timestamp and must never inherit the reference day.
           const clock=foldWidth(span.literal).trim()
           const clockOnly=/^(?:(?:凌晨|清晨|早上|上午|中午|下午|傍晚|晚上|夜间|夜里)\s*)?(?:\d{1,2}\s*[:：]\s*\d{2}|[\d一二两三四五六七八九十]{1,3}\s*[点时](?:\s*[\d一二两三四五六七八九十]{1,3}\s*分?|\s*半)?)$/u.test(clock)
-          if(kind==='event'&&entry.role==='start'&&clockOnly&&!/(?:备选|候选|任选|或者|或)/u.test(ownText)){
+          const clockRange=scopeRepairEnabled&&/^(?:(?:凌晨|清晨|早上|上午|中午|下午|傍晚|晚上|夜间|夜里)\s*)?\d{1,2}\s*[:：]\s*\d{2}\s*(?:至|到|[-—–~～])\s*(?:(?:凌晨|清晨|早上|上午|中午|下午|傍晚|晚上|夜间|夜里)\s*)?\d{1,2}\s*[:：]\s*\d{2}$/u.test(clock)
+          if(kind==='event'&&entry.role==='start'&&(clockOnly||clockRange)&&!/(?:备选|候选|任选|或者|或)/u.test(ownText)){
             const id=evidence(span.literal,'event',item.key,span.start)
             if(id){const line='时间说明：'+span.literal+'（日期待定）';if(!entity.description.split('\n').includes(line))entity.description+=(entity.description?'\n':'')+line;entity.evidenceIds=[...new Set([...entity.evidenceIds,id])].slice(0,20)}
           }
@@ -1077,7 +1086,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       }
     }
   }
-  if(goalContract)applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference:goalContextEnabled,allowAssignmentEvidenceFallback:goalContextV129,allowScopedMatter:matterEnabled||preservationEnabled,allowProseScope:preservationEnabled})
+  if(goalContract)applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference:goalContextEnabled,allowAssignmentEvidenceFallback:goalContextV129,allowScopedMatter:matterEnabled||preservationEnabled,allowProseScope:preservationEnabled,allowInlineScope:scopeRepairEnabled,allowNamedTaskFallback:scopeRepairEnabled})
   if(preservationEnabled&&roleResolutionVersion==='1.0.0')applyProcessScope({source,result,pending,evidence,note,audit})
   if(preservationEnabled&&roleResolutionVersion==='1.0.0')for(const material of result.materials){
     if(!material.goalScope)continue

@@ -4,6 +4,7 @@ import { workspaceSnapshotHash } from './migration'
 import {recognitionDiagnostic,failureDiagnostic,unobservedDiagnostic} from '../../recognition/requestDiagnostic'
 import type { CanonicalWorkspaceRepository } from './repository'
 import type { ExtractionDraft, JsonValue, LegacyData, RecognitionRun, Source, SourceVersion, WorkspaceV8 } from './types'
+import {sourceReferenceClock} from './sourceReferenceClock'
 
 export interface CaptureRequest {
   operationId: string
@@ -15,6 +16,7 @@ export interface CaptureRequest {
   promptVersion: string | null
   pipelineVersion: string
   sourceLegacyData?: LegacyData
+  referenceTimezone?: string
   now?: string
 }
 
@@ -32,6 +34,7 @@ export interface SourceOnlyRequest {
   title: string
   rawText: string
   sourceLegacyData?: LegacyData
+  referenceTimezone?: string
   now?: string
 }
 
@@ -49,6 +52,7 @@ export interface SourceRevisionRequest {
   promptVersion: string | null
   pipelineVersion: string
   sourceLegacyData?: LegacyData
+  referenceTimezone?: string
   now?: string
 }
 
@@ -88,6 +92,12 @@ function legacyString(data: LegacyData | undefined, key: string): string | null 
   if (typeof direct === 'string') return direct
   const v7 = jsonRecord(data?.v7Record)
   return typeof v7?.[key] === 'string' ? v7[key] : null
+}
+
+function referenceMetadata(now:string,timezone:string):LegacyData {
+  if(!Number.isFinite(Date.parse(now)))throw Error('SOURCE_REFERENCE_TIME_INVALID')
+  try{new Intl.DateTimeFormat('en',{timeZone:timezone}).format(0)}catch{throw Error('SOURCE_REFERENCE_TIMEZONE_INVALID')}
+  return {sourceReferenceClockV1:{version:'source-reference-clock-1.0.0',referenceTime:now,timezone}}
 }
 
 function normalizedHttpsUrl(value: string | null): string | null {
@@ -178,9 +188,8 @@ export class CapturePersistenceService {
         rawText: request.rawText,
         rawTextRef: null,
         createdAt: now,
-        legacyData: request.sourceLegacyData?.reviewMetadata === undefined
-          ? undefined
-          : { reviewMetadata: request.sourceLegacyData.reviewMetadata },
+        legacyData: {...referenceMetadata(now,request.referenceTimezone??workspace.settings.defaultTimezone),
+          ...(request.sourceLegacyData?.reviewMetadata === undefined ? {} : { reviewMetadata: request.sourceLegacyData.reviewMetadata })},
       }
       handle = { sourceId, sourceVersionId, duplicate: false }
       return {
@@ -234,6 +243,7 @@ export class CapturePersistenceService {
         rawTextRef: null,
         createdAt: now,
         legacyData: {
+          ...referenceMetadata(now,request.referenceTimezone??workspace.settings.defaultTimezone),
           revisionOperationId: request.operationId,
           ...(request.sourceLegacyData?.reviewMetadata === undefined
             ? {}
@@ -318,9 +328,8 @@ export class CapturePersistenceService {
       const version: SourceVersion = {
         id: sourceVersionId, sourceId, versionNo: 1, contentHash: workspaceSnapshotHash(request.rawText),
         rawText: request.rawText, rawTextRef: null, createdAt: now,
-        legacyData: request.sourceLegacyData?.reviewMetadata === undefined
-          ? undefined
-          : { reviewMetadata: request.sourceLegacyData.reviewMetadata },
+        legacyData: {...referenceMetadata(now,request.referenceTimezone??workspace.settings.defaultTimezone),
+          ...(request.sourceLegacyData?.reviewMetadata === undefined ? {} : { reviewMetadata: request.sourceLegacyData.reviewMetadata })},
       }
       const run: RecognitionRun = {
         id: recognitionRunId, sourceVersionId, provider: request.provider, modelName: request.modelName,
@@ -359,7 +368,8 @@ export class CapturePersistenceService {
       if(rawText!==version.rawText){
         const versionNo=workspace.sourceVersions.filter(item=>item.sourceId===source.id).reduce((max,item)=>Math.max(max,item.versionNo),0)+1
         sourceVersionId=`${source.id}:version:${versionNo}`
-        sourceVersions.push({id:sourceVersionId,sourceId:source.id,versionNo,contentHash:workspaceSnapshotHash(rawText),rawText,rawTextRef:null,createdAt:now,legacyData:{webRead}})
+        const clock=sourceReferenceClock(version,workspace.settings.defaultTimezone)
+        sourceVersions.push({id:sourceVersionId,sourceId:source.id,versionNo,contentHash:workspaceSnapshotHash(rawText),rawText,rawTextRef:null,createdAt:now,legacyData:{...referenceMetadata(clock.referenceTime,clock.timezone),webRead}})
       }
       updated={...handle,sourceVersionId,duplicate:false}
       return {...workspace,sourceVersions,

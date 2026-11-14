@@ -105,8 +105,18 @@ export function localMaterialOwnership(input:RecognitionResult,source:string):Re
   if(!match||!actionSpan(task))continue
   const owned=r.materials.filter(m=>m.relatedTaskTempIds.length===1&&m.relatedTaskTempIds[0]===task.tempId&&fold(m.name)===fold(task.actionObject))
   if(owned.length!==1)continue
-  const material=owned[0],requirement=immediateRequirement(task)
-  material.name=match[1].trim();material.formatRequirements=[...new Set([...material.formatRequirements,match[2]])]
+  const material=owned[0],requirement=immediateRequirement(task),name=match[1].trim()
+  // A format-only literal such as PDF is not an independently named document.
+  // Keep the source-backed value and mark its owner unresolved; never strip it
+  // to an empty material name and make the entire transaction invalid.
+  if(!name){
+   const reason='材料仅识别到文件格式，具体提交对象请查看原通知。'
+   material.formatRequirements=[...new Set([...material.formatRequirements,match[2]])]
+   material.requirements=[...new Set([...(material.requirements??[]),reason])].slice(0,20)
+   r.quality.needsHumanReview=true;r.quality.reviewReasons=[...new Set([...r.quality.reviewReasons,reason])].slice(-20)
+   continue
+  }
+  material.name=name;material.formatRequirements=[...new Set([...material.formatRequirements,match[2]])]
   if(requirement)material.requirements=[...new Set([...(material.requirements??[]),requirement])]
  }
  return r

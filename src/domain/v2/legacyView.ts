@@ -24,7 +24,7 @@ import { isDateOnly, parseBusinessDateTime } from '../../lib/timeSemantics'
 import { createIntegrationState } from '../../lib/workspace'
 import { workspaceSnapshotHash } from './migration'
 import type { JsonValue, LegacyData, WorkspaceV8 } from './types'
-import {sourceWindowChoiceBranch,sourceWindowDisplayLabel,sourceWindowFirstStart,sourceWindowLastEnd,sourceWindowUnresolvedLabel} from './sourceWindowDisplay'
+import {sourceWindowChoiceBranch,sourceWindowDisplayLabel,sourceWindowFirstStart,sourceWindowLastEnd,sourceWindowSingleDatePoint,sourceWindowUnresolvedLabel} from './sourceWindowDisplay'
 import {canonicalHandlingWindow} from './handlingWindow'
 import {handlingWindowLabel} from '../../recognition/handlingWindowSupport'
 
@@ -385,7 +385,10 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     const sourceAction=workspace.timePoints.find(point=>point.type==='event_start'&&!point.eventId&&point.legacyData?.sourceTimeRole==='source_action'
       &&point.taskId===item.id&&point.relatedTaskIds.includes(item.id)&&point.normalizedValue&&!point.needsConfirmation)
     const handling=canonicalHandlingWindow(workspace,item)?.row
-    const resolvedWindow=sourceWindowDisplayLabel(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)??(handling?handlingWindowLabel(handling):undefined)
+    const originalWindow=sourceWindowDisplayLabel(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)??(handling?handlingWindowLabel(handling):undefined)
+    const singleWindow=sourceWindowSingleDatePoint(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)
+    const day=singleWindow?.normalizedValue?.slice(0,10).match(/^(\d{4})-(\d{2})-(\d{2})$/u)
+    const resolvedWindow=originalWindow&&day&&sourceWeekdayInferred(singleWindow)?`${originalWindow}（${day[1]}年${Number(day[2])}月${Number(day[3])}日，按整理日期推算）`:originalWindow
     const unresolvedWindow=sourceWindowUnresolvedLabel(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)
     const windowLabel=[resolvedWindow,unresolvedWindow].filter(Boolean).join('；')||undefined
     const windowStart=sourceWindowFirstStart(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)
@@ -421,6 +424,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       ...(sourceWeekdayInferred(preferredTaskDeadlinePoint(workspace, item.id)) ? { sourceWeekdayInferred: true } : {}),
       ...(sourceAction?.normalizedValue?{sourceActionAt:sourceAction.normalizedValue,sourceActionRaw:sourceAction.rawText,...(sourceWeekdayInferred(sourceAction)?{sourceActionWeekdayInferred:true}:{})}:{}),
       sourceWindowLabel: windowLabel,
+      ...(singleWindow?.normalizedValue?{sourceWindowDate:singleWindow.normalizedValue}:{}),
       sourceWindowStart: windowStart,
       sourceWindowChoiceBranch: sourceWindowChoiceBranch(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions),
       sourceWindowEnd: windowEnd,

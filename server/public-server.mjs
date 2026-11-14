@@ -59,6 +59,9 @@ export function loadPublicConfig(env = process.env, cwd = process.cwd()) {
       .filter(Boolean),
     workerEnv: {
       ...PRODUCTION_RECOGNITION_ENV,
+      // Keep the recorded production compiler as the default until the new
+      // evidence-backed scope repair passes its live-model comparison.
+      ...(env.SAM_SEMANTIC_SCOPE_REPAIR === '1.1.0' ? { SEMANTIC_PARTICIPATION_SCOPE_VERSION: '1.1.0' } : {}),
       DEEPSEEK_API_KEY: apiKey,
       ALLOWED_ORIGINS: allowedOrigins,
       ASSETS: {

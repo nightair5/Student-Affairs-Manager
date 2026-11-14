@@ -56,6 +56,7 @@ import {
 } from './lib/workspaceRecoveryUi'
 import { markOnboardingComplete } from './lib/onboarding'
 import { CapturePersistenceService } from './domain/v2/capture'
+import {sourceReferenceClock} from './domain/v2/sourceReferenceClock'
 import { retryExistingSourceRecognition } from './domain/v2/sourceRetry'
 import { mapSourceWorkflowItem, selectPendingReviewItems } from './lib/sourceWorkflow'
 import { materialStatusFromLegacy } from './lib/domainEntities'
@@ -968,10 +969,11 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       }
       const metadata=ordinaryEnvironment?.recognitionMetadata?.()
       const attemptId=createOperationId()
-      const retried=await retryExistingSourceRecognition(capturePersistenceService,source.id,{provider:'deepseek',modelName:metadata?.modelName??'deepseek-v4-flash',promptVersion:metadata?.promptVersion??null,pipelineVersion:'direct-ai-retry-v1',expectedSourceVersionId:version.id},async()=>deepSeekExtractionService.recognize!({sourceType:source.type,sourceTitle:source.title,content:version.rawText!,sourceId:source.id,sourceVersionId:version.id,now:new Date(version.createdAt)},{projects,tasks},{attemptId,allowStatusUnknown:true,...(!ordinaryEnvironment?{semanticContract:'semantic-notice-3.11' as const}:{})}))
+      const clock=sourceReferenceClock(version,w!.settings.defaultTimezone)
+      const retried=await retryExistingSourceRecognition(capturePersistenceService,source.id,{provider:'deepseek',modelName:metadata?.modelName??'deepseek-v4-flash',promptVersion:metadata?.promptVersion??null,pipelineVersion:'direct-ai-retry-v1',expectedSourceVersionId:version.id},async()=>deepSeekExtractionService.recognize!({sourceType:source.type,sourceTitle:source.title,content:version.rawText!,sourceId:source.id,sourceVersionId:version.id,now:new Date(clock.referenceTime),timezone:clock.timezone},{projects,tasks},{attemptId,allowStatusUnknown:true,...(!ordinaryEnvironment?{semanticContract:'semantic-notice-3.11' as const}:{})}))
       stage='mapping'
       const sidecar=ordinaryEnvironment?.semanticSidecar?.(source.id)??deepSeekExtractionService.semanticSidecar?.(source.id,version.id)
-      const context=ordinaryEnvironment?.recognitionContext?.(version.rawText)??ordinaryProviderContextFromSidecar(sidecar)??{referenceTime:retried.result.createdAt,timezone:w!.settings.defaultTimezone}
+      const context=ordinaryEnvironment?.recognitionContext?.(version.rawText)??ordinaryProviderContextFromSidecar(sidecar)??clock
       const assembled=assembleProductFirstSuggestion(retried.result,{sourceText:version.rawText,...context,sourceWindows:sourceWindowsFromSidecar(sidecar),sourceActionTimes:sourceActionTimesFromSidecar(sidecar),workflowMaterialSupport:[...workflowMaterialSupportFromSidecar(sidecar),...ordinaryWorkflowMaterialSupportFromSidecar(sidecar)]})
       stage='saving'
       await canonicalWorkspaceRepository.transaction(current=>({...current,extractionDrafts:current.extractionDrafts.map(d=>d.id===retried.draftId?{...d,result:assembled.result,legacyData:{...d.legacyData,firstSuggestionDisplayed:JSON.parse(JSON.stringify(assembled.result)),...(sidecar?{semanticSidecar:JSON.parse(JSON.stringify(sidecar))}:{})}}:d),recognitionRuns:current.recognitionRuns.map(r=>r.id===current.extractionDrafts.find(d=>d.id===retried.draftId)?.recognitionRunId?{...r,legacyData:{...r.legacyData,originalRecognitionResult:JSON.parse(JSON.stringify(retried.result))}}:r)}))
@@ -1032,13 +1034,14 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       }
     }
     let intakeClock=input.now??new Date()
+    let intakeTimezone=Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai'
     const localResult = createIntakeResult({...input,now:intakeClock})
     let localRecognition = buildLocalRecognition({
       sourceType: input.sourceType,
       sourceTitle: input.sourceTitle ?? input.fileName ?? localResult.source.title,
       content: input.content,
       referenceTime: intakeClock,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai',
+      timezone: intakeTimezone,
       projects,
       tasks,
     })
@@ -1100,6 +1103,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         },
       },
       now: intakeClock.toISOString(),
+      referenceTimezone: intakeTimezone,
     }
     let webMessage=''
     try {
@@ -1118,7 +1122,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         const run=stored?.recognitionRuns.find(item=>item.id===handle.recognitionRunId)
         if(options&&linkPlan&&run?.errorCode==='WEB_READ_FAILED'){
           const original=stored?.sourceVersions.find(item=>item.sourceId===handle.sourceId&&item.versionNo===1)
-          if(original?.createdAt)intakeClock=new Date(original.createdAt)
+          if(original){const clock=sourceReferenceClock(original,stored?.settings.defaultTimezone??intakeTimezone);intakeClock=new Date(clock.referenceTime);intakeTimezone=clock.timezone}
           handle=await capturePersistenceService.beginRetry(handle.sourceId,{provider:captureRequest.provider,modelName:captureRequest.modelName,promptVersion:captureRequest.promptVersion,pipelineVersion:captureRequest.pipelineVersion,expectedSourceVersionId:handle.sourceVersionId})
         }
       }
@@ -1132,11 +1136,11 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
         if(outcome.failed){await capturePersistenceService.failWebBeforeRecognition(handle);throw Error('WEB_SOURCE_UNREAD')}
         workingContent=outcome.content
         if(workingContent!==input.content){
-          localRecognition=buildLocalRecognition({sourceType:input.sourceType,sourceTitle:input.sourceTitle??input.fileName??localResult.source.title,content:workingContent,referenceTime:intakeClock,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone||'Asia/Shanghai',projects,tasks})
+          localRecognition=buildLocalRecognition({sourceType:input.sourceType,sourceTitle:input.sourceTitle??input.fileName??localResult.source.title,content:workingContent,referenceTime:intakeClock,timezone:intakeTimezone,projects,tasks})
           draftRecognition=input.manualSuggestion?recognitionResultFromManualSuggestion(localRecognition,input.manualSuggestion):localRecognition
         }
       }
-      const providerInput={...input,content:workingContent,now:intakeClock,sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId}
+      const providerInput={...input,content:workingContent,now:intakeClock,timezone:intakeTimezone,sourceId:handle.sourceId,sourceVersionId:handle.sourceVersionId}
       const recognitionResult = await capturePersistenceService.recognize(
         handle,
         input.manualSuggestion
@@ -1153,7 +1157,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
       const semanticSidecar=!input.manualSuggestion && useCloudRecognition
         ? ordinaryEnvironment?.semanticSidecar?.(handle.sourceId) ?? deepSeekExtractionService.semanticSidecar?.(handle.sourceId,handle.sourceVersionId)
         : undefined
-      const inferenceContext=ordinaryEnvironment?.recognitionContext?.(workingContent) ?? ordinaryProviderContextFromSidecar(semanticSidecar) ?? {referenceTime:input.now?.toISOString() ?? recognitionResult.createdAt,timezone:Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai'}
+      const inferenceContext=ordinaryEnvironment?.recognitionContext?.(workingContent) ?? ordinaryProviderContextFromSidecar(semanticSidecar) ?? {referenceTime:intakeClock.toISOString(),timezone:intakeTimezone}
       const assembled=assembleProductFirstSuggestion(recognitionResult,{sourceText:workingContent,...inferenceContext,sourceWindows:sourceWindowsFromSidecar(semanticSidecar),sourceActionTimes:sourceActionTimesFromSidecar(semanticSidecar),workflowMaterialSupport:[...workflowMaterialSupportFromSidecar(semanticSidecar),...ordinaryWorkflowMaterialSupportFromSidecar(semanticSidecar)]})
       if(taskTimeAuthorityFromSidecar(semanticSidecar)){
         const grounded=groundTaskTimeWindows(assembled.result,semanticSidecar,{index:await indexImmutableScopesV11(handle.sourceId,handle.sourceVersionId,workingContent),...inferenceContext})

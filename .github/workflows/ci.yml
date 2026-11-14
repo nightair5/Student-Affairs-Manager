@@ -39,6 +39,10 @@ jobs:
         run: npm run test:product
         env:
           TZ: ${{ matrix.timezone }}
+      - name: Scoped notice and source clock configuration
+        run: node --test cloudflare/semantic-scope-repair.node-test.mjs server/scope-repair-config.node-test.mjs
+        env:
+          TZ: ${{ matrix.timezone }}
       - name: Preserve actual group outcomes even on failure
         if: always()
         uses: actions/upload-artifact@v4
@@ -71,6 +75,10 @@ jobs:
       - run: npm ci
       - name: Current offline experiment and executor safety
         run: node scripts/current-safety-ci.mjs
+        env:
+          TZ: Asia/Shanghai
+      - name: Scoped executor durable phase and state checks
+        run: node --test scripts/scoped-execution-v2.node-test.mjs scripts/scoped-state-writer-v2.node-test.mjs
         env:
           TZ: Asia/Shanghai
       - name: Preserve preparation failures and independent results

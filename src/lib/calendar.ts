@@ -96,6 +96,7 @@ function taskCalendarDates(task:Task, timeZone:string):TaskCalendarDate[] {
   if(plan&&validCalendarValue(plan,timeZone))dates.push({at:plan,role:'plan'})
   if(task.deadline&&validCalendarValue(task.deadline,timeZone))dates.push({at:task.deadline,role:'deadline'})
   if(task.sourceActionAt&&validCalendarValue(task.sourceActionAt,timeZone))dates.push({at:task.sourceActionAt,role:'source'})
+  if(task.sourceWindowDate&&task.sourceWindowDate!==task.sourceActionAt&&validCalendarValue(task.sourceWindowDate,timeZone))dates.push({at:task.sourceWindowDate,role:'window'})
   if(!dates.length&&task.sourceWindowLabel&&task.sourceWindowEnd&&validCalendarValue(task.sourceWindowEnd,timeZone))dates.push({at:task.sourceWindowEnd,role:'window'})
   return dates
 }
@@ -127,7 +128,7 @@ export function groupTasksByDate(tasks: Task[], timeZone=DEFAULT_WORKSPACE_TIMEZ
 }
 
 /** A personal date determines placement; the original deadline remains on the task. */
-export function taskCalendarDate(task: Task): string { return task.plannedStart || task.directDate || task.deadline || task.sourceActionAt || (task.sourceWindowLabel?task.sourceWindowEnd:'') || '' }
+export function taskCalendarDate(task: Task): string { return task.plannedStart || task.directDate || task.deadline || task.sourceActionAt || task.sourceWindowDate || (task.sourceWindowLabel?task.sourceWindowEnd:'') || '' }
 
 /** Calendar days overlapped by the actual event interval. Timed ends are exclusive. */
 export function eventCalendarDays(event:Pick<Event,'startAt'|'endAt'>,timeZone=DEFAULT_WORKSPACE_TIMEZONE,range?:{start:string;end:string}):string[] {

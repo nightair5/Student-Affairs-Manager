@@ -59,9 +59,23 @@ function citedGoalIntroduction(source,span,goal,raw) {
  return {start:span.end,end}
 }
 
+// A specific source-cited inline heading may introduce several differently
+// worded actions. Bound it to its own sentence; a broad day or notice heading
+// is not a goal and a separate heading/explicit aside closes the scope.
+function citedInlineGoal(source,span,goal){
+ if(!span)return null
+ const match=/^([^。！？；;\n：:]{2,60})[:：]/u.exec(source.slice(span.start))
+ const anchor=compact(goal.anchor),title=compact(goal.title),heading=compact(match?.[1])
+ if(!match||anchor.length<4||genericAnchors.has(anchor)||!heading.includes(anchor)||!title.includes(anchor))return null
+ if(/^(?:(?:今日|明日|本周|下周|近期|本次|有关|相关|其他|各项|学生|学校))?(?:通知|公告|事项|安排|计划|提醒|任务|活动|材料|办理|提交|报名)$/u.test(heading))return null
+ const start=span.start+match[0].length,tail=source.slice(start),stop=tail.search(/[。！？\n]/u),end=stop<0?source.length:start+stop
+ if(end<=start||/(?:另请|另外|此外|另一(?:件|项|个)|互不相关|彼此独立)/u.test(source.slice(start,end)))return null
+ return {start,end,headingStart:span.start}
+}
+
 /** Preserve a cited relation as a view grouping. Never delete or merge the
  * actionable task: its independent deadline, materials and status remain. */
-export function applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference=false,allowAssignmentEvidenceFallback=false,allowScopedMatter=false,allowProseScope=false}){
+export function applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference=false,allowAssignmentEvidenceFallback=false,allowScopedMatter=false,allowProseScope=false,allowInlineScope=false,allowNamedTaskFallback=false}){
  const events=pending.filter(row=>row.kind==='event'&&result.events.includes(row.entity)&&!row.entity.sourceStatus)
  const tasks=pending.filter(row=>row.kind==='task'&&result.standaloneTasks.includes(row.entity))
  const eventOwners=new Set()
@@ -75,10 +89,14 @@ export function applySemanticGoalRelations({raw,result,pending,source,evidence,n
   // for the guarded adjacent-participant rule below; never invent a quote.
   const directSpan=locateSourceQuote(quote,source)
   const fallbackQuote=text(task.item.assignment?.evidence,500)
-  const span=directSpan??(allowAssignmentEvidenceFallback?locateSourceQuote(fallbackQuote,source):null)
   const ownRefs=task.entity.evidenceIds.map(id=>result.evidence.find(ref=>ref.id===id)).filter(Boolean)
   const anchoredEvents=anchor?events.filter(row=>compact(row.entity.title).includes(anchor)||row.entity.evidenceIds.some(id=>compact(result.evidence.find(ref=>ref.id===id)?.quote).includes(anchor))):[]
-  const named=Boolean(directSpan)&&anchor.length>=2&&target&&anchoredEvents.length===1&&anchoredEvents[0]===target&&compact(span?.literal).includes(anchor)
+  const namedRefs=ownRefs.filter(ref=>typeof ref.textStart==='number'&&typeof ref.textEnd==='number'&&source.slice(ref.textStart,ref.textEnd)===ref.quote&&compact(ref.quote).includes(anchor))
+  const namedOwnSpan=allowNamedTaskFallback&&anchor.length>=2&&!genericAnchors.has(anchor)&&target&&anchoredEvents.length===1&&anchoredEvents[0]===target&&namedRefs.length===1
+   &&target.entity.evidenceIds.some(id=>compact(result.evidence.find(ref=>ref.id===id)?.quote).includes(anchor))
+   ?{start:namedRefs[0].textStart,end:namedRefs[0].textEnd,literal:namedRefs[0].quote}:null
+  const span=directSpan??namedOwnSpan??(allowAssignmentEvidenceFallback?locateSourceQuote(fallbackQuote,source):null)
+  const named=Boolean(directSpan||namedOwnSpan)&&anchor.length>=2&&target&&anchoredEvents.length===1&&anchoredEvents[0]===target&&compact(span?.literal).includes(anchor)
   // A source can use a shortened name later in the same notice. Accept only
   // a literal shared mention that identifies one extracted event uniquely.
   const shortMention=target&&span?sharedAnchor([target.entity.title,anchor,span.literal]):''
@@ -163,9 +181,9 @@ export function applySemanticGoalRelations({raw,result,pending,source,evidence,n
   const specificDocumentHeading=commonScope&&Boolean(documentSubject)&&!/^(?:今日|明日|本周|近期|本次|相关|有关|其他|各种|各类|全部|所有|多个|通知|事项)$/u.test(documentSubject)
   const supported=(literalAnchor||equivalentHeading||scopedHeading||specificDocumentHeading)&&!unrelated&&!differentNamedEvents&&otherEventKeys.size<=1&&citedEventKeys.size<=1&&keys.length>=2&&keys.length<=20&&new Set(keys).size===keys.length
    &&members.every(row=>row&&row.entity.evidenceIds.length<20&&!eventOwners.has(row.entity.tempId)&&!assigned.has(row.entity.tempId))
-  const bounds=(allowScopedMatter?citedMatterSection(source,span,anchor):null)??(allowProseScope?citedGoalIntroduction(source,span,goal,raw):null)
+  const bounds=(allowScopedMatter?citedMatterSection(source,span,anchor):null)??(allowProseScope?citedGoalIntroduction(source,span,goal,raw):null)??(allowInlineScope?citedInlineGoal(source,span,goal):null)
   const eligible=bounds?members.filter((row,i)=>row&&row.entity.evidenceIds.length<20&&!eventOwners.has(row.entity.tempId)&&!assigned.has(row.entity.tempId)
-   &&memberRefs[i].some(ref=>ref.start>=bounds.start&&ref.end<=bounds.end)):[]
+   &&memberRefs[i].some(ref=>ref.start>=(bounds.headingStart??bounds.start)&&ref.end>bounds.start&&ref.end<=bounds.end)):[]
   const scoped=Boolean(bounds&&title&&keys.length>=2&&keys.length<=20&&new Set(keys).size===keys.length
    &&eligible.length>=2&&!unrelated&&!differentNamedEvents&&otherEventKeys.size<=1&&citedEventKeys.size<=1)
   if(!supported&&!scoped){note('RELATION',text(goal.key,40)||String(index),'GOAL_RELATION_UNCONFIRMED');continue}

@@ -23,7 +23,7 @@ const flatTasks = (r: RecognitionResult) => [...r.standaloneTasks, ...r.mileston
 const compact = (s: string) => s.normalize('NFKC').replace(/[\s\p{P}\p{S}]+/gu, '')
 const cancelled = /取消|作废|废止|不再(?:举办|举行|提交|报名|申请|参加|出席)|禁止|(?:不得|不要|请勿|不能|不可)(?:提交|报名|申请|参加|出席|领取)|(?:无需|无须|不必|不用|不需要)(?:再|另行)?(?:提交|报名|申请|参加|出席|领取|填写|上传)/u
 const conditional = /(?:若|如果|如已|如需|符合.{0,18}条件|有意|自愿|入选后|录取后|(?:取得|获得)(?:相关|参赛|录取)?资格后|已缴费|放弃修读|仅限|限.{0,10}学生)/u
-const deadline = /截止|最迟|不晚于|不得(?:晚于|迟于)|之前|以前|前(?:[，,。；;\s]|将|把|须|需|请|提交|交到|交至|送至|送到|递交|发送|寄送|上交|完成|报送|报名|申请|办理|领取|上传|填写|登记|预约|$)|(?:\d{1,2}(?:日|号|点|时|分)|\d{1,2}:\d{2})\s*前(?:通过|在线)|于.{0,32}(?:提交|交至|交到|报送|发送|寄送|上交)/u
+const deadline = /截止|最迟|不晚于|不得(?:晚于|迟于)|之前|以前|前(?:[，,。；;\s]|将|把|须|需|请|提交|交到|交至|送至|送到|递交|发送|寄送|上交|完成|报送|报名|申请|办理|领取|上传|填写|登记|预约|归还|缴清|$)|(?:\d{1,2}(?:日|号|点|时|分)|\d{1,2}:\d{2})\s*前(?:通过|在线)|于.{0,32}(?:提交|交至|交到|报送|发送|寄送|上交)/u
 const alternatives = /任选|备选|可选择|任一|(?:日|号|\d)\s*(?:或|、).{0,18}(?:日|号)/u
 const recordTasks = (r: RecognitionResult) => new Map(flatTasks(r).map(t => [t.tempId, t]))
 
@@ -68,7 +68,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
   // unrelated "if you have questions" or a cancelled registration must not
   // become an event eligibility label merely because it appears nearby.
   const localEventCondition=(text:string,eventTitle:string)=>text.split(/[。；;！？\n]/u).some(clause=>{
-    const qualification=/(?:仅(?:对|供|面向|限)|符合.{0,18}(?:条件|资格)|入选后|录取后|通过审核|审核通过|已(?:报名|登记|注册|缴费|预约)|持(?:有|学生证|证|卡)|凭(?:学生证|证件|卡)|限.{0,10}(?:学生|同学|人员))/u
+    const qualification=/(?:仅(?:对|供|面向|限)|符合.{0,18}(?:条件|资格)|入选后|录取后|(?:入选|录取|获选)(?:者|人员|同学|学生)|通过审核|审核通过|已(?:报名|登记|注册|缴费|预约)|持(?:有|学生证|证|卡)|凭(?:学生证|证件|卡)|限.{0,10}(?:学生|同学|人员))/u
     if(!qualification.test(clause)||!isEventEligibility(clause)||/取消(?:报名|预约|注册|资格)/u.test(clause))return false
     const otherEvents=result.events.filter(candidate=>candidate.title!==eventTitle).some(candidate=>compact(candidate.title)&&compact(clause).includes(compact(candidate.title)))
     if(otherEvents)return false
@@ -157,6 +157,20 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     const titleParts=owners[0].title.split(' · ')
     const titleSupported=(quote:string)=>quote.includes(owners[0].title)||titleParts.length===2&&quote.includes(titleParts[1])&&refs.some(ref=>ref.quote.includes(titleParts[0]))
     const own=position&&refs.find(ref=>ref.at===Number(position[1])&&ref.quote.includes(p.rawText)&&titleSupported(ref.quote))
+    const weekdayPattern=/(?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天]/gu
+    const ownWeekdays=own?[...own.quote.matchAll(weekdayPattern)]:[]
+    // A named local session may cite its own weekday, or a uniquely cited
+    // common heading plus its own clock. Validate those pieces independently;
+    // never parse a full agenda and accidentally reuse its first clock.
+    if(result.modelName==='local-rules'&&own&&ownWeekdays.length===1){
+      return parseDirectSourceTime(ownWeekdays[0][0]+' '+p.rawText,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
+    }
+    const weekdays=[...sourceText.matchAll(weekdayPattern)]
+    const weekdayAnchor=own&&weekdays.length===1&&refs.find(ref=>ref.at<=own.at&&ref.quote.includes(weekdays[0][0]))
+    if(result.modelName==='local-rules'&&own&&ownWeekdays.length===0&&weekdayAnchor){
+      const between=sourceText.slice(weekdayAnchor.at,own.at)
+      if(!/(?:另有|另外|另请|取消|改期|延期|报名|提交|缴费|截止)/u.test(between))return parseDirectSourceTime(weekdays[0][0]+' '+p.rawText,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
+    }
     const ownDates=own?[...own.quote.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu)]:[]
     if(result.modelName==='local-rules'&&own&&ownDates.length===1){
       let date=ownDates[0][0]

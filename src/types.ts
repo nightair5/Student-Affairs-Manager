@@ -133,6 +133,8 @@ export interface Task {
   sourceActionWeekdayInferred?: boolean
   /** Read-only display of an existing, source-verified operating window. */
   sourceWindowLabel?: string
+  /** One source-cited operating date, not a deadline or personal plan. */
+  sourceWindowDate?: string
   /** Read-only start of one source-verified operating window; not a personal plan. */
   sourceWindowStart?: string
   /** Option number when a combined choice contains a branch-specific window. */

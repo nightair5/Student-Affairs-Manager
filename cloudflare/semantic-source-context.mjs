@@ -273,6 +273,47 @@ export function modelSummarySharedEventDay(source,span,item,items,summary,{decla
  return previous.length===1?{start,end,literal}:null
 }
 
+/** Bind an event-owned clock to a structurally scoped heading or to an
+ * immediately coordinated preceding event. Every date and clock remains an
+ * independently located source span; dates from unrelated clauses are never
+ * copied merely because they are nearby. */
+export function scopedEventDay(source,span,item,items){
+ if(item?.kind!=='event'||!span||typeof item.title!=='string')return null
+ const refs=(Array.isArray(item.evidence)?item.evidence:[]).map(q=>typeof q==='string'?locateSourceQuote(q,source):null).filter(Boolean)
+ if(!refs.some(ref=>ref.start<=span.start&&ref.end>=span.end&&compactText(ref.literal).includes(compactText(item.title))))return null
+ const targetEnd=source.indexOf('\n',span.end),lineEnd=targetEnd<0?source.length:targetEnd
+ const targetLine=source.slice(source.lastIndexOf('\n',span.start-1)+1,lineEnd)
+ if(/(?:日期|时间)[^，,。；;\n]{0,16}(?:另行|待定|未定|待通知|尚未)/u.test(targetLine))return null
+ const left=source.slice(0,span.start),boundary=Math.max(...['。','！','？','；',';','\n'].map(mark=>left.lastIndexOf(mark)))+1
+ const prefix=source.slice(boundary,span.start),found=[...fold(prefix).matchAll(new RegExp(SOURCE_DAY_PATTERN.source,'gu'))]
+ if(found.length===1){
+  const match=found[0],start=boundary+match.index,end=start+match[0].length,literal=source.slice(start,end)
+  const previous=(Array.isArray(items)?items:[]).filter(other=>other!==item&&other?.kind==='event'&&other.status!=='cancelled'&&typeof other.title==='string').flatMap(other=>(Array.isArray(other.evidence)?other.evidence:[]).map(q=>typeof q==='string'?locateSourceQuote(q,source):null).filter(ref=>ref&&ref.start>=boundary&&ref.start<=start&&ref.end<=span.start&&compactText(ref.literal).includes(compactText(other.title))&&compactText(ref.literal).includes(compactText(literal))))
+  if(previous.length===1&&/^[\s，,、和及与]*$/u.test(source.slice(previous[0].end,span.start))&&!differentDay.test(source.slice(end,span.start)))return {start,end,literal}
+ }
+ const currentLineStart=source.lastIndexOf('\n',span.start-1)+1
+ const before=source.slice(0,currentLineStart),lines=[...before.matchAll(/^([^\r\n]*)\r?$/gmu)]
+ let heading=null
+ for(const line of lines){
+  const value=line[1].trim(),isHeading=/^(?:【[^】\n]{1,80}】|\[[^\]\n]{1,80}\]|[^。！？；;\n]{1,80}[:：])$/u.test(value)
+  if(isHeading)heading={at:line.index,text:line[1],end:line.index+line[1].length}
+ }
+ if(!heading||currentLineStart-heading.end>800||clock(fold(heading.text))||/(?:截止|截至|报名|提交|缴费|取消|作废|备选|候选)/u.test(heading.text))return null
+ const days=[...fold(heading.text).matchAll(new RegExp(SOURCE_DAY_PATTERN.source,'gu'))]
+ if(days.length!==1)return null
+ const previousLines=source.slice(heading.end,currentLineStart).split(/\r?\n/u).map(line=>line.trim()).filter(Boolean)
+ for(const line of previousLines){
+  if(/^(?:活动|事项|名称)\s*\|\s*(?:时间|时段)\s*\|\s*(?:地点|位置)\s*$/u.test(line))continue
+  if(!clock(fold(line))||SOURCE_DAY_PATTERN.test(fold(line))||differentDay.test(line)||/(?:截止|截至|取消|备选|候选|日期待定)/u.test(line))return null
+  const owned=(Array.isArray(items)?items:[]).filter(other=>other?.kind==='event'&&other!==item&&other.status!=='cancelled').some(other=>(Array.isArray(other.evidence)?other.evidence:[]).some(q=>typeof q==='string'&&q.trim()&&line.includes(q.trim())))
+  if(!owned)return null
+ }
+ const currentPrefix=source.slice(currentLineStart,span.start)
+ if(SOURCE_DAY_PATTERN.test(fold(currentPrefix))||differentDay.test(currentPrefix)||/(?:截止|截至|取消|备选|候选)/u.test(currentPrefix))return null
+ const start=heading.at+days[0].index,end=start+days[0][0].length
+ return {start,end,literal:source.slice(start,end)}
+}
+
 /** A model may compose the shared date and its own clock into one string,
  * although those fragments are separated in the source. Locate both original
  * fragments and verify the shared event scope before parsing. */

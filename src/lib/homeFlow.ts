@@ -148,7 +148,7 @@ export function pendingGroupedTask(task:Task,members:readonly Task[]):boolean {
 }
 
 export function homeFlow(tasks:Task[],events:Event[],now=new Date(),linked:Readonly<Record<string,Event>>={},timeZone='Asia/Shanghai'){
-  const relatedDate=(t:Task)=>t.sourceWindowLabel?t.sourceWindowEnd:linked[t.id]?.startAt
+  const relatedDate=(t:Task)=>t.sourceWindowLabel?(t.sourceWindowEnd??t.sourceWindowDate):linked[t.id]?.startAt
   const visibleTasks=visibleChoiceTasks(tasks)
   const ready=getExecutableTasks(visibleTasks,now),dated=(t:Task)=>Boolean(t.deadline||t.plannedStart||t.directDate||t.sourceActionAt||relatedDate(t))
   const priorityDifference=(a:Task,b:Task)=>calculateTaskPriority(b,tasks,now).score-calculateTaskPriority(a,tasks,now).score
@@ -185,7 +185,7 @@ export function homeFlow(tasks:Task[],events:Event[],now=new Date(),linked:Reado
     const plan=t.plannedStart||t.directDate
     // Preserve existing placement for old overdue tasks with a future plan,
     // while ensuring an actual deadline today remains visible today.
-    if(plan)return localDateKey(plan,timeZone)<=today||Boolean(t.deadline&&localDateKey(t.deadline,timeZone)===today)||Boolean(t.sourceActionAt&&localDateKey(t.sourceActionAt,timeZone)===today)
+    if(plan)return localDateKey(plan,timeZone)<=today||Boolean(t.deadline&&localDateKey(t.deadline,timeZone)===today)||Boolean(t.sourceActionAt&&localDateKey(t.sourceActionAt,timeZone)===today)||Boolean(t.sourceWindowDate&&localDateKey(t.sourceWindowDate,timeZone)===today)
     const dates=[t.deadline,t.sourceActionAt,relatedDate(t)]
     return dates.some(date=>Boolean(date&&localDateKey(date,timeZone)<=today))
   }

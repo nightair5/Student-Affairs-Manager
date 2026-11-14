@@ -49,6 +49,8 @@ export interface RecognitionRequestOptions {
 export interface RecognitionServiceInput extends IntakeInput {
   sourceId?: string
   sourceVersionId?: string
+  /** Source-capture timezone, retained across explicit retries. */
+  timezone?: string
 }
 
 interface ProxyRecognitionObservation {
@@ -142,7 +144,7 @@ export class ProxyDeepSeekExtractionService implements DeepSeekExtractionService
         sourceTitle: (input.sourceTitle ?? input.fileName ?? '').slice(0, 160),
         content: input.content.slice(0, 24_000),
         referenceTime: (input.now ?? new Date()).toISOString(),
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai',
+        timezone: input.timezone ?? (Intl.DateTimeFormat().resolvedOptions().timeZone || 'Asia/Shanghai'),
         ...selectedContext,
         ...(input.multimodal
           ? {

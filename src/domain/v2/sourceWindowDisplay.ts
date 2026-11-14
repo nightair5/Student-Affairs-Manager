@@ -37,6 +37,18 @@ export function sourceWindowUnresolvedLabel(taskId:string,declaration:JsonValue|
  return quotes.length?`原文：${[...new Set(quotes)].join('；')}（时间未安排）`:undefined
 }
 
+/** Return the existing single date point only after validating the source
+ * declaration, owner, exact citation and precision. This is a date entry for
+ * the source window, not a deadline or personal plan. */
+export function sourceWindowSingleDatePoint(taskId:string,declaration:JsonValue|undefined,points:TimePoint[],versions:SourceVersion[]):TimePoint|undefined {
+ const d=object(declaration)
+ if(!d||!Array.isArray(d.windows)||d.windows.length!==1)return undefined
+ const row=object(d.windows[0])
+ if(row?.state!=='RESOLVED_SOURCE_DATE'||!Array.isArray(row.pointIds)||row.pointIds.length!==1||!sourceWindowDisplayLabel(taskId,declaration,points,versions))return undefined
+ const ids=row.pointIds,point=points.find(value=>value.id===ids[0])
+ return point&&point.type==='event_start'&&!point.eventId&&point.taskId===taskId&&point.relatedTaskIds.includes(taskId)&&validPoint(point)?point:undefined
+}
+
 /** Only actual resolved endpoint values supply urgency. The label alone cannot
  * manufacture a cutoff or suppress a pending canonical time. */
 export function sourceWindowLastEnd(taskId:string,declaration:JsonValue|undefined,points:TimePoint[],versions:SourceVersion[]):string|undefined {

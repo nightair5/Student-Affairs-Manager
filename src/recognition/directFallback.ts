@@ -18,14 +18,15 @@ import {boundLocalResult} from './localResultCapacity'
 import {scopeLocalOtherPartyActions} from './localResponsibilityScope'
 import {retainLocalConditionalMaterials} from './localConditionalMaterials'
 import {indexLocalSections} from './localSectionScope'
+import {repairLocalDeliveryOwnership,retainLocalOwnedWeekdayDeadlines,retainLocalConditionalFollowup,retainLocalCitedAttendance,retainLocalOwnedEventTimes,retainLocalSeparateDirective,retainLocalRecruitmentGroups,retainLocalRecruitmentFlow,retainLocalJointGoal,retainLocalLocationCorrection} from './localScopeRepair'
 import {isEventEligibility} from '../../cloudflare/event-eligibility.mjs'
 import {sourceActionWeekday,sourceWeekdayAlternatives,formatSourceWeekdayAlternatives} from '../../cloudflare/source-action-weekday.mjs'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
-export function improveDirectFallback(input:RecognitionResult,source:string,options:{scopeAware?:boolean}={}):RecognitionResult {
- const actions=removeDuplicatedActionEvents(improveLocalActions(input,source,options))
+export function improveDirectFallback(input:RecognitionResult,source:string,options:{scopeAware?:boolean;timezone?:string}={}):RecognitionResult {
+ const actions=removeDuplicatedActionEvents(improveLocalActions(retainLocalOwnedWeekdayDeadlines(repairLocalDeliveryOwnership(input,source,options.timezone),source,options.timezone),source,options))
  const improved=retainLocalEventDetails(retainSourceEventContext(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(projectLocalDeliveryRoles(actions,source),source),source),source),source),source)
- const result=boundLocalResult(retainLocalConditionalMaterials(scopeLocalOtherPartyActions(clearUndatedSingleEventRevision(attachExplicitSharedGoal(linkReferencedEventActions(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(improved,source,{inlineSharedObject:options.scopeAware}),source)),source,true),source),source),source),source),source),source))
+ const result=boundLocalResult(retainLocalConditionalMaterials(scopeLocalOtherPartyActions(clearUndatedSingleEventRevision(attachExplicitSharedGoal(linkReferencedEventActions(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(repairLocalDeliveryOwnership(improved,source,options.timezone),source,{inlineSharedObject:options.scopeAware,timezone:options.timezone}),source)),source,true,options.timezone),source),source),source),source),source),source))
  const rows=source.split(/\r?\n/u).map(line=>line.trim()).filter(line=>/^[\p{Script=Han}\d]{1,12}场[：:]/u.test(line)&&!/^(?:报名|申请|提交|缴费)/u.test(line))
  if(rows.length>1&&result.events.length<rows.length){
   const reason='部分内容尚未完整整理（活动场次），请核对原文'
@@ -40,11 +41,20 @@ export function improveDirectFallback(input:RecognitionResult,source:string,opti
   if(!result.quality.reviewReasons.includes(reason))result.quality.reviewReasons.push(reason)
   result.quality.needsHumanReview=true
  }
- return retainLocalActionWeekdays(result,source)
+ let adjusted=retainLocalActionWeekdays(result,source,options.timezone)
+ adjusted=retainLocalOwnedWeekdayDeadlines(adjusted,source,options.timezone)
+ adjusted=retainLocalLocationCorrection(adjusted,source,options.timezone)
+ adjusted=retainLocalCitedAttendance(adjusted,source,options.timezone)
+ adjusted=retainLocalConditionalFollowup(adjusted,source,options.timezone)
+ adjusted=retainLocalRecruitmentGroups(adjusted,source)
+ adjusted=retainLocalRecruitmentFlow(adjusted,source,options.timezone)
+ adjusted=retainLocalJointGoal(adjusted,source)
+ adjusted=retainLocalOwnedEventTimes(adjusted,source,options.timezone)
+ return retainLocalSeparateDirective(adjusted,source,options.timezone)
 }
 
 /** Preserve only a source-cited weekday for the task which owns its action. */
-function retainLocalActionWeekdays(input:RecognitionResult,source:string):RecognitionResult {
+function retainLocalActionWeekdays(input:RecognitionResult,source:string,zone?:string):RecognitionResult {
  const result=structuredClone(input)
  const tasks=[...result.standaloneTasks,...result.milestones.flatMap(stage=>[...stage.tasks,...stage.workPackages.flatMap(group=>group.tasks)])]
  const sourceItems=tasks.map(task=>({actionVerb:task.actionVerb,actionObject:task.actionObject,evidence:task.evidenceIds.flatMap(id=>{const ref=result.evidence.find(value=>value.id===id);return ref?.quote?[ref.quote]:[]})}))
@@ -53,7 +63,7 @@ function retainLocalActionWeekdays(input:RecognitionResult,source:string):Recogn
   const item={actionVerb:task.actionVerb,actionObject:task.actionObject,evidence:citations}
   const action=sourceActionWeekday(source,item)
   if(action&&!result.timePoints.some(point=>point.relatedTaskTempIds.includes(task.tempId)&&point.tempId.startsWith('local-action-time-'))){
-   const timezone=result.timePoints.find(point=>point.timezone)?.timezone??'Asia/Shanghai'
+   const timezone=zone??result.timePoints.find(point=>point.timezone)?.timezone??'Asia/Shanghai'
    const parsed=parseDirectSourceTime(action.raw,{type:'event_start',referenceTime:result.createdAt,timezone})
    if(parsed.normalizedValue&&!parsed.needsConfirmation){
     const eid=`local-action-evidence-${action.start}`,id=`local-action-time-${action.start}-${task.tempId}`
@@ -64,7 +74,7 @@ function retainLocalActionWeekdays(input:RecognitionResult,source:string):Recogn
   }
   const alternatives=sourceWeekdayAlternatives(source,item)
   if(alternatives){
-   const timezone=result.timePoints.find(point=>point.timezone)?.timezone??'Asia/Shanghai'
+   const timezone=zone??result.timePoints.find(point=>point.timezone)?.timezone??'Asia/Shanghai'
    const formatted=formatSourceWeekdayAlternatives(source,alternatives,sourceItems,result.createdAt,timezone)
    if(formatted){
     const line=`原文备选时间：${formatted}`
@@ -228,7 +238,7 @@ function recoverCoordinatedDelivery(input:RecognitionResult,source:string):Recog
  return r
 }
 
-function improveLocalActions(input:RecognitionResult,source:string,options:{scopeAware?:boolean}={}):RecognitionResult {
+function improveLocalActions(input:RecognitionResult,source:string,options:{scopeAware?:boolean;timezone?:string}={}):RecognitionResult {
  const positiveDirective=source.split(/[。！？；;，,\n]/u).some(clause=>/(?:请|须|需|应|务必)[^。；]{0,30}(?:提交|递交|填写|申请|申报|报名|领取|缴费|参加|上传|登记|预约)/u.test(clause)&&!/(?:无需|无须|不用|不必|不得|禁止|请勿|不要|不再)/u.test(clause))
  if(/仅供知悉|仅供参考|请知悉|无需操作|无需办理/u.test(source)&&!positiveDirective){const result=structuredClone(input);const topic=source.split(/[。！？\n]/u).find(line=>line.trim()&&!/^\s*(?:各位同学|同学们)/u.test(line));if(topic)result.sourceSummary.title=cleanDirectTopic(topic);return {...result,standaloneTasks:[],milestones:[]}}
  if(/无需办理|无需操作|仅供知悉/u.test(source)&&!/提交|报名|申请|申报|缴费|领取|上传/u.test(source.replace(/(?:无需|不必|不要|无须)(?:办理|操作|提交|报名|申请|申报|缴费|领取|上传)/gu,''))){const result=structuredClone(input);const topic=source.split(/[。！？\n]/u).find(line=>line.trim()&&!/仅供知悉|无需|无须|不必/u.test(line));if(topic)result.sourceSummary.title=cleanDirectTopic(topic);return {...result,standaloneTasks:[],milestones:[]}}
@@ -281,7 +291,7 @@ function improveLocalActions(input:RecognitionResult,source:string,options:{scop
    })
   })
  })
- const cutoffTimezone=r.timePoints.find(point=>point.timezone)?.timezone??'Asia/Shanghai'
+ const cutoffTimezone=options.timezone??r.timePoints.find(point=>point.timezone)?.timezone??'Asia/Shanghai'
  const cutoff=(q:string)=>{
   const c=q.normalize('NFKC').replace(/\s/gu,'')
   const applicationEnd=/申请|申报|报名/u.test(q)&&/逾期[^。；]{0,20}(?:不再受理|不予受理|不受理)/u.test(source)
@@ -348,9 +358,20 @@ function improveLocalActions(input:RecognitionResult,source:string,options:{scop
   const objectAt=cutoffText.indexOf(object)
   const repeatedObject=object.length>=2&&objectAt>=0&&objectAt===cutoffText.lastIndexOf(object)&&/^(?:\s|[，,:：]|须|需|必须|应|于|在|截止)/u.test(cutoffText.slice(objectAt+object.length))
   const sameObject=taskTitle.length>=4&&cutoffText.includes(taskTitle)||repeatedObject
-  const separated=uniqueCutoff&&(/[；;]/u.test(between)||/[。！？\r\n]/u.test(between)&&!sameObject&&/(?:提交|递交|上传|报送|发送|填写|登记|领取|缴费)/u.test(cutoffText))
+  const separated=uniqueCutoff&&(/[；;]/u.test(between)||/[。！？\r\n]/u.test(between)&&!sameObject&&/(?:提交|递交|上传|报送|发送|填写|登记|领取|缴费|归还|缴清)/u.test(cutoffText))
   const unknownOwnTime=/(?:时间|截止|日期).{0,10}(?:另行通知|待通知|待定)|(?:之后|随后|另行).{0,8}(?:提交|办理|递交)/u.test(q)
   let chosen=own?{...span,p:own}:formCutoffs.length===1?formCutoffs[0]:uniqueCutoff&&!separated&&!unknownOwnTime?uniqueCutoff:null
+  if(chosen&&options.scopeAware){
+   // A deadline for a predecessor's review is not the later student's
+   // submission deadline, even when both appear in one grammatical sentence.
+   const before=/(?:之前|以前|前)/u.exec(chosen.text),actionAt=chosen.text.lastIndexOf(verb)
+   const gap=before&&actionAt>before.index?chosen.text.slice(before.index+before[0].length,actionAt):''
+   if(/(?:审核|评审|复核|审批|筛选|汇总|通知|报送)[^，,。；;\n]{0,20}(?:后|再|之后)/u.test(gap)){
+    chosen=null
+    const reason='原文中的前置办理时间未作为个人截止，请查看通知。'
+    r.quality.needsHumanReview=true;r.quality.reviewReasons=[...new Set([...r.quality.reviewReasons,reason])].slice(-20)
+   }
+  }
   if(chosen&&/纸质|电子/u.test(object)){
    const fragments=[...chosen.text.matchAll(/[^，,；;]+/gu)].flatMap(m=>{const p=cutoff(m[0]);return p?[{text:m[0],at:chosen!.at+m.index!,p}]:[]})
    if(fragments.length>1&&new Set(fragments.map(f=>f.p.normalizedValue)).size===1)chosen=fragments[0]

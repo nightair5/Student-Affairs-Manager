@@ -38,8 +38,12 @@ export function scopeLocalOtherPartyActions(input:RecognitionResult,source:strin
   // describe the next step of the only cited personal submission. Keep it as
   // source-backed context; never infer the same link from a date alone.
   const scopedLater=at>parentAt&&datedSubject&&audience&&/(?:告知|通知|联系|反馈)[^，,。；;\n]{0,12}(?:申请人|申请者|报名者|报名人|学生|同学)/u.test(text)?datedSubject:null
+  // An explicitly grammatical non-reader actor can own a subsequent review
+  // when its outcome is reported to participants in the same cited clause.
+  const laterActor=/^\s*([\p{Script=Han}]{2,12}?)(?:将|会)(?:在|于)?[^，,。；;\n]{0,36}?(?:审核|评审|复核|汇总|报送|上报|受理|发放|发证|公布结果)/u.exec(text)?.[1]
+  const linkedOutcome=at>parentAt&&laterActor&&/(?:结果|进度)[^。；;\n]{0,24}(?:通知|反馈|告知|公布)/u.test(text)?laterActor:null
   if(at<=parentAt&&!scopedPrior)continue
-  const actor=by?.[1]??(at>parentAt&&recipient&&text.trim().startsWith(recipient)?recipient:scopedPrior??scopedLater)
+  const actor=by?.[1]??(at>parentAt&&recipient&&text.trim().startsWith(recipient)?recipient:scopedPrior??scopedLater??linkedOutcome)
   if(!actor||mightBeReader.test(actor))continue
   // A recipient match or a grammatical "by X" plus a single prior direct
   // action supports ownership; the mere existence of an institutional name

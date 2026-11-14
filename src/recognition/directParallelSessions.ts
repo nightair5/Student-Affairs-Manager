@@ -14,32 +14,38 @@ const squash=(s:string)=>s.normalize('NFKC').replace(/[\s\p{P}\p{S}]+/gu,'')
 const roleKey=(s:string)=>squash(s).replace(/(?:活动|环节|阶段|专场|会)$/u,'')
 const cleanHeading=(s:string)=>s.replace(/\[[^\]\n]{1,8}\]/gu,'').replace(/^【|】$/gu,'').trim()
 
-const rowsHeader=(source:string)=>source.split(/\r?\n/u).map(s=>s.trim()).find(s=>{const c=s.split(/[|｜]/u).map(x=>x.trim());return c.length===3&&c[0]==='时间'&&/^(?:项目|活动|日程)$/u.test(c[1])&&/^(?:地点|场地)$/u.test(c[2])})??''
+const eventColumns=(s:string)=>{
+ const c=s.split(/[|｜]/u).map(x=>x.trim()),time=c.findIndex(x=>x==='时间'),role=c.findIndex(x=>/^(?:名称|项目|活动|日程)$/u.test(x)),place=c.findIndex(x=>/^(?:地点|场地)$/u.test(x))
+ return c.length===3&&new Set([time,role,place]).size===3&&time>=0&&role>=0&&place>=0?{time,role,place}:null
+}
+const rowsHeader=(source:string)=>source.split(/\r?\n/u).map(s=>s.trim()).find(s=>Boolean(eventColumns(s)))??''
 
 /** Parse a dated event schedule as rows, preserving literal source offsets. */
 function eventScheduleTable(source:string,extended=false):SessionSchedule|null {
  const rows=[...source.matchAll(/[^\r\n]+/gu)].map(m=>({text:m[0].trim(),start:m.index!+m[0].indexOf(m[0].trim())}))
  const cells=(s:string)=>s.split(/[|｜]/u).map(x=>x.trim())
- const headerIndexes=rows.flatMap((row,index)=>{const c=cells(row.text);return c.length===3&&c[0]==='时间'&&/^(?:项目|活动|日程)$/u.test(c[1])&&/^(?:地点|场地)$/u.test(c[2])?[index]:[]})
+ const headerIndexes=rows.flatMap((row,index)=>eventColumns(row.text)?[index]:[])
  if(headerIndexes.length>1)return null
  // Both a labelled table and numbered, three-column event lines convey a
  // shared schedule. Require an adjacent dated heading and complete rows.
  const numbered=headerIndexes.length===0
  if(numbered&&!extended)return null
  const index=numbered?1:headerIndexes[0]+1,heading=numbered?rows[0]:rows[index-2]
- const headingTopic=heading?.text.replace(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu,'')??''
+ const headingTopic=heading?.text.replace(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]|(?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天]/gu,'')??''
  const explicitEvent=/(?:活动|日程|讲座|培训|工作坊)/u.test(headingTopic)
  const datedEventLabel=extended&&(/[\p{Script=Han}](?:日|周|节|季)(?:[】\]：:]|$)/u.test(headingTopic)||/[\p{Script=Han}](?:日|周|节|季|月)(?:的)?安排/u.test(headingTopic))
  if(!heading||!explicitEvent&&!datedEventLabel||/报名|申请|提交|上传|缴费|截止/u.test(headingTopic))return null
- const dates=[...heading.text.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu)]
+ const dates=[...heading.text.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]|(?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天]/gu)]
  if(dates.length!==1||source.indexOf(heading.text)!==source.lastIndexOf(heading.text)||/取消|改期|待定|备选|或/u.test(heading.text))return null
  const sessions:{line:LabelledLine;role:string}[]=[],places=new Map<string,string>()
  for(const row of rows.slice(index)){
   const numberedRow=numbered?/^(?:[①②③④⑤⑥⑦⑧⑨⑩]|\d{1,2}[.、)]|【[^】\n]{1,16}】)\s*(.+)$/u.exec(row.text)?.[1]:null
-  const c=numbered?(numberedRow?.replace(/[。；;]$/u,'').split(/[，,]/u).map(x=>x.trim())??[]):cells(row.text)
+  let c=numbered?(numberedRow?.replace(/[。；;]$/u,'').split(/[，,]/u).map(x=>x.trim())??[]):cells(row.text)
+  if(numbered&&c.length===2){const first=/^(\d{1,2}[:：][0-5]\d\s*[-—–至到]\s*\d{1,2}[:：][0-5]\d)\s*(.{2,40})$/u.exec(c[0]);if(first)c=[first[1],first[2].trim(),c[1]]}
   // A malformed row must not silently turn a partial schedule into a complete one.
   if(c.length!==3){if(numbered&&numberedRow||!numbered&&/[|｜]/u.test(row.text))return null;break}
-  const [time,role,place]=c
+  const columns=numbered?{time:0,role:1,place:2}:eventColumns(rows[headerIndexes[0]].text)!
+  const time=c[columns.time],role=c[columns.role],place=c[columns.place]
   const hours=/^(\d{1,2}):([0-5]\d)\s*[-—–至到]\s*(\d{1,2}):([0-5]\d)$/u.exec(time)
   // An action row is a user obligation, not evidence of a scheduled event.
   // Ambiguous or overnight ranges are left for the ordinary parser; inferring
@@ -48,6 +54,30 @@ function eventScheduleTable(source:string,extended=false):SessionSchedule|null {
   places.set(role,place);sessions.push({role,line:{label:role+'时间',value:time,start:row.start+row.text.indexOf(time),whole:row.text,wholeStart:row.start}})
  }
  return sessions.length>=2&&sessions.length<=8?{heading:heading.text,date:dates[0][0],sessions,places}:null
+}
+
+/** A compact sentence of named events may supply a weekday once or on every
+ * clause. Only inherit it when every other substantive clause is another
+ * fully specified event; a separate action or another paragraph blocks it. */
+function weekdayInlineSessions(source:string):SessionSchedule|null {
+ if(/[\r\n]/u.test(source)||/(?:取消|作废|改期|延期|调整|更正|备选|任选|入选|仅限|报名成功|通过审核)/u.test(source))return null
+ const parts=[...source.matchAll(/[^，,；;。！？]+/gu)].map(m=>({text:m[0].trim(),start:m.index!+m[0].indexOf(m[0].trim())}))
+ const candidates=parts.filter(part=>!/^(?:欢迎|诚邀)(?:大家|同学|师生)?(?:参加|参与|出席)$/u.test(part.text))
+ if(candidates.length<2||candidates.length>8)return null
+ const pattern=/^((?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天]|当天|同日|当日)?\s*((?:(?:凌晨|早上|上午|中午|下午|傍晚|晚上)\s*)?\d{1,2}[:：][0-5]\d(?:\s*[-—–至到]\s*(?:(?:上午|下午|晚上)\s*)?\d{1,2}[:：][0-5]\d)?)\s*在/u
+ const first=pattern.exec(candidates[0].text),shared=first?.[1]
+ if(!first||!shared||/^(?:当天|同日|当日)$/u.test(shared))return null
+ const sessions:Session[]=[],places=new Map<string,string>()
+ for(const part of candidates){
+  const match=pattern.exec(part.text),place=match&&localEventLocation(part.text)
+  if(!match||!place||places.has(place.name)||source.indexOf(part.text)!==source.lastIndexOf(part.text)||/(?:报名|提交|上传|填写|截止|缴费)/u.test(part.text))return null
+  const day=match[1]&&!/^(?:当天|同日|当日)$/u.test(match[1])?match[1]:undefined,clock=match[2]
+  const times=[...clock.matchAll(/(\d{1,2})[:：]([0-5]\d)/gu)].map(value=>Number(value[1])*60+Number(value[2]))
+  if(times.some(value=>value>=24*60)||times.length===2&&times[1]<=times[0])return null
+  places.set(place.name,place.location)
+  sessions.push({role:place.name,date:day,line:{label:place.name+'时间',value:clock,start:part.start+part.text.indexOf(clock),whole:part.text,wholeStart:part.start}})
+ }
+ return {heading:candidates[0].text,date:shared,sessions,places,dateAnchor:{quote:candidates[0].text,start:candidates[0].start}}
 }
 
 /** A labelled agenda can state a date on its first row and explicitly say
@@ -149,16 +179,21 @@ function explicitlyDatedEventSessions(source:string,dates:RegExpMatchArray[]):Se
 /** Preserve independently labelled sessions from one announcement. Labels
  * and parenthetical venue qualifiers are joined by the same source role,
  * never by their order. Source offsets stay attached to each fact. */
-export function completeParallelSessions(input:RecognitionResult,source:string,localInline=false):RecognitionResult {
+export function completeParallelSessions(input:RecognitionResult,source:string,localInline=false,sourceTimezone?:string):RecognitionResult {
+ const timezone=sourceTimezone??input.timePoints.find(point=>point.timezone)?.timezone??'Asia/Shanghai'
  const parsedLines=lines(source)
  const timeLines=parsedLines.filter(l=>/^.{1,12}时间$/u.test(l.label)&&l.label!=='活动时间'&&l.label!=='会议时间'&&l.value&&l.value.length<=160&&l.whole.length<=500)
- const scheduleTable=input.events.length===0?eventScheduleTable(source,localInline):null
+ // A failed local first projection can leave only a generic, unlinked event
+ // placeholder. It is not evidence that a complete agenda already exists.
+ // Named events and anything with existing task relations remain protected.
+ const onlyUnlinkedPlaceholders=localInline&&input.events.length>0&&input.events.every(event=>/^(?:待核对事件|待确认事件)$/u.test(event.title)&&!event.relatedTaskTempIds?.length&&event.sourceStatus!=='alternative')
+ const scheduleTable=input.events.length===0||onlyUnlinkedPlaceholders?eventScheduleTable(source,localInline):null
  const labelledSessions=localInline&&!scheduleTable?labelledSessionRows(source):null
- const inlineSessions=localInline&&!scheduleTable&&!labelledSessions?inlineEventSessions(source):null
+ const inlineSessions=localInline&&!scheduleTable&&!labelledSessions?(weekdayInlineSessions(source)??inlineEventSessions(source)):null
  const table=scheduleTable??labelledSessions??inlineSessions
  const sessions:Session[]=table?.sessions??timeLines.map(l=>({line:l,role:l.label.slice(0,-2).trim()})).filter(s=>s.role&&!/(?:报名|申请|提交|登记|上传|缴费|领取|报送|截止)$/u.test(s.role))
  if(sessions.length<2||sessions.length>8||new Set(sessions.map(s=>s.role)).size!==sessions.length)return input
- if(table&&sessions.some(s=>{const p=parseDirectSourceTime((s.date??table.date)+' '+s.line.value,{type:'event_start',referenceTime:input.createdAt,timezone:'Asia/Shanghai'});return !p.normalizedValue||Boolean(scheduleTable&&!p.rangeEndNormalizedValue)||p.needsConfirmation}))return input
+ if(table&&sessions.some(s=>{const p=parseDirectSourceTime((s.date??table.date)+' '+s.line.value,{type:'event_start',referenceTime:input.createdAt,timezone});return !p.normalizedValue||Boolean(scheduleTable&&!p.rangeEndNormalizedValue)||p.needsConfirmation}))return input
  // A revision or cancellation needs its own existing interpretation; do not
  // reintroduce the old schedule from a list of labelled times.
  if(/取消|作废|不再(?:举办|举行)|原定|改期|延期|调整为|更正为|变更为/u.test(source))return input
@@ -197,6 +232,17 @@ export function completeParallelSessions(input:RecognitionResult,source:string,l
   const artifactIds=new Set(allTasks.filter(t=>t.evidenceIds.some(id=>{
    const quote=r.evidence.find(e=>e.id===id)?.quote??''
    const exact=tableQuotes.has(squash(quote))&&(t.actionVerb==='核对'||squash(quote)===squash(headingQuote)&&!/(?:请|须|需|应|提交|上传|填写|报名)/u.test(quote))
+   // A local tokenizer can also misread a session name such as “阅读分享”
+   // as an action. Only demote it when the exact cited schedule row names
+   // that event and there is no directive or independent relation attached.
+   const nounArtifact=!t.materialTempIds.length&&!t.dependencyTempIds.length
+    &&!allTasks.some(other=>other.tempId!==t.tempId&&(other.parentTempId===t.tempId||other.dependencyTempIds.includes(t.tempId)))
+    &&!r.materials.some(material=>material.relatedTaskTempIds.includes(t.tempId)||material.goalScope?.taskTempIds.includes(t.tempId))
+    &&!r.events.some(event=>event.relatedTaskTempIds?.includes(t.tempId))
+    &&!r.goalGroups?.some(group=>group.taskTempIds.includes(t.tempId))
+    &&!r.conflicts.some(conflict=>conflict.entityTempIds.includes(t.tempId))
+    &&!/(?:请|须|需|应|务必)[^。；;\n]{0,24}(?:阅读|提交|上传|填写|报名|缴费|领取)/u.test(quote)
+    &&table.sessions.some(session=>squash(quote)===squash(session.line.whole)&&(squash(t.title)===squash(session.role)||squash(t.actionVerb+t.actionObject)===squash(session.role)))
    // A parser placeholder can cite a session and the following welcome in a
    // single quote. It is not an independent delivery, but only remove it when
    // its named session and citation both agree and no relation depends on it.
@@ -208,7 +254,7 @@ export function completeParallelSessions(input:RecognitionResult,source:string,l
     &&!r.conflicts.some(conflict=>conflict.entityTempIds.includes(t.tempId))
     &&table.sessions.some(session=>quote.includes(session.line.whole)&&(t.title.includes(session.role)||t.actionObject.includes(session.role)))
     &&!/(?:请|须|需|应|务必)[^。；;\n]{0,24}(?:提交|上传|填写|报名|缴费|领取)/u.test(quote)
-   return exact||inline
+   return exact||inline||nounArtifact
   })).map(t=>t.tempId))
   const kept=(tasks:typeof r.standaloneTasks)=>tasks.filter(t=>!artifactIds.has(t.tempId)).map(t=>({...t,dependencyTempIds:t.dependencyTempIds.filter(id=>!artifactIds.has(id))}))
   r.standaloneTasks=kept(r.standaloneTasks)
@@ -246,7 +292,7 @@ export function completeParallelSessions(input:RecognitionResult,source:string,l
  const linkedInfo=parsedLines.find(l=>/(?:信息|介绍|详情|说明)$/u.test(l.label)&&/^https?:\/\//u.test(l.value)&&l.whole.length<=500)
  for(const {line,role,date,yearFromHeading,displayTitle} of sessions){
   const current=r.events.find(e=>matchesRole(e,role)),id=current?.tempId??`direct-session:${line.wholeStart}`,timeId=table&&localInline?`direct-inline-time:${line.wholeStart}:start`:id+':start',endId=table&&localInline?`direct-inline-time:${line.wholeStart}:end`:id+':end',headingId=id+':heading',lineId=id+':time',placeId=id+':location',anchorId=id+':date-anchor'
-  const parsed=parseDirectSourceTime(table?(date??table.date)+' '+line.value:line.value,{type:'event_start',referenceTime:r.createdAt,timezone:'Asia/Shanghai'})
+  const parsed=parseDirectSourceTime(table?(date??table.date)+' '+line.value:line.value,{type:'event_start',referenceTime:r.createdAt,timezone})
   const selectedTime=parsed.normalizedValue&&!parsed.needsConfirmation?parsed.normalizedValue:null
   const point=(tempId:string,type:'event_start'|'event_end',value:string):TimePointSuggestionV2=>({tempId,type,rawText:line.value,normalizedValue:value,timezone:parsed.timezone,isAllDay:parsed.isAllDay,precision:parsed.precision,needsConfirmation:false,relatedTaskTempIds:[],relatedMaterialTempIds:[],evidenceIds:table&&(!date||yearFromHeading)?[headingId,lineId,...(table.dateAnchor?[anchorId]:[])]:[lineId],confidence:1,selected:true})
   r.evidence=r.evidence.filter(e=>![headingId,lineId,placeId,anchorId,id+':linked-info'].includes(e.id)&&!e.id.startsWith(id+':overview:'))

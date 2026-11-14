@@ -49,7 +49,11 @@ export function sourceActionWeekday(source,item){
       ||/^(?:(?:一并|一起|全部|统一|同时))*(?:交给|交至|交到|发送至|发送给|发给|提交至|提交给|递交给|递交至|报送至|投递至|上传至)/u.test(afterTarget)
     if(!delivery||!sourceDelivery)continue
    }
-   if(!/(?:请|须|需|应|务必|要求)/u.test(clause.slice(0,day.index)))continue
+   const directiveBefore=/(?:请|须|需|应|务必|要求)/u.test(clause.slice(0,day.index))
+   // “周二请提交” is the same explicitly addressed action as “请周二
+   // 提交”. Do not bridge a named third party between the cue and verb.
+   const directAfter=actionIndex>=0&&/^(?:请|须|需|应|务必)\s*$/u.test(tail.slice(0,actionIndex).trim())
+   if(!directiveBefore&&!directAfter)continue
    const start=part.index+day.index
    found.push({raw:source.slice(start,start+literal.length),start,end:start+literal.length})
   }

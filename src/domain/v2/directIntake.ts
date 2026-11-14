@@ -17,6 +17,7 @@ import {isSemanticNoticeVersion} from '../../recognition/semanticNoticeVersion'
 import {completeSourceEventRange} from '../../recognition/completeSourceEventRange'
 import {retainSourceEventContext} from '../../recognition/retainSourceEventContext'
 import {goalMaterialScope} from './materialScope'
+import {sourceReferenceClock} from './sourceReferenceClock'
 
 export interface DirectBatch {
   version: typeof DIRECT_MODE_VERSION; id: string; draftId: string; sourceId: string; addedAt: string
@@ -97,13 +98,14 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const localFallback=!d.result||run?.provider==='local-rules'
     // Execution starts can move when a request is retried. The source version's
     // received time is the stable anchor for this notice, including on failure.
-    const rawInput=d.result??buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(v.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]})
+    const clock=sourceReferenceClock(v,w.settings.defaultTimezone)
+    const rawInput=d.result??buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(clock.referenceTime),timezone:clock.timezone,projects:[],tasks:[]})
     const semanticNotice=!localFallback&&isSemanticNoticeVersion(rawInput.promptVersion)
-    const input=localFallback?improveDirectFallback(rawInput,v.rawText,{scopeAware:true}):retainSourceEventContext(completeSourceEventRange(linkReferencedEventActions(semanticNotice?rawInput:linkFollowingFormChannel(completeParallelSessions(rawInput,v.rawText),v.rawText),v.rawText),v.rawText,v.createdAt,w.settings.defaultTimezone),v.rawText)
+    const input=localFallback?improveDirectFallback(rawInput,v.rawText,{scopeAware:true,timezone:clock.timezone}):retainSourceEventContext(completeSourceEventRange(linkReferencedEventActions(semanticNotice?rawInput:linkFollowingFormChannel(completeParallelSessions(rawInput,v.rawText,false,clock.timezone),v.rawText),v.rawText),v.rawText,clock.referenceTime,clock.timezone),v.rawText)
     const actionRecovery=(import.meta as ImportMeta&{env?:{VITE_DIRECT_ACTION_RECOVERY?:string}}).env?.VITE_DIRECT_ACTION_RECOVERY==='1'
     const retention=DIRECT_RETENTION_DEFAULT||(import.meta as ImportMeta&{env?:{VITE_DIRECT_RETENTION?:string}}).env?.VITE_DIRECT_RETENTION==='1'
     const initial=convertDirectResult(input,v.rawText,record(original)?original as unknown as RecognitionResult:undefined,{actionRecovery,retention,scopeAware:localFallback})
-    const candidate=localFallback||semanticNotice?initial:recoverMissingDirectActions(initial,buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(rawInput.createdAt),timezone:w.settings.defaultTimezone,projects:[],tasks:[]}),v.rawText)
+    const candidate=localFallback||semanticNotice?initial:recoverMissingDirectActions(initial,buildLocalRecognition({sourceType:'text',sourceTitle:s.title,content:v.rawText,referenceTime:new Date(clock.referenceTime),timezone:clock.timezone,projects:[],tasks:[]}),v.rawText)
     const bounded=localFallback?boundLocalResult(candidate.result,'direct'):candidate.result
     const retainedIds=new Set([...bounded.standaloneTasks,...bounded.events].map(item=>item.tempId))
     const converted=localFallback?{...candidate,result:bounded,items:candidate.items.filter(item=>retainedIds.has(item.tempId)),omitted:[...candidate.omitted,...candidate.items.filter(item=>!retainedIds.has(item.tempId)).map(item=>({id:item.tempId,reason:'LOCAL_CAPACITY_DEFERRED'}))]}:candidate

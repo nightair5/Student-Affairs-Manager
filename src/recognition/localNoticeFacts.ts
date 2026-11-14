@@ -7,6 +7,11 @@ export function localDelivery(text: string): {verb: string; sourceVerb: string; 
   const direct = [...source.matchAll(/(提交|递交|报送|上传|发送)\s*([^，,；;。！？\n]{1,60}?)\s*(?:至|到|给)\s*([^，,；;。！？\n]{1,60})/gu)]
   const candidates = matches.map(m => ({verb: /^交/u.test(m[2]) ? '提交' : /^发/u.test(m[2]) ? '发送' : m[2], sourceVerb: m[2].replace(/[到至]$/u,''), object: m[1].trim(), channel: m[3].replace(/^(?:到|至|给)\s*/u, '').trim()}))
     .concat(direct.map(m => ({verb: m[1], sourceVerb: m[1], object: m[2].trim(), channel: m[3].trim()})))
+  // A directly addressed “请周日交资料给老师” is a handoff. Requiring
+  // the complete object-and-recipient grammar avoids matching the last
+  // character of “提交至平台” as a new verb.
+  const handoff=/(?:请|须|需|应)\s*(?:于|在)?\s*(?:(?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天]|(?:\d{4}年)?\d{1,2}月\d{1,2}[日号])?\s*(?:(?:早上|上午|中午|下午|傍晚|晚上|夜间)\s*)?(?:(?:之前|以前|前)\s*)?交(?!到|至|给)\s*([^，,；;。！？\n]{2,50}?)\s*给\s*([^，,；;。！？\n]{1,50})/u.exec(source)
+  if(handoff&&!candidates.length&&!/(?:无需|无须|不必|不得|禁止|请勿|取消)/u.test(handoff[0]))candidates.push({verb:'交',sourceVerb:'交',object:handoff[1].trim(),channel:handoff[2].trim()})
   // A coordinated instruction may name the document before the final verb:
   // “填写登记表并提交到平台”.  Keep the original object, rather than
   // treating the chapter name or the platform as a submitted document.
