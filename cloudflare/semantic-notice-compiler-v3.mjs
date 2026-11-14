@@ -27,7 +27,7 @@ export const SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION='semantic-notice-compil
 export const SEMANTIC_MATTER_COMPILER_VERSION='semantic-notice-compiler-1.0.30'
 export const SEMANTIC_PRESERVATION_COMPILER_VERSION='semantic-notice-compiler-1.0.31'
 export const SEMANTIC_ROLE_SCOPE_COMPILER_VERSION='semantic-notice-compiler-1.0.32'
-export const SEMANTIC_PARTICIPATION_COMPILER_VERSION='semantic-notice-compiler-1.0.36'
+export const SEMANTIC_PARTICIPATION_COMPILER_VERSION='semantic-notice-compiler-1.0.37'
 // Full-width ASCII maps one UTF-16 unit to one unit; source offsets remain valid.
 const foldWidth = value => value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const hasLiteral = (source,value) => Boolean(value && compact(source).includes(compact(value)))
@@ -1006,7 +1006,11 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       const formatted=formatSourceWeekdayAlternatives(source,followup,raw.items,referenceTime,timezone)
       const task=result.standaloneTasks[0]
       if(formatted){
-        const line=`本通知后续安排（条件适用）：${followup.quote}；备选时间：${formatted}`
+        const owner=pending.find(record=>record.entity===task)
+        const existing=Array.isArray(owner?.item?.contextFacts)?owner.item.contextFacts.slice(0,8).find(fact=>['later_handler','receiving_schedule','document_context'].includes(fact?.kind)&&typeof fact.quote==='string'&&compact(fact.quote).includes(compact(followup.quote))&&locateSourceQuote(fact.quote,source)) : null
+        const shortLine=`后续备选时间（条件适用）：${formatted}`
+        const described=existing&&existing.quote.length<=500&&task.description.length+shortLine.length+existing.quote.length+25<=800&&task.evidenceIds.length<18
+        const line=described?shortLine:`本通知后续安排（条件适用）：${followup.quote}；备选时间：${formatted}`
         if(!task.description.includes(line)&&task.description.length+line.length+1<=800&&task.evidenceIds.length<20){
           const id=evidence(followup.quote,'description','conditional-followup',followup.startQuote)
           if(id){task.description=[task.description,line].filter(Boolean).join('\n');task.evidenceIds=[...new Set([...task.evidenceIds,id])];audit.facts.push({role:'conditional_source_followup',owner:task.tempId,sourceEvidenceId:id})}

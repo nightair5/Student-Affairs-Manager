@@ -27,6 +27,32 @@ test('a model-composed shared day and owned clock survive even when they are not
  assert.equal(validateRecognitionResult(result,{sourceContent:source}).valid,true)
 })
 
+test('an explicitly cited shared weekday can anchor each same-sentence event and its own time range',()=>{
+ const source='本周四14:00—15:00在东楼101举办写作讲座，16:00—17:30在西楼202举办案例工作坊。'
+ const raw={topic:'交流活动',kind:'event',items:[
+  {...event('a','写作讲座','本周四14:00—15:00在东楼101举办写作讲座','本周四14:00—15:00','东楼101'),times:[{role:'start',raw:'本周四14:00—15:00'},{role:'end',raw:'本周四14:00—15:00'}]},
+  {...event('b','案例工作坊','16:00—17:30在西楼202举办案例工作坊','本周四16:00—17:30','西楼202'),times:[{role:'start',raw:'本周四16:00—17:30'},{role:'end',raw:'本周四16:00—17:30'}]}
+ ],materials:[]}
+ const {result}=compileSemanticNotice(raw,{...options(source),referenceTime:'2026-11-09T09:00:00+08:00'})
+ assert.equal(result.events.length,2)
+ assert.equal(timeOf(result,'写作讲座'),'2026-11-12T14:00')
+ assert.equal(timeOf(result,'案例工作坊'),'2026-11-12T16:00')
+ const workshop=result.events.find(item=>item.title==='案例工作坊')
+ assert.equal(result.timePoints.find(point=>point.tempId===workshop.endTimePointTempId)?.normalizedValue,'2026-11-12T17:30')
+ assert.equal(workshop.location,'西楼202')
+ assert.equal(validateRecognitionResult(result,{sourceContent:source}).valid,true)
+})
+
+test('a different explicit weekday cannot inherit a model-composed earlier weekday',()=>{
+ const source='本周四14:00在东楼举办写作讲座，本周五16:00在西楼举办案例工作坊。'
+ const raw={topic:'交流活动',kind:'event',items:[
+  event('a','写作讲座','本周四14:00在东楼举办写作讲座','本周四14:00','东楼'),
+  event('b','案例工作坊','本周五16:00在西楼举办案例工作坊','本周四16:00','西楼')
+ ],materials:[]}
+ const {result}=compileSemanticNotice(raw,{...options(source),referenceTime:'2026-11-09T09:00:00+08:00'})
+ assert.notEqual(timeOf(result,'案例工作坊'),'2026-11-12T16:00')
+})
+
 test('a model-composed date absent from the source is not recovered as an event date',()=>{
  const source='2027年3月10日9:00在东楼101举行绘画工作坊，14:00在西楼202举行戏剧工作坊。'
  const raw={topic:'工作坊',kind:'event',items:[event('a','绘画工作坊','2027年3月10日9:00在东楼101举行绘画工作坊','2027年3月10日9:00','东楼101'),event('b','戏剧工作坊','14:00在西楼202举行戏剧工作坊','2027年3月12日14:00','西楼202')],materials:[]}

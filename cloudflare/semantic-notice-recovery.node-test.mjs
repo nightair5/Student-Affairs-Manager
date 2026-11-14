@@ -103,12 +103,33 @@ test('an empty JSON-mode response fails transparently but still reports observed
   assert.equal(body.result,undefined)
 })
 
+test('malformed model output exposes only bounded structural diagnostics, never response text',async()=>{
+ const worker=createWorker({fetcher:async()=>Response.json({model:'observed-flash',choices:[{finish_reason:'stop',message:{content:'{"topic":"private-model-content","items":[}'}}],usage:{prompt_tokens:100,completion_tokens:20}})})
+ const response=await worker.fetch(new Request('https://local.test/api/deepseek/extract',{method:'POST',headers:{origin:'https://local.test','content-type':'application/json','x-student-affairs-recognition':'semantic-notice-3.11'},body:JSON.stringify({sourceType:'text',content:source,referenceTime:'2026-11-01T09:00:00+08:00',timezone:'Asia/Shanghai'})}),{DEEPSEEK_API_KEY:'SYNTHETIC_TEST_PLACEHOLDER',ALLOWED_ORIGINS:'https://local.test',DEEPSEEK_GENERATION_MODE:'semantic-notice-3.0'})
+ const body=await response.json()
+ assert.equal(response.status,502)
+ assert.equal(body.execution.modelFactSamples[0].outputShape.form,'object')
+ assert.equal(body.execution.modelFactSamples[0].outputShape.json,'invalid')
+ assert.equal(typeof body.execution.modelFactSamples[0].outputShape.characters,'number')
+ assert.doesNotMatch(JSON.stringify(body),/private-model-content|校园开放日|SYNTHETIC_TEST_PLACEHOLDER/u)
+})
+
 test('arbitrary provider text cannot be exposed as a response identifier or finish reason',()=>{
   const execution={modelFactSamples:[{upstreamResponseId:'sk-not-an-identifier',finishReason:'private source text',usage:{prompt_tokens:1,completion_tokens:2}}]}
   const observed=safeSemanticExecution(execution)
   assert.equal(observed.modelFactSamples[0].upstreamResponseId,null)
   assert.equal(observed.modelFactSamples[0].finishReason,null)
   assert.doesNotMatch(JSON.stringify(observed),/sk-not|private source/u)
+})
+
+test('safe execution keeps only whitelisted output-shape fields after an uncertain transport',()=>{
+ const execution={modelFactSamples:[{usage:{prompt_tokens:1,completion_tokens:2},outputShape:{form:'object',json:'invalid',characters:40,position:12,private:'never-expose'}}],networkAttempts:[{status:null}],upstreamUsageComplete:false}
+ const observed=safeSemanticExecution(execution)
+ assert.deepEqual(observed.modelFactSamples[0].outputShape,{form:'object',json:'invalid',characters:40,position:12})
+ assert.equal(observed.tokenUsage,null)
+ assert.doesNotMatch(JSON.stringify(observed),/never-expose/u)
+ execution.modelFactSamples[0].outputShape.form='private-content'
+ assert.equal(safeSemanticExecution(execution).modelFactSamples[0].outputShape,undefined)
 })
 
 test('an earlier uncertain send cannot be misreported as fully metered when the later response fails decoding',async()=>{

@@ -247,7 +247,11 @@ export function modelSummarySharedEventDay(source,span,item,items,summary,{decla
  if(item?.kind!=='event'||!span||typeof summary!=='string'&&!declaredDay)return null
  const left=source.slice(0,span.start),boundary=Math.max(...['。','！','？','\n'].map(mark=>left.lastIndexOf(mark)))+1
  const prefix=source.slice(boundary,span.start),matches=[...fold(prefix).matchAll(new RegExp(SOURCE_DAY_PATTERN.source,'gu'))]
- const dates=matches.filter(match=>!/^(?:本周|下周|周|星期)/u.test(match[0]))
+ // A relative weekday can be shared only when the model explicitly
+ // composed the exact same literal weekday with this item's own clock.
+ // The preceding event and this event must still have independent citations.
+ const dates=matches.filter(match=>!/^(?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)/u.test(match[0])
+  ||Boolean(declaredDay&&compactText(match[0])===compactText(declaredDay)))
  if(dates.length!==1||matches.length!==dates.length)return null
  const date=dates[0],start=boundary+date.index,end=start+date[0].length,literal=source.slice(start,end)
  const before=source.slice(boundary,start),between=source.slice(end,span.start),own=Array.isArray(item.evidence)?item.evidence:[]

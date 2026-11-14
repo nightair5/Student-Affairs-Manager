@@ -40,6 +40,44 @@ describe('source action weekday remains distinct from a deadline or personal pla
   const result=parseRecognitionResult(compileSemanticNotice(answer,options).result)
   expect(result.timePoints.some(point=>point.tempId.startsWith('sem-action-time-')&&point.normalizedValue==='2026-11-14')).toBe(true)
  })
+ it.each([
+  ['请周六晚上发送申请表给组长。','申请表','周六晚上','2026-11-14'],
+  ['请于周六晚上把登记表和作品摘要交给小组长。','登记表和作品摘要','周六晚上','2026-11-14'],
+  ['参加同学请周三晚上把报名表交给班长。','报名表','周三晚上','2026-11-11'],
+ ])('retains a model-bound weekday when the displayed action faithfully paraphrases the source: %s',(text,target,when,date)=>{
+  const answer={topic:'匿名事项',kind:'action',items:[{key:'a',kind:'task',title:'提交'+target,action:'提交',object:target,evidence:[text],times:[{role:'deadline',raw:when}]}],materials:[]}
+  const result=parseRecognitionResult(compileSemanticNotice(answer,{...options,source:text,referenceTime:'2026-11-09T09:00:00+08:00'}).result)
+  expect(result.timePoints.find(point=>point.rawText===when&&point.normalizedValue===date)).toMatchObject({type:'event_start'})
+  expect(result.timePoints.some(point=>point.type==='task_deadline'&&point.normalizedValue)).toBe(false)
+ })
+ it('uses a unique cited delivery even if the model omitted a separate time field',()=>{
+  const text='请周六晚上发送申请表给组长。'
+  const answer={topic:'匿名事项',kind:'action',items:[{key:'a',kind:'task',title:'提交申请表',action:'提交',object:'申请表',evidence:[text],times:[]}],materials:[]}
+  const result=parseRecognitionResult(compileSemanticNotice(answer,{...options,source:text}).result)
+  expect(result.timePoints.find(point=>point.rawText==='周六晚上'&&point.normalizedValue==='2026-11-14')).toMatchObject({type:'event_start'})
+ })
+ it('does not attach a paraphrased action to an unquoted, canceled, dependent or other-person weekday',()=>{
+  const other={scope:'audience',actor:'学生'}
+  const cases=[
+   {text:'请周六晚上提醒同学提交申请表。',quote:'请周六晚上提醒同学提交申请表。'},
+   {text:'请班长周六晚上发送申请表。',quote:'请班长周六晚上发送申请表。',assignment:other},
+   {text:'请班长周六晚上提交申请表。',quote:'请班长周六晚上提交申请表。',assignment:other},
+   {text:'请周六晚上等待老师提交申请表。',quote:'请周六晚上等待老师提交申请表。'},
+   {text:'请周六晚上检查申请表，周日提交申请表。',quote:'请周六晚上检查申请表'},
+   {text:'请周六晚上带齐申请表，周日再提交申请表。',quote:'请周六晚上带齐申请表'},
+   {text:'请周六晚上准备申请表，周日提交申请表。',quote:'请周六晚上准备申请表'},
+   {text:'请周六晚上结束后发送申请表。',quote:'请周六晚上结束后发送申请表。'},
+   {text:'请周六晚上不要发送申请表。',quote:'请周六晚上不要发送申请表。'},
+   {text:'请周六或者周日发送申请表。',quote:'请周六或者周日发送申请表。'},
+   {text:'请周六晚上发送申请表。',quote:'发送申请表'},
+   {text:'请周六晚上发送申请表。',quote:'周六晚上'},
+  ]
+  for(const {text,quote,assignment} of cases){
+   expect(sourceActionWeekday(text,{action:'提交',object:'申请表',evidence:[quote],times:[{role:'deadline',raw:'周六晚上'}],assignment})).toBeNull()
+  }
+  const conflicting='请周六晚上发送申请表。'
+  expect(sourceActionWeekday(conflicting,{action:'提交',object:'申请表',evidence:[conflicting],times:[{role:'deadline',raw:'周日晚上'}]})).toBeNull()
+ })
  it('preserves the source date after save, scheduling, reload, export and undo',async()=>{
   const answer=parseRecognitionResult(compileSemanticNotice(structuredClone(raw),options).result)
   const workspace=createGoldenWorkspaceV8()
@@ -130,6 +168,16 @@ describe('source action weekday remains distinct from a deadline or personal pla
   expect(sourceUnassignedWeekdayAlternative(selected,'没有相关说明',['面试的日期未明确'],[])).toBeNull()
   expect(sourceUnassignedWeekdayAlternative(selected,'筛选部分人员参加面试',['面试的日期未明确'],['参加面试'])).toBeNull()
   expect(sourceUnassignedWeekdayAlternative(selected,'筛选部分人员参加面试',undefined,[])?.quote).toContain('筛选部分人员')
+ })
+ it('preserves invitation to a subset as conditional weekday alternatives',()=>{
+  const text='请于周六晚上把登记表和作品摘要交给小组长。提交后将邀请部分同学下周二或者下周三进行面谈，场地另行通知。'
+  const answer={topic:'材料',kind:'action',summary:'提交后将邀请部分同学下周二或下周三面谈，场地另行通知。',items:[{key:'a',kind:'task',title:'向小组长提交材料',action:'提交',object:'登记表和作品摘要',evidence:['请于周六晚上把登记表和作品摘要交给小组长'],times:[{role:'deadline',raw:'周六晚上'}],contextFacts:[{kind:'later_handler',quote:'提交后将邀请部分同学下周二或者下周三进行面谈，场地另行通知'}]}],materials:[],unresolved:['面谈场地未确定']}
+  const result=parseRecognitionResult(compileSemanticNotice(answer,{...options,source:text,referenceTime:'2026-11-09T09:00:00+08:00'}).result)
+  expect(result.events).toHaveLength(0)
+  expect(result.standaloneTasks[0].description).toContain('部分同学')
+  expect(result.standaloneTasks[0].description).toContain('下周二（2026-11-17）或下周三（2026-11-18）')
+  expect(result.standaloneTasks[0].description).toContain('尚未确定')
+  expect(result.standaloneTasks[0].description.match(/将邀请部分同学/gu)).toHaveLength(1)
  })
  it.each([true,false])('does not infer follow-up dates before the cited submission, separateTask=%s',separateTask=>{
   const text=source.replace('我们根据材料筛选','我们根据大家提交的材料，筛选')

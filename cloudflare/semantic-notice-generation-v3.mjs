@@ -1,5 +1,5 @@
 import {extractionRequestOptions} from './extraction-profile.mjs'
-import {decodeSemanticNoticeOutput} from './recognition-output-recovery.mjs'
+import {decodeSemanticNoticeOutput,MAX_EXTRACTION_RESPONSE_CHARACTERS} from './recognition-output-recovery.mjs'
 import {compileSemanticNotice} from './semantic-notice-compiler-v3.mjs'
 import {SEMANTIC_NOTICE_MODE,SEMANTIC_NOTICE_VERSION,semanticNoticeRequest} from './semantic-notice-contract-v3-2-0.mjs'
 import {SEMANTIC_NOTICE_VERSION as ACTOR_VERSION,semanticNoticeRequest as actorNoticeRequest} from './semantic-notice-contract-v3-3-0.mjs'
@@ -30,6 +30,29 @@ function safeUsage(raw) {
 const safeFinishReason=value=>['stop','length','content_filter','tool_calls','insufficient_system_resource','aborted'].includes(value)?value:null
 // Only retain known identifier shapes, never arbitrary provider text.
 const safeUpstreamResponseId=value=>typeof value==='string'&&/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|chatcmpl-[a-zA-Z0-9_-]{1,96})$/iu.test(value)?value:null
+// Structural metadata helps diagnose a failed anonymous/production response
+// without exposing any notification or model text.
+function outputShape(content){
+  if(typeof content!=='string')return {form:'missing',json:'not_applicable',characters:0,position:null}
+  const trimmed=content.trim(),characters=Math.min(content.length,MAX_EXTRACTION_RESPONSE_CHARACTERS+1)
+  const form=!trimmed?'empty':trimmed.startsWith('```')?'fence':trimmed.startsWith('{')?'object':trimmed.startsWith('[')?'array':'other'
+  if(content.length>MAX_EXTRACTION_RESPONSE_CHARACTERS)return {form,json:'oversized',characters,position:null}
+  const fence=/^```(?:json)?[ \t]*(?:\r?\n)?([\s\S]*?)(?:\r?\n)?[ \t]*```$/iu.exec(trimmed)
+  try {
+    const value=JSON.parse(fence?fence[1]:trimmed)
+    return {form,json:value&&typeof value==='object'&&!Array.isArray(value)?'object':'other',characters,position:null}
+  } catch(error) {
+    const match=typeof error?.message==='string'?/position\s+(\d+)/u.exec(error.message):null
+    const candidate=match?Number(match[1]):null
+    const position=Number.isSafeInteger(candidate)&&candidate>=0&&candidate<=characters?candidate:null
+    return {form,json:'invalid',characters,position}
+  }
+}
+function safeOutputShape(value){
+  if(!value||!['missing','empty','fence','object','array','other'].includes(value.form)||!['not_applicable','oversized','object','other','invalid'].includes(value.json)||!Number.isSafeInteger(value.characters)||value.characters<0||value.characters>MAX_EXTRACTION_RESPONSE_CHARACTERS+1)return null
+  const position=Number.isSafeInteger(value.position)&&value.position>=0&&value.position<=value.characters?value.position:null
+  return {form:value.form,json:value.json,characters:value.characters,position}
+}
 
 // Keep billing and routing observation on a rejected compiled result, without
 // returning source text, model facts or arbitrary provider fields. Unknown or
@@ -45,7 +68,7 @@ export function safeSemanticExecution(execution) {
   const elapsedMs=Number.isSafeInteger(sample.elapsedMs)&&sample.elapsedMs>=0?sample.elapsedMs:null
   return {generationMode:safeName(execution.generationMode),promptVersion:safeName(execution.promptVersion),
     twoStep:{compilerVersion:safeName(execution.twoStep?.compilerVersion)},
-    modelFactSamples:[{index:0,status:Number.isInteger(sample.status)?sample.status:null,actualModel:safeName(sample.actualModel),finishReason:safeFinishReason(sample.finishReason),upstreamResponseId:safeUpstreamResponseId(sample.upstreamResponseId),usage,elapsedMs}],
+    modelFactSamples:[{index:0,status:Number.isInteger(sample.status)?sample.status:null,actualModel:safeName(sample.actualModel),finishReason:safeFinishReason(sample.finishReason),upstreamResponseId:safeUpstreamResponseId(sample.upstreamResponseId),usage,elapsedMs,...(safeOutputShape(sample.outputShape)?{outputShape:safeOutputShape(sample.outputShape)}:{})}],
     tokenUsage:usage?{input:usage.prompt_tokens,output:usage.completion_tokens,...(usage.total_tokens!==undefined?{total:usage.total_tokens}:{})}:null}
 }
 
@@ -76,7 +99,7 @@ export async function runSemanticNoticeGeneration({fetcher,apiKey,profile,userTe
     const safeModel=actualModel&&/^[a-zA-Z0-9._:/-]+$/u.test(actualModel)?actualModel:null
     const reason=decoded.error??'INVALID_SEMANTIC_ROOT'
     const generationMode=matter?'semantic-notice-3.12':goal?'semantic-notice-3.11':timedAction?'semantic-notice-3.10':refined?'semantic-notice-3.9':unified?'semantic-notice-3.8':integrity?'semantic-notice-3.7':eventNotice?'semantic-notice-3.6':serviceContext?'semantic-notice-3.5':actorContext?'semantic-notice-3.4':actorRoles?'semantic-notice-3.3':SEMANTIC_NOTICE_MODE
-    return {ok:false,status:502,error:'INVALID_AI_RESPONSE',failureCategory:decoded.error?'model_output_decode':'semantic_root',failureReason:reason,execution:{generationMode,promptVersion,twoStep:{compilerVersion:compiled.audit.compilerVersion},modelFactSamples:[{index:0,status:response.status,actualModel:safeModel,finishReason,upstreamResponseId,usage,elapsedMs}],tokenUsage:usage?{input:usage.prompt_tokens,output:usage.completion_tokens,...(usage.total_tokens!==undefined?{total:usage.total_tokens}:{})}:null}}
+    return {ok:false,status:502,error:'INVALID_AI_RESPONSE',failureCategory:decoded.error?'model_output_decode':'semantic_root',failureReason:reason,execution:{generationMode,promptVersion,twoStep:{compilerVersion:compiled.audit.compilerVersion},modelFactSamples:[{index:0,status:response.status,actualModel:safeModel,finishReason,upstreamResponseId,usage,elapsedMs,outputShape:outputShape(payload?.choices?.[0]?.message?.content)}],tokenUsage:usage?{input:usage.prompt_tokens,output:usage.completion_tokens,...(usage.total_tokens!==undefined?{total:usage.total_tokens}:{})}:null}}
   }
   const truncated=payload?.choices?.[0]?.finish_reason==='length'
   if(truncated){compiled.result.quality.needsHumanReview=true;compiled.result.quality.reviewReasons.push('本次回答未完整结束，部分内容可能尚未整理。');compiled.result.ambiguities.push({id:'sem-truncated',field:'source_reference',message:'本次回答未完整结束，原文已保留。',options:['查看原文'],evidenceIds:[]})}

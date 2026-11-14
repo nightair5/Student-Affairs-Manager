@@ -32,6 +32,15 @@ test('one JSON-only fenced container is lossless; mixed prose and multiple conta
  assert.throws(()=>parseRecognitionJson('[{}]'))
  const invalid=structuredClone(r);delete invalid.materials[0].formatRequirements;assert.equal(validateRecognitionResult(parseRecognitionJson('```json\n'+JSON.stringify(invalid)+'\n```')).valid,false)
 })
+test('case and line breaks around one complete JSON fence do not change its value',()=>{
+ const expected={topic:'测试',kind:'action',items:[],materials:[]},body=JSON.stringify(expected)
+ for(const value of ['```JSON\n'+body+'\n```','```json '+body+' ```','```'+body+'```','```JSON\r\n'+body+'\r\n```']){
+  assert.deepEqual(parseRecognitionJson(value),expected)
+ }
+ for(const value of ['说明\n```JSON\n'+body+'\n```','```JSON\n'+body+'\n```\n说明','```JSON\n'+body+'\n'+body+'\n```','```JSON\n{"bad":}\n```']){
+  assert.throws(()=>parseRecognitionJson(value))
+ }
+})
 test('an explicitly void, unselected ownerless old cutoff is never reactivated; owned or ambiguous dates remain visible',()=>{
  const source='报告截止由2026年10月23日改为2026年10月26日17:00，旧截止作废。',x=structuredClone(r);x.evidence[0].quote=source;x.timePoints=[{...x.timePoints[0],tempId:'OLD',rawText:'2026年10月23日',relatedTaskTempIds:[],relatedMaterialTempIds:[],selected:false}];x.standaloneTasks[0].timePointTempIds=[];x.events=[]
  assert.equal(normalizeRecognitionResult(x,source,x.createdAt).timePoints[0].selected,false)
