@@ -23,6 +23,7 @@ import {isEventEligibility} from '../../cloudflare/event-eligibility.mjs'
 import {sourceActionWeekday,sourceWeekdayAlternatives,formatSourceWeekdayAlternatives} from '../../cloudflare/source-action-weekday.mjs'
 import {retainLocalSameDayEvents,retainLocalDeliveryReferences} from './localReferencedFacts'
 import {retainLocalOrganizerContext} from './localOrganizerContext'
+import {retainLocalNamedRequirements} from './localNamedRequirements'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string,options:{scopeAware?:boolean;timezone?:string}={}):RecognitionResult {
@@ -62,7 +63,7 @@ export function improveDirectFallback(input:RecognitionResult,source:string,opti
  adjusted=retainLocalUndatedClockEvent(adjusted,source)
  adjusted=detachOtherActorTime(retainCoordinatedAction(retainLocalSeparateDirective(adjusted,source,options.timezone),source),source)
  adjusted=retainLocalSameDayEvents(adjusted,source,options.timezone??'Asia/Shanghai')
- return retainLocalOrganizerContext(retainLocalDeliveryReferences(adjusted,source,options.timezone??'Asia/Shanghai'),source)
+ return retainLocalNamedRequirements(retainLocalOrganizerContext(retainLocalDeliveryReferences(adjusted,source,options.timezone??'Asia/Shanghai'),source),source)
 }
 
 /** Preserve only a source-cited weekday for the task which owns its action. */

@@ -30,7 +30,7 @@ export function localSubmissionChoices(input:RecognitionResult,source:string,opt
  // choice and both independently described branches name the same object.
  let inlineGoal=''
  if(options.inlineSharedObject&&labels.length!==2){
-  const inline=[...source.matchAll(/(?:^|[：:，,；;\n。！？])\s*(电子版|纸质版)([\p{Script=Han}]{2,18}?)(?=于|在|可|须|需|应|\d)/gu)]
+  const inline=[...source.matchAll(/(?:^|[：:，,；;\n。！？])\s*(电子(?:版)?|纸质(?:版)?)([\p{Script=Han}]{2,18}?)(?=于|在|可|须|需|应|\d)/gu)]
    .map(m=>({label:m[1],object:m[2],at:m.index!+m[0].lastIndexOf(m[1])}))
    .filter(m=>!optionNames||optionNames.includes(m.label))
   if(inline.length===2&&inline[0].label!==inline[1].label&&inline[0].object===inline[1].object){labels=inline;inlineGoal=inline[0].object}
@@ -45,8 +45,8 @@ export function localSubmissionChoices(input:RecognitionResult,source:string,opt
   if(markerAt>item.at)end=Math.min(end,markerAt)
   const text=source.slice(item.at,end).replace(/[，,\s]+$/u,'')
   const deadline=/(?:(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]\s*(?:[（(][^）)]{1,8}[）)]\s*)?|(?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天])\s*(?:(?:凌晨|早上|上午|中午|下午|傍晚|晚上|夜间)\s*)?(?:\d{1,2}\s*[:：]\s*\d{2})?\s*(?:之前|以前|前)/u.exec(text)?.[0]??null
-  const channel=localSubmissionChannel(text)??localDelivery(text)?.channel??/(?:上传|发送)(?:到|至)?\s*([^，,；;。！？\n]{1,35}?(?:平台|系统|邮箱|网站))/u.exec(text)?.[1]??null
-  const verb=/(?:上传|发送|递交|提交|报送|邮寄|交到|交至)/u.exec(text)?.[0]??''
+  const channel=localSubmissionChannel(text)??localDelivery(text)?.channel??/(?:上传|发送)(?:到|至)?\s*([^，,；;。！？\n]{0,35}?(?:平台|系统|邮箱|网站))/u.exec(text)?.[1]??/前\s*交\s*([^，,；;。！？\n]{1,35}?(?:窗口|办公室|服务点))$/u.exec(text)?.[1]??null
+  const verb=/(?:上传|发送|递交|提交|报送|邮寄|交到|交至|(?<=前)\s*交(?=\S))/u.exec(text)?.[0]?.trim()??''
   return {label:item.label,at:item.at,text,deadline,channel,verb}
  })
  // A mention without an actual branch action is not evidence that a second
@@ -68,10 +68,10 @@ export function localSubmissionChoices(input:RecognitionResult,source:string,opt
  // An explicit deliverable in the choice declaration is stronger than a
  // surrounding heading such as “submission instructions”.
  const useIntroduction=Boolean(introduction&&!inlineGoal)
- const goal=(useIntroduction?introduction![1]:directive?.[1]??heading?.[1]??choiceGoal?.[1]??topic?.[1]??inlineGoal).trim()
+ const goal=(inlineGoal||(useIntroduction?introduction![1]:directive?.[1]??heading?.[1]??choiceGoal?.[1]??topic?.[1]??'')).trim()
  if((!goalMatch&&!inlineGoal&&!introduction)||goal.length<2||goal.length>40||!source.includes(goal))return input
- const goalText=useIntroduction?introduction![0].trim().replace(/^[【】。；;]\s*/u,''):goalMatch?goalMatch[0]:goal
- const goalAt=useIntroduction?source.indexOf(goalText,introduction!.index!):goalMatch?prefixAt+goalMatch.index!:labels[0].at+labels[0].label.length
+ const goalText=inlineGoal?inlineGoal:useIntroduction?introduction![0].trim().replace(/^[【】。；;]\s*/u,''):goalMatch?goalMatch[0]:goal
+ const goalAt=inlineGoal?labels[0].at+labels[0].label.length:useIntroduction?source.indexOf(goalText,introduction!.index!):goalMatch?prefixAt+goalMatch.index!:labels[0].at+labels[0].label.length
  if(goalAt<0||source.slice(goalAt,goalAt+goalText.length)!==goalText||useIntroduction&&source.indexOf(goalText)!==source.lastIndexOf(goalText))return input
  const anchor=Math.min(goalAt,markerAt,firstAt)
  const preceding=source.slice(0,anchor),rangeStart=Math.max(preceding.lastIndexOf('。'),preceding.lastIndexOf('！'),preceding.lastIndexOf('？'),preceding.lastIndexOf('\n'))+1

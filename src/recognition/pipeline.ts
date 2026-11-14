@@ -1,6 +1,6 @@
 import type { ParsedSuggestion, Project, SourceType, Task, TaskCategory } from '../types'
 import { createSuggestions } from '../lib/parser'
-import { localDelivery, localEventLocation, localCitedEventLocation, localMaterialRequirements, localActionNeedsDecision, localSubmissionChannel, localAttendanceDirective } from './localNoticeFacts'
+import { localDelivery, localEventLocation, localHeldEventName, localCitedEventLocation, localMaterialRequirements, localActionNeedsDecision, localSubmissionChannel, localAttendanceDirective } from './localNoticeFacts'
 import { taskActionText } from '../lib/taskActionText'
 import { parseChineseTimeAst } from '../lib/timeSemantics'
 import { localMeetingBlock, localNamedMeeting } from './localMeetingBlock'
@@ -9,6 +9,7 @@ import {normalizeSourceWithOffsets,alignRecognitionEvidence} from '../../cloudfl
 import {itemPolarity} from '../../cloudflare/semantic-item-polarity.mjs'
 import {boundLocalResult} from './localResultCapacity'
 import {indexLocalSections,isDescriptiveLocalCandidate} from './localSectionScope'
+import {scopeLocalDirectiveCandidates} from './localDirectiveCandidates'
 import {scopeLocalOtherPartyActions} from './localResponsibilityScope'
 import {retainLocalConditionalMaterials} from './localConditionalMaterials'
 import { RECOGNITION_MODEL_NAME, RECOGNITION_PROMPT_VERSION } from './prompt'
@@ -211,7 +212,7 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
   const preprocessed = preprocessSource(input.content)
   const sourceIndex=normalizeSourceWithOffsets(input.content)
   const sections=indexLocalSections(preprocessed.normalizedText)
-  const candidates=createSuggestions(preprocessed.normalizedText, input.sourceType, input.sourceTitle, input.referenceTime, input.timezone,{sourceOffsets:true})
+  const candidates=scopeLocalDirectiveCandidates(createSuggestions(preprocessed.normalizedText, input.sourceType, input.sourceTitle, input.referenceTime, input.timezone,{sourceOffsets:true}),preprocessed.normalizedText,input.sourceType,input.sourceTitle,input.referenceTime,input.timezone)
   const parsed = candidates.filter(item=>!isDescriptiveLocalCandidate(item,preprocessed.normalizedText,sections)).map(item => {
     const meeting = localMeetingBlock(preprocessed.normalizedText, item.evidence)
     return meeting ? { ...item, title: meeting.title, evidence: meeting.quote,evidenceRefs:undefined, timePoint: parseChineseTimeAst(meeting.timeText, { referenceTime: input.referenceTime, timezone: input.timezone, type: 'event_start', resolveBareWeekday: true }) } : item
@@ -248,7 +249,8 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     task.estimatedMinutes = duration ? Number(duration[1]) : null
     if (localActionNeedsDecision(item.evidence)) task.selected = false
     const namedGathering=/(?:大会|报告会|说明会|分享会|座谈会|培训会)/u.test(task.title)&&/(?:召开|举行|举办|开|参加|出席)/u.test(item.evidence)&&!/^(?:报名|申请|预约|填写)/u.test(task.title)
-    const watchedGathering=localEventLocation(item.evidence)
+    const heldName=localHeldEventName(item.evidence)
+    const watchedGathering=localEventLocation(item.evidence)??(heldName?{name:heldName,location:null}:null)
     const isWatchedEvent=Boolean(watchedGathering&&/观看/u.test(item.evidence)&&/(?:讲座|报告|比赛|球赛|演出|展览|赛事)$/u.test(watchedGathering.name))
     // A literal venue + “举行/举办/召开” also supports a named gathering
     // whose title is not in the legacy event-name list. An explicitly
@@ -311,7 +313,7 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
       }
       const eventLocation = localEventLocation(item.evidence)
       const namedMeeting = (namedGathering||/^(?:参加|出席|开会)$/u.test(task.title)) ? localNamedMeeting(item.evidence) : null
-      events.push({ tempId: `event-${index + 1}`, title: meeting?.title ?? eventLocation?.name ?? namedMeeting ?? task.title, description: localEventTimeDescription(item.evidence,Boolean(timeAst.normalizedValue)), startTimePointTempId: timePointId, endTimePointTempId: endTimePointId, location: meeting?.location ?? eventLocation?.location ?? localCitedEventLocation(item.evidence), evidenceIds: [evidenceId], confidence: task.confidence, inferenceLevel: task.inferenceLevel, selected: meeting ? false : task.selected })
+      events.push({ tempId: `event-${index + 1}`, title: meeting?.title ?? eventLocation?.name ?? namedMeeting ?? heldName ?? task.title, description: localEventTimeDescription(item.evidence,Boolean(timeAst.normalizedValue)), startTimePointTempId: timePointId, endTimePointTempId: endTimePointId, location: meeting?.location ?? eventLocation?.location ?? localCitedEventLocation(item.evidence), evidenceIds: [evidenceId], confidence: task.confidence, inferenceLevel: task.inferenceLevel, selected: meeting ? false : task.selected })
       const preparation = preparationAction(item.evidence)
       if (preparation) {
         const preparationIndex = parsed.length + index

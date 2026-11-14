@@ -143,7 +143,8 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     if(owners.length!==1)return undefined
     const start=result.timePoints.find(x=>x.tempId===owners[0].startTimePointTempId&&x.type==='event_start')
     if(!start?.normalizedValue||start.needsConfirmation||start.precision!=='exact'||deadlineConflicts.has(start.tempId)||alternatives.test(context(start.evidenceIds))||!quotes(start.evidenceIds).length||!compact(context(start.evidenceIds)).includes(compact(start.rawText)))return undefined
-    const parsed=parseDirectSourceTime(start.rawText,{type:'event_start',referenceTime:result.createdAt,timezone:start.timezone})
+    const sameDay=result.modelName==='local-rules'?localSameDayTime(sourceText,owners[0].title,start.rawText,result.createdAt,start.timezone):null
+    const parsed=sameDay?.parsed??parseDirectSourceTime(start.rawText,{type:'event_start',referenceTime:result.createdAt,timezone:start.timezone})
     if(parsed.needsConfirmation||parsed.dateKind==='none'||parsed.normalizedValue!==start.normalizedValue)return undefined
     return start.normalizedValue.slice(0,10)
   }

@@ -19,24 +19,39 @@ export function localEventYearUnresolved(source:string,raw:string):boolean {
  return Boolean(anchor&&Number(current[1])*100+Number(current[2])<Number(anchor[1])*100+Number(anchor[2]))
 }
 
-/** An explicit "same day" points to the preceding dated clause in this
- * sentence/paragraph. A cancelled event can supply a day, never its clock,
- * venue or validity. Multiple/alternative/revised days stay unresolved. */
-export function localSameDayTime(source: string, title: string, raw: string, referenceTime: string, timezone: string) {
+/** Locate the reference and its own clock independently of resolving its day.
+ * A failed antecedent must not erase an otherwise explicit time of day. */
+export function localSameDayClock(source: string, title: string, raw: string) {
   const clauses = [...source.matchAll(/[^，,。；;！？\n]+/gu)]
-  const owners = clauses.filter(clause => clause[0].includes(title) && clause[0].includes(raw) && /^(?:\s*)(?:同日|当日|当天)/u.test(clause[0]))
+  const owners = clauses.filter(clause => clause[0].includes(title) && (clause[0].includes(raw) || raw.includes(clause[0].trim())) && /^\s*(?:同日|当日|当天)/u.test(clause[0]))
   if (owners.length !== 1) return null
-  const owner = owners[0], at = owner.index!, previous = source.slice(0, at)
-  const boundary = Math.max(...['。', '！', '？', '\n'].map(mark => previous.lastIndexOf(mark))) + 1
-  const context = source.slice(boundary, at)
+  const owner = owners[0]
+  const ownTime = new RegExp(`^\\s*((?:同日|当日|当天)\\s*(${clockSource}(?:\\s*[-－—–至到]\\s*(?:(?:次日|翌日|第二天)\\s*)?${clockSource})?))`, 'u').exec(owner[0])
+  return ownTime ? {raw: ownTime[1], clock: ownTime[2], at: owner.index! + owner[0].indexOf(ownTime[1])} : null
+}
+
+/** Resolve a local date reference, including across one sentence stop. Only
+ * the immediately preceding sentence in this paragraph is an antecedent;
+ * a deadline, recurrence, revision or competing dates cannot donate a day.
+ * Cancellation affects attendance, not the explicitly referenced day. */
+export function localSameDayTime(source: string, title: string, raw: string, referenceTime: string, timezone: string) {
+  const own = localSameDayClock(source, title, raw)
+  if (!own) return null
+  const previous = source.slice(0, own.at)
+  const paragraph = previous.lastIndexOf('\n') + 1
+  const withinParagraph = previous.slice(paragraph).trimEnd()
+  const antecedent = withinParagraph.replace(/[。！？]\s*$/u, '')
+  const boundary = paragraph + Math.max(...['。', '！', '？'].map(mark => antecedent.lastIndexOf(mark))) + 1
+  const context = source.slice(boundary, own.at)
   const days = [...context.matchAll(new RegExp(daySource, 'gu'))]
-  if (days.length !== 1 || /(?:或者|或|备选|改为|改至|调整至|延期|另行|待定|每周|每星期)/u.test(context)) return null
+  if (days.length !== 1 || /(?:或者|或|备选|改为|改至|调整至|延期|另行|待定|每周|每星期|截止|截至|最迟|之前|以前|前(?:提交|上传|发送|填写|交|报名|申请))/u.test(context)) return null
+  // A clock followed by "前" is also a cutoff when a channel intervenes
+  // before its action ("17:00前在平台填写...").
+  if (new RegExp(`${daySource}\\s*(?:${clockSource})?\\s*前`, 'u').test(context)) return null
   const anchor = parseDirectSourceTime(days[0][0], {type: 'event_start', referenceTime, timezone})
   if (!anchor.normalizedValue || anchor.needsConfirmation) return null
-  const ownTime = new RegExp(`^\\s*((?:同日|当日|当天)\\s*${clockSource}(?:\\s*[-－—–至到]\\s*${clockSource})?)`, 'u').exec(owner[0])
-  if (!ownTime || !ownTime[1].includes(raw)) return null
-  const parsed = parseDirectSourceTime(ownTime[1], {type: 'event_start', referenceTime, timezone, inheritedDate: anchor.normalizedValue.slice(0, 10)})
-  return parsed.normalizedValue && !parsed.needsConfirmation ? {parsed, raw: ownTime[1], at: at + owner[0].indexOf(ownTime[1]), anchor: {raw: days[0][0], at: boundary + days[0].index!}} : null
+  const parsed = parseDirectSourceTime(own.raw, {type: 'event_start', referenceTime, timezone, inheritedDate: anchor.normalizedValue.slice(0, 10)})
+  return parsed.normalizedValue && !parsed.needsConfirmation ? {parsed, raw: own.raw, at: own.at, anchor: {raw: days[0][0], at: boundary + days[0].index!}} : null
 }
 
 export function retainLocalSameDayEvents(input: RecognitionResult, source: string, timezone: string): RecognitionResult {
@@ -45,7 +60,12 @@ export function retainLocalSameDayEvents(input: RecognitionResult, source: strin
   for (const event of result.events) {
     const start = result.timePoints.find(point => point.tempId === event.startTimePointTempId)
     if (!start) continue
+    const clock = localSameDayClock(source, event.title, start.rawText)
     const proof = localSameDayTime(source, event.title, start.rawText, result.createdAt, timezone)
+    if (clock && !proof && !event.description.includes('时间说明：')) {
+      const line = `时间说明：${clock.clock}（日期待定）`
+      if (event.description.length + line.length + 1 <= 800) event.description += '\n' + line
+    }
     if (!proof || result.evidence.length > 118 || start.evidenceIds.length > 18) continue
     const refs = [proof, proof.anchor].map(span => {
       const id = `local-day-reference:${span.at}`

@@ -36,6 +36,10 @@ export function indexLocalSections(source:string):LocalSection[] {
 export function isDescriptiveLocalCandidate(item:ParsedSuggestion,source:string,sections:LocalSection[]):boolean {
  const quote=item.evidence.trim()
  if(!quote)return false
+ // A closing reminder with no action object does not create a new delivery.
+ // Concrete requirements elsewhere in the same quotation remain eligible.
+ const genericReminder=/^(?:请)?(?:知悉|周知)(?:并按(?:上述|通知|相关)?要求)?(?:提交|办理|执行)?[。！!\s]*$/u
+ if(genericReminder.test(item.title.trim())&&quote.split(/[。；;！？\n]/u).some(part=>genericReminder.test(part.trim())))return true
  const title=item.title.trim().replace(/^(?:[一二三四五六七八九十]+[、.．]|\d+[、.．]|[（(][一二三四五六七八九十\d]+[）)])\s*/u,'')
  // Numbers, punctuation and a contact heading can be artefacts of splitting a
  // table or phone number. They are not actions merely because a nearby clause
