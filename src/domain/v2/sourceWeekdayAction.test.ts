@@ -161,6 +161,33 @@ describe('source action weekday remains distinct from a deadline or personal pla
   expect(description).toContain('周二（2026-11-17）或周三（2026-11-18）')
   expect(description).toContain('尚未确定')
  })
+ it('keeps a conditional follow-up when the only extra candidate is the cited later handler',()=>{
+  const text='请周六晚上把登记表交给组长，由组长统一报送。提交后将邀请部分同学周二或者周三进行面谈。'
+  const handler='由组长统一报送'
+  const answer={topic:'报名事项',kind:'action',summary:'提交后将邀请部分同学周二或周三进行面谈。',unresolved:['面谈的具体日期未明确'],items:[
+   {key:'a',kind:'task',title:'向组长提交登记表',action:'提交',object:'登记表',evidence:['请周六晚上把登记表交给组长'],times:[{role:'start',raw:'周六晚上'}],contextFacts:[{kind:'later_handler',quote:handler}]},
+   {key:'b',kind:'task',title:'组长报送登记表',action:'报送',object:'登记表',evidence:[handler],assignment:{scope:'conditional',actor:'组长',evidence:handler,actorEvidence:'组长'}},
+  ],materials:[]}
+  const result=parseRecognitionResult(compileSemanticNotice(answer,{...options,source:text}).result)
+  const primary=result.standaloneTasks.find(task=>task.title.includes('提交登记表'))!
+  const later=result.standaloneTasks.find(task=>task.title.includes('组长报送'))!
+  expect(later.selected).toBe(false)
+  expect(primary.description).toContain('周二（2026-11-17）或周三（2026-11-18）')
+  expect(primary.description).toContain('尚未确定')
+  expect(result.events).toHaveLength(0)
+ })
+ it('does not assign the follow-up across an unrelated conditional task',()=>{
+  const text='请周六晚上把登记表交给组长，由组长统一报送。负责人另行领取物资。提交后将邀请部分同学周二或者周三进行面谈。'
+  const answer={topic:'报名事项',kind:'action',summary:'提交后将邀请部分同学周二或周三进行面谈。',items:[
+   {key:'a',kind:'task',title:'向组长提交登记表',action:'提交',object:'登记表',evidence:['请周六晚上把登记表交给组长'],contextFacts:[{kind:'later_handler',quote:'由组长统一报送'}]},
+   {key:'b',kind:'task',title:'负责人领取物资',action:'领取',object:'物资',evidence:['负责人另行领取物资'],assignment:{scope:'conditional',actor:'负责人',evidence:'负责人另行领取物资',actorEvidence:'负责人'}},
+  ],materials:[]}
+  const result=parseRecognitionResult(compileSemanticNotice(answer,{...options,source:text}).result)
+  expect(result.standaloneTasks.find(task=>task.title.includes('提交登记表'))?.selected).toBe(true)
+  expect(result.standaloneTasks.find(task=>task.title.includes('负责人领取'))?.selected).toBe(false)
+  expect(sourceUnassignedWeekdayAlternative(text,answer.summary,undefined,[])).not.toBeNull()
+  expect(result.standaloneTasks.map(task=>task.description).join('\n')).not.toContain('2026-11-17')
+ })
  it('does not attach unsupported, unrelated or already represented follow-up times',()=>{
   const text='请周六提交报名表。评委周二或周三进行评审。'
   expect(sourceUnassignedWeekdayAlternative(text,'评委进行评审',['评审的日期未明确'],[])).toBeNull()

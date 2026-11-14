@@ -27,7 +27,7 @@ export const SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION='semantic-notice-compil
 export const SEMANTIC_MATTER_COMPILER_VERSION='semantic-notice-compiler-1.0.30'
 export const SEMANTIC_PRESERVATION_COMPILER_VERSION='semantic-notice-compiler-1.0.31'
 export const SEMANTIC_ROLE_SCOPE_COMPILER_VERSION='semantic-notice-compiler-1.0.32'
-export const SEMANTIC_PARTICIPATION_COMPILER_VERSION='semantic-notice-compiler-1.0.37'
+export const SEMANTIC_PARTICIPATION_COMPILER_VERSION='semantic-notice-compiler-1.0.38'
 // Full-width ASCII maps one UTF-16 unit to one unit; source offsets remain valid.
 const foldWidth = value => value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const hasLiteral = (source,value) => Boolean(value && compact(source).includes(compact(value)))
@@ -999,25 +999,6 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       if(id){task.description+=(task.description?'\n':'')+line;task.evidenceIds=[...new Set([...task.evidenceIds,id])];audit.facts.push({role:'candidate_times',owner:task.tempId,sourceEvidenceId:id})}
     }
   }
-  if(participationEnabled&&result.standaloneTasks.length===1&&!result.events.length){
-    const represented=pending.flatMap(record=>[record.entity.title,record.entity.actionObject??''])
-    const followup=sourceUnassignedWeekdayAlternative(source,raw.summary,raw.unresolved,represented)
-    if(followup){
-      const formatted=formatSourceWeekdayAlternatives(source,followup,raw.items,referenceTime,timezone)
-      const task=result.standaloneTasks[0]
-      if(formatted){
-        const owner=pending.find(record=>record.entity===task)
-        const existing=Array.isArray(owner?.item?.contextFacts)?owner.item.contextFacts.slice(0,8).find(fact=>['later_handler','receiving_schedule','document_context'].includes(fact?.kind)&&typeof fact.quote==='string'&&compact(fact.quote).includes(compact(followup.quote))&&locateSourceQuote(fact.quote,source)) : null
-        const shortLine=`后续备选时间（条件适用）：${formatted}`
-        const described=existing&&existing.quote.length<=500&&task.description.length+shortLine.length+existing.quote.length+25<=800&&task.evidenceIds.length<18
-        const line=described?shortLine:`本通知后续安排（条件适用）：${followup.quote}；备选时间：${formatted}`
-        if(!task.description.includes(line)&&task.description.length+line.length+1<=800&&task.evidenceIds.length<20){
-          const id=evidence(followup.quote,'description','conditional-followup',followup.startQuote)
-          if(id){task.description=[task.description,line].filter(Boolean).join('\n');task.evidenceIds=[...new Set([...task.evidenceIds,id])];audit.facts.push({role:'conditional_source_followup',owner:task.tempId,sourceEvidenceId:id})}
-        }else if(!task.description.includes(line))note('CAPACITY',task.tempId,'CONDITIONAL_FOLLOWUP_NOT_DISPLAYED')
-      }
-    }
-  }
   for(const record of pending){
     const context=sourceFormContext(source,raw,record,pending),task=record.entity
     if(context&&!compact(task.title).includes(compact(context))&&task.title.length+context.length+2<=80){
@@ -1063,6 +1044,39 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
   }
   combineSupportedChoices(result,audit)
   if(['recognition-semantic-notice-3.3.0','recognition-semantic-notice-3.4.0','recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0','recognition-semantic-notice-3.10.0','recognition-semantic-notice-3.11.0','recognition-semantic-notice-3.12.0'].includes(promptVersion))applySemanticActorRelations({result,pending,source,evidence,note,audit,timezone,includeContextFacts:['recognition-semantic-notice-3.5.0','recognition-semantic-notice-3.6.0','recognition-semantic-notice-3.7.0','recognition-semantic-notice-3.8.0','recognition-semantic-notice-3.9.0','recognition-semantic-notice-3.10.0','recognition-semantic-notice-3.11.0','recognition-semantic-notice-3.12.0'].includes(promptVersion),documentContext:unifiedContract?raw.contextFacts:[],respectPersonalNeed:refinedContract,respectVoluntary:goalContract})
+  // A second, unselected task can describe an explicitly linked later handler
+  // rather than another personal goal. It must not suppress the one primary
+  // task's conditional follow-up, but an unrelated task must not inherit it.
+  const primaryTasks=result.standaloneTasks.filter(task=>task.selected!==false)
+  const followupTask=result.standaloneTasks.length===1?result.standaloneTasks[0]:primaryTasks.length===1?primaryTasks[0]:null
+  const followupOwner=pending.find(record=>record.kind==='task'&&record.entity===followupTask)
+  const otherFollowupRecords=pending.filter(record=>record.kind==='task'&&record.entity!==followupTask)
+  const linkedLaterHandler=record=>{
+    if(record.entity.selected!==false||!followupOwner)return false
+    const quotes=Array.isArray(followupOwner.item.contextFacts)?followupOwner.item.contextFacts:[]
+    const owned=quotes.filter(fact=>fact?.kind==='later_handler'&&typeof fact.quote==='string').map(fact=>locateSourceQuote(fact.quote,source)).filter(Boolean)
+    const cited=(Array.isArray(record.item.evidence)?record.item.evidence:[]).map(quote=>typeof quote==='string'?locateSourceQuote(quote,source):null).filter(Boolean)
+    return owned.some(left=>cited.some(right=>left.start<right.end&&right.start<left.end))
+  }
+  if(participationEnabled&&followupTask&&otherFollowupRecords.every(linkedLaterHandler)&&!result.events.length){
+    const represented=pending.flatMap(record=>[record.entity.title,record.entity.actionObject??''])
+    const followup=sourceUnassignedWeekdayAlternative(source,raw.summary,raw.unresolved,represented)
+    if(followup){
+      const formatted=formatSourceWeekdayAlternatives(source,followup,raw.items,referenceTime,timezone)
+      const task=followupTask
+      if(formatted){
+        const owner=followupOwner
+        const existing=Array.isArray(owner?.item?.contextFacts)?owner.item.contextFacts.slice(0,8).find(fact=>['later_handler','receiving_schedule','document_context'].includes(fact?.kind)&&typeof fact.quote==='string'&&compact(fact.quote).includes(compact(followup.quote))&&locateSourceQuote(fact.quote,source)) : null
+        const shortLine=`后续备选时间（条件适用）：${formatted}`
+        const described=existing&&existing.quote.length<=500&&task.description.length+shortLine.length+existing.quote.length+25<=800&&task.evidenceIds.length<18
+        const line=described?shortLine:`本通知后续安排（条件适用）：${followup.quote}；备选时间：${formatted}`
+        if(!task.description.includes(line)&&task.description.length+line.length+1<=800&&task.evidenceIds.length<20){
+          const id=evidence(followup.quote,'description','conditional-followup',followup.startQuote)
+          if(id){task.description=[task.description,line].filter(Boolean).join('\n');task.evidenceIds=[...new Set([...task.evidenceIds,id])];audit.facts.push({role:'conditional_source_followup',owner:task.tempId,sourceEvidenceId:id})}
+        }else if(!task.description.includes(line))note('CAPACITY',task.tempId,'CONDITIONAL_FOLLOWUP_NOT_DISPLAYED')
+      }
+    }
+  }
   if(goalContract)applySemanticGoalRelations({raw,result,pending,source,evidence,note,audit,allowAdjacentParticipantReference:goalContextEnabled,allowAssignmentEvidenceFallback:goalContextV129,allowScopedMatter:matterEnabled||preservationEnabled,allowProseScope:preservationEnabled})
   if(preservationEnabled&&roleResolutionVersion==='1.0.0')applyProcessScope({source,result,pending,evidence,note,audit})
   if(preservationEnabled&&roleResolutionVersion==='1.0.0')for(const material of result.materials){
