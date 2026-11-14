@@ -5,6 +5,7 @@ import { extname, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createWorker } from '../cloudflare/worker.mjs'
 import { createPinnedHttpsFetch, resolvePublicNodeHostname } from './pinned-fetch.mjs'
+import { createPilotHandler } from './pilot-http.mjs'
 
 const MIME_TYPES = new Map([
   ['.css', 'text/css; charset=utf-8'],
@@ -57,6 +58,9 @@ export function loadPublicConfig(env = process.env, cwd = process.cwd()) {
       .split(',')
       .map((host) => host.trim().toLowerCase())
       .filter(Boolean),
+    // This release fails closed by default; public mode must be explicit.
+    pilotEnabled: env.SAM_PILOT_ENABLED !== 'false',
+    pilotFile: env.SAM_PILOT_STATE_FILE?.trim() || '/var/lib/student-affairs-pilot/state.json',
     workerEnv: {
       ...PRODUCTION_RECOGNITION_ENV,
       // Keep the recorded production compiler as the default until the new
@@ -296,6 +300,7 @@ function createPinnedWorker() {
 }
 
 export function createPublicServer(config, worker = createPinnedWorker()) {
+  const pilot = config.pilotEnabled ? createPilotHandler(config.pilotFile) : null
   return createServer(async (nodeRequest, nodeResponse) => {
     try {
       if (!isAllowedHost(nodeRequest.headers.host || '', config)) {
@@ -309,6 +314,7 @@ export function createPublicServer(config, worker = createPinnedWorker()) {
         nodeResponse.end('Bad Request')
         return
       }
+      if (pilot && await pilot(nodeRequest, nodeResponse, url, trustedClientAddress(nodeRequest))) return
       if (url.pathname === '/api' || url.pathname.startsWith('/api/')) {
         const response = await worker.fetch(await toWebRequest(nodeRequest, url), config.workerEnv)
         const body = Buffer.from(await response.arrayBuffer())
