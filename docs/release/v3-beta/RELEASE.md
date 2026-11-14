@@ -1,5 +1,9 @@
 # 当前正式环境：v3.0.0-beta.48 / 阿里云 SWAS（2026-11-14）
 
+**复核结果：**本版本对“周六晚上发送”等没有明确截止词的办理时间仍可能显示为未设日期。本轮候选 `82e0c0275c8fe5bcd9397adc71fbc59937f55138` 和 `a9532dd48a17a44c888b5dbc73ad2a12c9f85e10` 已分别部署测试并回滚，当前仍运行 beta.48。前者真实模型结果遗漏条件后续安排；后者生产 AI 冒烟返回 `INVALID_AI_RESPONSE`（502，`MODEL_OUTPUT_UNRECOVERABLE_ROOT`），模型响应原文不可见，未能判定具体格式原因。不能称为线上已修复。
+
+本轮最终候选本地完整检查及其[六项远端 CI](https://github.com/nightair5/Student-Affairs-Manager/actions/runs/43572427696)通过；两份真实模型回答同 raw 回放、隔离内存仓库保存恢复通过，真实浏览器 `NOT_RUN`。备份及回滚核验保持 HTTPS、备案、env/600 和已有用户数据；最后一次回滚命令 `bash /root/sa-backups/20261114-153653-a9532dd4/rollback.sh`。证据 `.data/weekday-action-repair-20261114-144933/` 与 `.data/weekday-action-final-20261114-153653/`。
+
 部署代码 `2b4e2e4cc611c25296f38f8853744fa05a7af62c`。单独写“周六、星期日”等时，按该通知整理时的参考日期和时区推算最近同名星期；“本周、下周”保留原意，推算日期在时间轴标明依据。每周重复、未选定日期及原文日期与星期冲突不强行确定；已保存数据不自动改写。
 
 完整本地检查与[部署提交六项远端 CI](https://github.com/nightair5/Student-Affairs-Manager/actions/runs/43479417453)通过；服务器 Node 20 构建、22 项站点检查、33 项相关测试及模拟上游识别通过。真实 Flash 调用与浏览器 `NOT_RUN`，不能据此宣称模型准确率改善。HTTPS、ACME、备案、env/600 和用户数据保持；回滚至 beta.47：`bash /root/sa-backups/20261114-020831-2b4e2e4c/rollback.sh`。证据 `.data/weekday-reference-repair-20261114-013512/`。

@@ -1,5 +1,7 @@
 # 当前生产：v3.0.0-beta.48 / 阿里云 SWAS（2026-11-14）
 
+本轮发现 beta.48 对没有明确截止词的“周六晚上发送”仍可能丢失办理日期；候选 `a9532dd48a17a44c888b5dbc73ad2a12c9f85e10` 在同 raw 回放和隔离仓库中保留原文办理日、个人计划与未确定的条件备选时间，但真实生产 AI 冒烟返回 `INVALID_AI_RESPONSE`（502，模型正文未观测）。已回滚到 beta.48，未打 beta.50 标签；不得将候选行为描述为已上线。先前候选 `82e0c0275c8fe5bcd9397adc71fbc59937f55138` 的真实模型回答漏生成条件后续事项，亦已回滚。最终候选完整本地检查及[六项远端 CI](https://github.com/nightair5/Student-Affairs-Manager/actions/runs/43572427696)通过；真实浏览器 `NOT_RUN`。证据 `.data/weekday-action-repair-20261114-144933/` 与 `.data/weekday-action-final-20261114-153653/`。
+
 部署 `2b4e2e4cc611c25296f38f8853744fa05a7af62c`。无月日的星期日期按来源固定的整理时间和时区推算，保存原文并标明推算；重复安排、候选日期和日期星期冲突不强行确定。模型引用中有明确归属但遗漏时间字段时，只在引用唯一且作用域明确时补齐。本地完整检查、部署提交六项 CI、服务器 22 项站点检查和 33 项相关测试通过；模拟上游验证通过，真实 AI 与浏览器 `NOT_RUN`。回滚 beta.47：`bash /root/sa-backups/20261114-020831-2b4e2e4c/rollback.sh`。证据 `.data/weekday-reference-repair-20261114-013512/`。
 
 # 历史生产：v3.0.0-beta.47 / 阿里云 SWAS（2026-11-14）
