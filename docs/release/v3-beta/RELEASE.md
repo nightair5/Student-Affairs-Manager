@@ -1,6 +1,14 @@
-# 当前正式环境：v3.0.0-beta.48 / 阿里云 SWAS（2026-11-14）
+# 当前正式环境：v3.0.0-beta.52 / 阿里云 SWAS（2026-11-14）
 
-**复核结果：**本版本对“周六晚上发送”等没有明确截止词的办理时间仍可能显示为未设日期。本轮候选 `82e0c0275c8fe5bcd9397adc71fbc59937f55138` 和 `a9532dd48a17a44c888b5dbc73ad2a12c9f85e10` 已分别部署测试并回滚，当前仍运行 beta.48。前者真实模型结果遗漏条件后续安排；后者生产 AI 冒烟返回 `INVALID_AI_RESPONSE`（502，`MODEL_OUTPUT_UNRECOVERABLE_ROOT`），模型响应原文不可见，未能判定具体格式原因。不能称为线上已修复。
+实际部署代码 `286e70a94aca172df7d794d21ee5e4ece4c3cc2f`。无明确月日的星期按来源固定参考时间和时区推算，任务的原文办理时间与截止及个人计划分开；来源明确支持的条件后续备选时间保留但不伪装成确定日程。同日多场活动仍分别保留时间、地点和状态。上一次 beta.51 候选因线上真实回答遗漏条件答辩日期而回滚，随后依据同一回答修复责任判断顺序；历史记录与数据未改写。
+
+本轮八次真实 Flash 请求均返回 200：输入 23,157、输出 3,651 tokens；实际扣费不可观测，按官方峰值单价逐笔计算的费用上界为 0.011331 美元。最终两条生产响应经隔离内存仓库检验保存、读回、完成恢复、重复添加、撤销与备份；真实浏览器 `NOT_RUN`。先前 502 的原始回答未获观测，未证明具体根因已经解决；新增脱敏输出结构诊断和严格完整 JSON 围栏兼容。
+
+完整本地检查和[部署提交六项远端 CI](https://github.com/nightair5/Student-Affairs-Manager/actions/runs/43579719574)通过；服务器 22 项站点和资源检查、Node 服务及日期相关测试通过，HTTPS、ACME、备案、env/600 和非特权服务保持。依赖审计高危门槛通过，仍有 10 项中危提示。回滚至部署前 beta.48：`bash /root/sa-backups/20261114-1710-286e70a9/rollback.sh`。证据 `.data/weekday-decode-investigation-20261114-160548/`、`.data/weekday-decode-retry-20261114-1710/`。
+
+# 历史正式环境：v3.0.0-beta.48 / 阿里云 SWAS（2026-11-14）
+
+**复核结果：**本版本对“周六晚上发送”等没有明确截止词的办理时间仍可能显示为未设日期。本轮候选 `82e0c0275c8fe5bcd9397adc71fbc59937f55138` 和 `a9532dd48a17a44c888b5dbc73ad2a12c9f85e10` 已分别部署测试并回滚，该轮回滚后运行 beta.48。前者真实模型结果遗漏条件后续安排；后者生产 AI 冒烟返回 `INVALID_AI_RESPONSE`（502，`MODEL_OUTPUT_UNRECOVERABLE_ROOT`），模型响应原文不可见，未能判定具体格式原因。不能称为线上已修复。
 
 本轮最终候选本地完整检查及其[六项远端 CI](https://github.com/nightair5/Student-Affairs-Manager/actions/runs/43572427696)通过；两份真实模型回答同 raw 回放、隔离内存仓库保存恢复通过，真实浏览器 `NOT_RUN`。备份及回滚核验保持 HTTPS、备案、env/600 和已有用户数据；最后一次回滚命令 `bash /root/sa-backups/20261114-153653-a9532dd4/rollback.sh`。证据 `.data/weekday-action-repair-20261114-144933/` 与 `.data/weekday-action-final-20261114-153653/`。
 
