@@ -19,7 +19,7 @@ import {scopeLocalOtherPartyActions} from './localResponsibilityScope'
 import {retainLocalConditionalMaterials} from './localConditionalMaterials'
 import {indexLocalSections} from './localSectionScope'
 import {isEventEligibility} from '../../cloudflare/event-eligibility.mjs'
-import {sourceActionWeekday,sourceWeekdayAlternatives} from '../../cloudflare/source-action-weekday.mjs'
+import {sourceActionWeekday,sourceWeekdayAlternatives,formatSourceWeekdayAlternatives} from '../../cloudflare/source-action-weekday.mjs'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string,options:{scopeAware?:boolean}={}):RecognitionResult {
@@ -47,6 +47,7 @@ export function improveDirectFallback(input:RecognitionResult,source:string,opti
 function retainLocalActionWeekdays(input:RecognitionResult,source:string):RecognitionResult {
  const result=structuredClone(input)
  const tasks=[...result.standaloneTasks,...result.milestones.flatMap(stage=>[...stage.tasks,...stage.workPackages.flatMap(group=>group.tasks)])]
+ const sourceItems=tasks.map(task=>({actionVerb:task.actionVerb,actionObject:task.actionObject,evidence:task.evidenceIds.flatMap(id=>{const ref=result.evidence.find(value=>value.id===id);return ref?.quote?[ref.quote]:[]})}))
  for(const task of tasks){
   const citations=task.evidenceIds.flatMap(id=>{const ref=result.evidence.find(value=>value.id===id);return ref?.quote?[ref.quote]:[]})
   const item={actionVerb:task.actionVerb,actionObject:task.actionObject,evidence:citations}
@@ -64,9 +65,9 @@ function retainLocalActionWeekdays(input:RecognitionResult,source:string):Recogn
   const alternatives=sourceWeekdayAlternatives(source,item)
   if(alternatives){
    const timezone=result.timePoints.find(point=>point.timezone)?.timezone??'Asia/Shanghai'
-   const dates=alternatives.days.map(day=>parseDirectSourceTime(day,{type:'event_start',referenceTime:result.createdAt,timezone}))
-   if(dates.every(day=>day.normalizedValue&&!day.needsConfirmation)){
-    const line=`原文备选时间：${alternatives.days.map((day,index)=>`${day}（${dates[index].normalizedValue}）`).join('或')}（按整理日期推算，尚未确定）`
+   const formatted=formatSourceWeekdayAlternatives(source,alternatives,sourceItems,result.createdAt,timezone)
+   if(formatted){
+    const line=`原文备选时间：${formatted}`
     if(!task.description.includes(line)&&task.description.length+line.length+1<=800)task.description=[task.description,line].filter(Boolean).join('\n')
    }
   }

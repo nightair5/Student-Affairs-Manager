@@ -13,7 +13,7 @@ import {buildLocalRecognition} from '../../recognition/pipeline'
 import {improveDirectFallback} from '../../recognition/directFallback'
 import {convertDirectResult} from '../../recognition/directResult'
 import {groupTasksByDate,taskCalendarEntryForDay} from '../../lib/calendar'
-import {sourceActionWeekday,sourceWeekdayAlternatives} from '../../../cloudflare/source-action-weekday.mjs'
+import {sourceActionWeekday,sourceWeekdayAlternatives,sourceUnassignedWeekdayAlternative} from '../../../cloudflare/source-action-weekday.mjs'
 
 // Anonymous reproduction; this is a model-shaped fixture, not a real AI reply.
 const referenceTime='2026-11-14T14:44:00+08:00',timezone='Asia/Shanghai'
@@ -112,6 +112,35 @@ describe('source action weekday remains distinct from a deadline or personal pla
   const send=result.standaloneTasks.find(item=>item.actionVerb==='发送')!
   expect(result.timePoints.find(point=>point.relatedTaskTempIds.includes(send.tempId)&&point.normalizedValue)).toMatchObject({rawText:'周六晚上',normalizedValue:'2026-11-14',type:'event_start'})
   expect(result.standaloneTasks.find(item=>item.title.includes('答辩'))?.description).toContain('周二（2026-11-17）或周三（2026-11-18）')
+ })
+ it.each([true,false])('preserves a model-summary-only conditional follow-up, with unresolved=%s',withUnresolved=>{
+  const answer={...structuredClone(raw),items:[structuredClone(raw.items[0])],summary:'提交材料后将筛选部分同学周二或周三进行答辩汇报。',...(withUnresolved?{unresolved:['答辩汇报的具体日期未明确']}:{}),partial:true}
+  const result=parseRecognitionResult(compileSemanticNotice(answer,options).result)
+  expect(result.standaloneTasks).toHaveLength(1)
+  expect(result.events).toHaveLength(0)
+  const description=result.standaloneTasks[0].description
+  expect(description).toContain('筛选部分同学')
+  expect(description).toContain('周二（2026-11-17）或周三（2026-11-18）')
+  expect(description).toContain('尚未确定')
+ })
+ it('does not attach unsupported, unrelated or already represented follow-up times',()=>{
+  const text='请周六提交报名表。评委周二或周三进行评审。'
+  expect(sourceUnassignedWeekdayAlternative(text,'评委进行评审',['评审的日期未明确'],[])).toBeNull()
+  const selected='筛选部分人员周二或周三进行面试。'
+  expect(sourceUnassignedWeekdayAlternative(selected,'没有相关说明',['面试的日期未明确'],[])).toBeNull()
+  expect(sourceUnassignedWeekdayAlternative(selected,'筛选部分人员参加面试',['面试的日期未明确'],['参加面试'])).toBeNull()
+  expect(sourceUnassignedWeekdayAlternative(selected,'筛选部分人员参加面试',undefined,[])?.quote).toContain('筛选部分人员')
+ })
+ it.each([true,false])('does not infer follow-up dates before the cited submission, separateTask=%s',separateTask=>{
+  const text=source.replace('我们根据材料筛选','我们根据大家提交的材料，筛选')
+  const answer={...structuredClone(raw),items:separateTask?structuredClone(raw.items):[structuredClone(raw.items[0])],summary:'提交材料后筛选部分同学进行答辩汇报。',unresolved:['答辩汇报的具体日期未明确']}
+  if(answer.items[1])answer.items[1].evidence=['我们根据大家提交的材料，筛选部分同学周二或者周三进行答辩汇报']
+  const result=parseRecognitionResult(compileSemanticNotice(answer,{...options,source:text,referenceTime:'2026-11-09T10:00:00+08:00'}).result)
+  const descriptions=result.standaloneTasks.map(task=>task.description).join('\n')
+  expect(descriptions).toContain('周二或者周三')
+  expect(descriptions).toContain('先后日期尚不明确')
+  expect(descriptions).not.toContain('2026-11-10')
+  expect(descriptions).not.toContain('2026-11-11')
  })
  it('does not lose the weekday in local processing of the fuller anonymized notice',()=>{
   const full='已在系统报名成长赛道的同学，如想晋级学校复赛，必须提交ppt。请周六晚上发送最终版的ppt和生涯规划表(或生涯发展报告）给各班班长，由班长将材料汇总发送。如已提交ppt的同学没有提交最新版，视为用原提交的材料参评。我们根据大家提交的材料，筛选部分同学周二或者周三进行答辩汇报，依据表现情况确定晋级校级复赛名单。复赛所需材料将届时通知。'

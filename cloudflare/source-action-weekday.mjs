@@ -1,4 +1,5 @@
 import {locateSourceQuote} from './source-text-index.mjs'
+import {parseDirectSourceTime} from './direct-source-time.mjs'
 
 const compact=value=>typeof value==='string'?value.normalize('NFKC').toLowerCase().replace(/[\s的，,。；;：:（）()]/gu,''):''
 const dayPattern=/(?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天]/gu
@@ -52,4 +53,57 @@ export function sourceWeekdayAlternatives(source,item){
  }
  const unique=[...new Map(found.map(value=>[`${value.start}:${value.end}`,value])).values()]
  return unique.length===1?unique[0]:null
+}
+
+/** Never show inferred candidate dates that precede an explicitly linked
+ * submission. The weekday words remain available when chronology is unclear. */
+export function formatSourceWeekdayAlternatives(source,choice,items,referenceTime,timezone){
+ const dates=choice.days.map(day=>parseDirectSourceTime(day,{type:'event_start',referenceTime,timezone}))
+ if(!dates.every(day=>day.normalizedValue&&!day.needsConfirmation))return null
+ const context=source.slice(Math.max(0,choice.start-160),choice.start).split(/[。；;\n]/u).at(-1)??''
+ if(/(?:根据|依据|按照)[^。；;\n]{0,50}(?:提交|递交|报送|报名|申请)[^。；;\n]{0,20}(?:材料|资料|名单|结果)/u.test(context)){
+  const previous=[...new Set((Array.isArray(items)?items:[]).flatMap(item=>{
+   const prior=sourceActionWeekday(source,item)
+   if(!prior||prior.start>=choice.start)return []
+   const parsed=parseDirectSourceTime(prior.raw,{type:'event_start',referenceTime,timezone})
+   return parsed.normalizedValue&&!parsed.needsConfirmation?[parsed.normalizedValue.slice(0,10)]:[]
+  }))]
+  if(previous.length===1&&dates.some(day=>day.normalizedValue.slice(0,10)<previous[0]))return `${choice.raw}（与前续事项的先后日期尚不明确，请确认）`
+ }
+ return `${choice.days.map((day,index)=>`${day}（${dates[index].normalizedValue}）`).join('或')}（按整理日期推算，尚未确定）`
+}
+
+/** A model can describe a conditional later activity in its summary and mark
+ * its time unresolved without emitting a separate personal task. Preserve the
+ * uniquely source-backed note instead of inventing an obligation or event. */
+export function sourceUnassignedWeekdayAlternative(source,summary,unresolved,represented){
+ if(typeof summary!=='string')return null
+ const targets=(Array.isArray(unresolved)?unresolved:[]).flatMap(value=>{
+  if(typeof value!=='string')return []
+  const match=/^\s*([^，,。；;“”"\n]{2,24}?)(?:的)?(?:具体)?(?:日期|时间|时段|地点)/u.exec(value)
+  const target=match?.[1]?.replace(/的$/u,'').trim()
+  return target&&compact(summary).includes(compact(target))&&source.includes(target)?[target]:[]
+ })
+ // A well-formed summary may retain a later conditional activity even when
+ // the model did not list it as unresolved. Confirm its object in both the
+ // literal clause and that summary before treating it as useful context.
+ for(const part of source.matchAll(/[^，,。；;！？\n]+/gu)){
+  const clause=part[0],days=[...clause.matchAll(dayPattern)]
+  if(days.length!==2||!/(?:筛选|入选|获选|录取|受邀|被选中|通过(?:初审|审核|筛选))/u.test(clause))continue
+  const suffix=clause.slice(days[1].index+days[1][0].length)
+  const match=/(?:进行|参加|出席|接受|安排)\s*([^，,。；;！？\n]{2,24})/u.exec(suffix)
+  const target=match?.[1]?.trim()
+  if(target&&compact(summary).includes(compact(target)))targets.push(target)
+ }
+ const found=[]
+ for(const target of [...new Set(targets)]){
+  if(represented.some(value=>compact(value).includes(compact(target))))continue
+  for(const part of source.matchAll(/[^，,。；;！？\n]+/gu)){
+   const quote=part[0].trim()
+   if(!quote.includes(target)||!/(?:筛选|入选|获选|录取|受邀|被选中|通过(?:初审|审核|筛选))/u.test(quote))continue
+   const choice=sourceWeekdayAlternatives(source,{object:target,evidence:[quote]})
+   if(choice)found.push({...choice,quote,startQuote:part.index+part[0].indexOf(quote)})
+  }
+ }
+ return found.length===1?found[0]:null
 }

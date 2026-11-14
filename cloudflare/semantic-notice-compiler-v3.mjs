@@ -14,7 +14,7 @@ import {applySemanticGoalRelations} from './semantic-goal-relations.mjs'
 import {timeRoleContext,parseWindowWithDailyHours,sourceTimeModality} from './semantic-time-context.mjs'
 import {sourceOptionalMaterialClause,sourceParagraphContext,sourceSectionLocation,sourceMaterialInlineFormats} from './semantic-source-context.mjs'
 import {isEventEligibility} from './event-eligibility.mjs'
-import {sourceActionWeekday,sourceWeekdayAlternatives} from './source-action-weekday.mjs'
+import {sourceActionWeekday,sourceWeekdayAlternatives,formatSourceWeekdayAlternatives,sourceUnassignedWeekdayAlternative} from './source-action-weekday.mjs'
 
 const object = value => Boolean(value && typeof value === 'object' && !Array.isArray(value))
 const text = (value, max=160) => typeof value === 'string' ? value.trim().slice(0,max) : ''
@@ -27,7 +27,7 @@ export const SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION='semantic-notice-compil
 export const SEMANTIC_MATTER_COMPILER_VERSION='semantic-notice-compiler-1.0.30'
 export const SEMANTIC_PRESERVATION_COMPILER_VERSION='semantic-notice-compiler-1.0.31'
 export const SEMANTIC_ROLE_SCOPE_COMPILER_VERSION='semantic-notice-compiler-1.0.32'
-export const SEMANTIC_PARTICIPATION_COMPILER_VERSION='semantic-notice-compiler-1.0.35'
+export const SEMANTIC_PARTICIPATION_COMPILER_VERSION='semantic-notice-compiler-1.0.36'
 // Full-width ASCII maps one UTF-16 unit to one unit; source offsets remain valid.
 const foldWidth = value => value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const hasLiteral = (source,value) => Boolean(value && compact(source).includes(compact(value)))
@@ -580,10 +580,10 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     }
     const candidateDays=participationEnabled&&kind==='task'?sourceWeekdayAlternatives(source,item):null
     if(candidateDays){
-      const dates=candidateDays.days.map(day=>parseDirectSourceTime(day,{type:'event_start',referenceTime,timezone}))
-      if(dates.every(day=>day.normalizedValue&&!day.needsConfirmation)){
+      const formatted=formatSourceWeekdayAlternatives(source,candidateDays,raw.items,referenceTime,timezone)
+      if(formatted){
         const id=evidence(candidateDays.raw,'description',item.key,candidateDays.start)
-        const line=`原文备选时间：${candidateDays.days.map((day,index)=>`${day}（${dates[index].normalizedValue}）`).join('或')}（按整理日期推算，尚未确定）`
+        const line=`原文备选时间：${formatted}`
         if(id&&!entity.description.includes(line)&&entity.description.length+line.length+1<=800){entity.description=[entity.description,line].filter(Boolean).join('\n');entity.evidenceIds=[...new Set([...entity.evidenceIds,id])].slice(0,20)}
       }
     }
@@ -997,6 +997,21 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     if(!task.description.includes(candidate.literal)&&task.description.length+line.length+1<=800&&task.evidenceIds.length<20){
       const id=evidence(candidate.literal,'description',candidate.record.item.key,candidate.start)
       if(id){task.description+=(task.description?'\n':'')+line;task.evidenceIds=[...new Set([...task.evidenceIds,id])];audit.facts.push({role:'candidate_times',owner:task.tempId,sourceEvidenceId:id})}
+    }
+  }
+  if(participationEnabled&&result.standaloneTasks.length===1&&!result.events.length){
+    const represented=pending.flatMap(record=>[record.entity.title,record.entity.actionObject??''])
+    const followup=sourceUnassignedWeekdayAlternative(source,raw.summary,raw.unresolved,represented)
+    if(followup){
+      const formatted=formatSourceWeekdayAlternatives(source,followup,raw.items,referenceTime,timezone)
+      const task=result.standaloneTasks[0]
+      if(formatted){
+        const line=`本通知后续安排（条件适用）：${followup.quote}；备选时间：${formatted}`
+        if(!task.description.includes(line)&&task.description.length+line.length+1<=800&&task.evidenceIds.length<20){
+          const id=evidence(followup.quote,'description','conditional-followup',followup.startQuote)
+          if(id){task.description=[task.description,line].filter(Boolean).join('\n');task.evidenceIds=[...new Set([...task.evidenceIds,id])];audit.facts.push({role:'conditional_source_followup',owner:task.tempId,sourceEvidenceId:id})}
+        }else if(!task.description.includes(line))note('CAPACITY',task.tempId,'CONDITIONAL_FOLLOWUP_NOT_DISPLAYED')
+      }
     }
   }
   for(const record of pending){
