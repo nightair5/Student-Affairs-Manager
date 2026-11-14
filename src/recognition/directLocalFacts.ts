@@ -6,7 +6,7 @@ import {sameWeekdayTime,structuredOptionalEvent} from './directStructuredEvent'
 
 const compact=(value:string)=>value.replace(/\s/gu,'')
 const eventName=(value:string)=>value.replace(/^(?:参加|出席|举行|召开)/u,'').trim()
-const revisionCue=/(?:现)?(?:改为|调整为|更正为|变更为|改至|调整至)/u
+const revisionCue=/(?:现)?(?:改为|调整为|更正为|变更为|改至|调整至|变更至|延期至|改期至)/u
 
 /** One named event followed by a correction in the same sentence. This is a
  * source relation, not a title similarity guess or a reference to another notice. */
@@ -33,16 +33,28 @@ export function directEventRevision(text:string,name?:string){
     const named=[...before.matchAll(/(?:举行|举办|召开)的?([^，,；;]{2,45}?)(?:取消|作废|[，,；;]|$)/gu)]
     if(!named.length){
       const priorTitle=before.replace(/(?:取消|作废)(?:[，,；;]\s*)?$/u,'').trim()
-      const withoutVerb=/的([^，,；;]{2,45}(?:会议|说明会|答疑会|交流会|分享会|讲座|培训|研讨会|宣讲会|活动|报告会|开幕式|答辩|考试))\s*$/u.exec(priorTitle)
+      const withoutVerb=/的([^，,；;]{0,45}(?:会议|说明会|答疑会|交流会|分享会|讲座|培训|研讨会|宣讲会|宣讲|活动|报告会|开幕式|答辩|考试))\s*$/u.exec(priorTitle)
       if(withoutVerb)named.push(withoutVerb)
+      // “某活动原定……，现调整至……” names the same event before
+      // the original schedule rather than after a “的”. Keep that explicit
+      // title without treating the following corrected date as another event.
+      if(!named.length){
+       const subjectFirst=/^\s*(?:【[^】\n]{1,30}】\s*)?([^，,；;。！？\n]{2,45}?(?:会议|说明会|答疑会|交流会|分享会|讲座|培训|研讨会|宣讲会|宣讲|活动|报告会|开幕式|答辩|考试|交流|分享))原定/u.exec(priorTitle)
+       if(subjectFirst)named.push(subjectFirst)
+      }
     }
     if(named.length!==1)return []
-    const title=named[0][1].trim()
+    const originalTitle=named[0][1].trim()
+    const newName=/(?:举行|举办|召开|进行)\s*([^，,；;。！？\n]{2,45})/u.exec(after)?.[1].trim()
+    // A cancelled event can be replaced by a differently named event. Use
+    // that name only when the replacement explicitly names an event; never
+    // silently transfer a new time onto the cancelled event.
+    const explicitReplacement=Boolean(newName&&newName!==originalTitle&&/(?:取消|作废)/u.test(before)&&/(?:会议|说明会|答疑会|交流会|分享会|讲座|培训|研讨会|宣讲会|活动|报告会|开幕式|答辩|考试|交流|分享)$/u.test(newName))
+    if(newName&&newName!==originalTitle&&!explicitReplacement)return []
+    const title=explicitReplacement?newName!:originalTitle
     if(name&&eventName(name)!==eventName(title))return []
-    const newName=/(?:举行|举办|召开)([^，,；;]*)/u.exec(after)?.[1].trim()
-    if(newName&&newName!==title)return []
     if(/取消|作废|禁止|不再/u.test(after.replace(/(?:原|旧)(?:时间|安排|地点)(?:已)?(?:作废|取消)/gu,'')))return []
-    const location=/在\s*([^，,；;]{1,40}?)\s*(?:举行|举办|召开)/u.exec(after)?.[1]
+    const location=/在\s*([^，,；;]{1,40}?)\s*(?:举行|举办|召开|进行)/u.exec(after)?.[1]
       ??/地点[：:]?\s*([^，,；;]{1,40})/u.exec(after)?.[1]??null
     const next=sentences[index+1]
     // An adjacent invitation repeating the exact event name belongs to the

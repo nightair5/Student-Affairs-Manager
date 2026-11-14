@@ -6,7 +6,13 @@ export function localActionExplicitlyNegated(text:string,verb:string,object:stri
  if(!verb||!object)return false
  const plain=(s:string)=>s.normalize('NFKC').replace(/\s/gu,'')
  const original=plain(object)
- const normalizedObject=original.replace(/^(?:如符合条件)?(?:无需|无须|不用|不必|不需要|不要求|不再|禁止|不得|不要|请勿)(?:再|重新|另行|额外|主动)*/u,'')
+ // A local parser can mistake an entire negated clause for the object of
+ // the same verb (e.g. “已登记的人无需重新报名”). Resolve that malformed
+ // action from its own cited wording; do not cancel a different positive
+ // instruction elsewhere in the notice.
+ const embedded=original.lastIndexOf(verb),prefix=embedded>=0?original.slice(0,embedded):''
+ if(embedded>=0&&plain(text).includes(original)&&/(?:无需|无须|不必|不用|不需要|不再)(?:再次|再|重新|另行|额外)?$/u.test(prefix))return true
+ const normalizedObject=original.replace(/^(?:如符合条件)?(?:无需|无须|不用|不必|不需要|不要求|不再|禁止|不得|不要|请勿)(?:再次|再|重新|另行|额外|主动)*/u,'')
  const target=normalizedObject.startsWith(verb)?normalizedObject.slice(verb.length):normalizedObject
  const mentions:boolean[]=[]
  for(const raw of text.split(/[，,；;。！？\n]/u)){
@@ -37,6 +43,9 @@ export function localBackgroundNotUserAction(text:string,verb:string,object:stri
  if(!clauses.length)return false
  return clauses.every(clause=>{
   const at=clause.indexOf(object),before=clause.slice(0,at)
+  // An already-completed registration can modify the audience of another
+  // instruction (“已报名同学携带…”); it is not an instruction to register.
+  if(/^(?:报名|登记|申请)$/u.test(verb)&&/^(?:同学|学生|人员|成员|志愿者)(?:携带|准备|参加|填写|提交|领取)/u.test(object)&&/(?:已|曾|未)(?:经)?(?:报名|登记|申请)\s*$/u.test(before))return true
   if(/(?:请|务必|须|需要|应当|请大家|请同学)[^。；]{0,30}$/u.test(before))return false
   // “报名成功/报名流程/报名网站” describes a state or a noun phrase,
   // not an instruction whose object is “成功/流程/网站”. A separate

@@ -50,10 +50,15 @@ export function sourceActionWeekday(source,item){
     if(!delivery||!sourceDelivery)continue
    }
    const directiveBefore=/(?:请|须|需|应|务必|要求)/u.test(clause.slice(0,day.index))
+   // A named recipient group can also be the grammatical subject of an
+   // immediately following action ("报名者周日提交申请"). This supplies
+   // an action date, not a deadline or a claim that the reader qualifies.
+   const addressedSubject=/^(?:报名者|报名人|申请者|申请人|参加者|参与者|同学|学生)(?:须|需|应|请)?\s*$/u.test(clause.slice(0,day.index).trim())
    // “周二请提交” is the same explicitly addressed action as “请周二
    // 提交”. Do not bridge a named third party between the cue and verb.
    const directAfter=actionIndex>=0&&/^(?:请|须|需|应|务必)\s*$/u.test(tail.slice(0,actionIndex).trim())
-   if(!directiveBefore&&!directAfter)continue
+   const bareAfter=actionIndex===0&&!clause.slice(0,day.index).trim()&&compact(tail).startsWith(action+target)
+   if(!directiveBefore&&!directAfter&&!addressedSubject&&!bareAfter)continue
    const start=part.index+day.index
    found.push({raw:source.slice(start,start+literal.length),start,end:start+literal.length})
   }

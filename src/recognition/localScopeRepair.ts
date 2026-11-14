@@ -3,6 +3,98 @@ import {parseDirectSourceTime} from '../../cloudflare/direct-source-time.mjs'
 import {localDelivery} from './localNoticeFacts'
 import type {RecognitionResult} from './types'
 
+/** Preserve an explicitly undated event with a known clock as a real event.
+ * The time remains source text, not a guessed calendar date or end time. */
+export function retainLocalUndatedClockEvent(input:RecognitionResult,source:string):RecognitionResult {
+ if(input.modelName!=='local-rules'||input.events.length||source.length>500||input.milestones.length||input.materials.length)return input
+ const genericIds=new Set(input.standaloneTasks.filter(task=>/^(?:查看|核对)$/u.test(task.actionVerb)).map(task=>task.tempId))
+ if(input.conflicts.some(conflict=>!conflict.id.startsWith('source-action-evidence:')||conflict.entityTempIds.some(id=>input.standaloneTasks.some(task=>task.tempId===id)&&!genericIds.has(id))))return input
+ if(!/(?:举办日期|活动日期|日期)\s*(?:另行通知|待通知|待定|尚未确定)/u.test(source)||/(?:取消|作废|不再举行|改期|备选|候选|任选|或者)/u.test(source))return input
+ if(/(?:\d{1,4}年|\d{1,2}月|(?:本|下|上|这)?(?:周|星期|礼拜)[一二三四五六日天]|今天|明天|后天)/u.test(source))return input
+ const matches=[...source.matchAll(/(?:^|[。；;\n])\s*([\p{Script=Han}]{2,36}?(?:交流会|分享会|说明会|报告会|讲座|会议|分享|培训))\s*((?:(?:凌晨|清晨|早上|上午|中午|下午|傍晚|晚上|夜间|夜里)\s*)?(?:\d{1,2}\s*[:：]\s*\d{2}|[\d一二两三四五六七八九十]{1,3}\s*[点时](?:\s*[\d一二两三四五六七八九十]{1,3}\s*分?|\s*半)?))\s*(?:开始|举行|举办)/gu)]
+ if(matches.length!==1||!/(?:欢迎|邀请|可|可以|请)[^。；;\n]{0,15}(?:参加|出席|到场)|(?:举办日期|活动日期)/u.test(source))return input
+ const match=matches[0],title=match[1],clock=match[2].trim(),quote=match[0].trim(),at=match.index!+match[0].indexOf(quote)
+ if(source.indexOf(quote)!==source.lastIndexOf(quote)||input.standaloneTasks.some(task=>!/^(?:查看|核对)$/u.test(task.actionVerb)||task.materialTempIds.length||task.dependencyTempIds.length)||input.evidence.length>=119)return input
+ const durations=[...source.slice(at+quote.length).matchAll(/^\s*[，,]\s*((?:约|大约)\s*(?:持续\s*)?[\d一二两三四五六七八九十半]+(?:个)?(?:分钟|小时))(?!后)/gu)]
+ const duration=durations.length===1?durations[0][1].trim():''
+ const result=structuredClone(input),removed=new Set(result.standaloneTasks.map(task=>task.tempId)),id=`local-undated-event:${at}`
+ result.standaloneTasks=[]
+ // This conflict referred only to the unsupported generic reading task that
+ // is now resolved as the uniquely cited event; unrelated conflicts remain.
+ result.conflicts=result.conflicts.filter(conflict=>!conflict.id.startsWith('source-action-evidence:'))
+ result.timePoints=result.timePoints.filter(point=>!point.relatedTaskTempIds.some(taskId=>removed.has(taskId))||point.relatedTaskTempIds.some(taskId=>!removed.has(taskId))||point.relatedMaterialTempIds.length>0).map(point=>({...point,relatedTaskTempIds:point.relatedTaskTempIds.filter(taskId=>!removed.has(taskId))}))
+ result.evidence.push({id:id+':evidence',sourceId:result.evidence[0]?.sourceId??'source',quote,quotedText:quote,textStart:at,textEnd:at+quote.length,field:'event',extractionMethod:'parser',confidence:1})
+ result.events.push({tempId:id,title,description:[quote,`时间说明：${clock}（日期待定）`,duration?`原文时长：${duration}`:''].filter(Boolean).join('\n'),startTimePointTempId:null,endTimePointTempId:null,location:null,relatedTaskTempIds:[],evidenceIds:[id+':evidence'],confidence:1,inferenceLevel:'explicit',selected:true})
+ return result
+}
+
+/** Do not attach a dated administrative step to a later reader action just
+ * because both were captured by one local sentence. Preserve the source and
+ * keep independently owned timestamps; only the unsupported ownership is
+ * removed. */
+export function detachOtherActorTime(input:RecognitionResult,source:string):RecognitionResult {
+ if(input.modelName!=='local-rules')return input
+ const result=structuredClone(input)
+ const tasks=[...result.standaloneTasks,...result.milestones.flatMap(stage=>[...stage.tasks,...stage.workPackages.flatMap(group=>group.tasks)])]
+ const eventTimes=new Set(result.events.flatMap(event=>[event.startTimePointTempId,event.endTimePointTempId]).filter(Boolean))
+ let changed=false
+ for(const point of result.timePoints){
+  if(!point.normalizedValue||!point.rawText||!point.relatedTaskTempIds.length)continue
+  const timeAt=source.indexOf(point.rawText)
+  if(timeAt<0||timeAt!==source.lastIndexOf(point.rawText))continue
+  const detached=point.relatedTaskTempIds.filter(id=>{
+   const task=tasks.find(item=>item.tempId===id)
+   if(!task||!task.actionVerb||!task.actionObject)return false
+   const literal=task.actionVerb+task.actionObject,actionAt=source.indexOf(literal)
+   if(actionAt<=timeAt||actionAt!==source.lastIndexOf(literal))return false
+   const between=source.slice(timeAt,actionAt)
+   if(/[。；;\n]/u.test(between))return false
+   return /(?:审核|评审|复核|筛选|汇总|审批|报送)[^。；;\n]{0,45}(?:[，,]\s*(?:学生|同学|申请人|申请者|报名者|本人)(?:随后|再|请|须|需|应)|后(?:请)?(?:学生|同学|申请人|申请者|报名者|本人))/u.test(between)
+  })
+  if(!detached.length)continue
+  changed=true
+  if(point.relatedTaskTempIds.some(id=>!detached.includes(id))||point.relatedMaterialTempIds.length||eventTimes.has(point.tempId)){
+   point.relatedTaskTempIds=point.relatedTaskTempIds.filter(id=>!detached.includes(id))
+   for(const task of tasks)if(detached.includes(task.tempId))task.timePointTempIds=task.timePointTempIds.filter(id=>id!==point.tempId)
+  }else {point.normalizedValue=null;point.needsConfirmation=true}
+ }
+ if(changed){
+  const reason='部分内容尚未完整整理：其他办理人的时间未作为个人截止，请查看原通知。'
+  result.quality.needsHumanReview=true;result.quality.reviewReasons=[...new Set([...result.quality.reviewReasons,reason])].slice(-20)
+ }
+ return result
+}
+
+/** Recover a second, explicitly coordinated action only when the first
+ * action is already source-cited in the same clause. No dependency or shared
+ * date is inferred from the word "同时". */
+export function retainCoordinatedAction(input:RecognitionResult,source:string):RecognitionResult {
+ if(input.modelName!=='local-rules'||input.evidence.length>=120||input.standaloneTasks.length>=20)return input
+ const tasks=[...input.standaloneTasks,...input.milestones.flatMap(stage=>[...stage.tasks,...stage.workPackages.flatMap(group=>group.tasks)])]
+ const candidates=[...source.matchAll(/[^。！？；;\n]+/gu)].flatMap(part=>{
+  const quote=part[0].trim(),at=part.index!+part[0].indexOf(quote)
+  if(source.indexOf(quote)!==source.lastIndexOf(quote)||quote.length>500||/(?:二选一|任选|或者|例如|比如)/u.test(quote))return []
+  const matches=[...quote.matchAll(/(?:同时|并且|以及)(?:(?:还|也)?(?:要|须|需|请))?\s*(领取|归还|缴费|上传|填写|提交|登记)\s*([^，,。！？；;\n]{2,40})/gu)]
+  if(matches.length!==1)return []
+  const match=matches[0],verb=match[1],object=match[2].trim(),before=quote.slice(0,match.index!)
+  if(!object||/(?:无需|无须|不必|不用|不要|不得|禁止|取消|不再)/u.test(match[0])||tasks.some(task=>task.actionVerb===verb&&task.actionObject===object))return []
+  const owners=tasks.filter(task=>task.actionVerb&&task.actionObject&&before.replace(/\s/gu,'').includes((task.actionVerb+task.actionObject).replace(/\s/gu,''))&&task.evidenceIds.some(id=>{
+   const ref=input.evidence.find(item=>item.id===id),text=ref?.quote??''
+   return text&&source.indexOf(text)>=0&&source.indexOf(text)===source.lastIndexOf(text)&&text.includes(task.actionVerb)&&text.includes(task.actionObject)
+  }))
+  // A conjoined item already represented as the first action's required
+  // material is not a second independent delivery or completion state.
+  if(owners.length===1&&input.materials.some(material=>material.name===object&&material.relatedTaskTempIds.includes(owners[0].tempId)))return []
+  return owners.length===1?[{quote,at,verb,object,owner:owners[0]}]:[]
+ })
+ if(candidates.length!==1)return input
+ const candidate=candidates[0],result=structuredClone(input),id=`local-coordinated:${candidate.at}:${candidate.verb}`,evidenceId=id+':evidence'
+ if(result.evidence.some(ref=>ref.id===evidenceId))return input
+ result.evidence.push({id:evidenceId,sourceId:result.evidence[0]?.sourceId??'source',quote:candidate.quote,quotedText:candidate.quote,textStart:candidate.at,textEnd:candidate.at+candidate.quote.length,field:'description',extractionMethod:'parser',confidence:1})
+ result.standaloneTasks.push({tempId:id,parentTempId:null,hierarchyType:'task',title:candidate.verb+candidate.object,actionVerb:candidate.verb,actionObject:candidate.object,description:candidate.quote,completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:[evidenceId],confidence:1,inferenceLevel:'explicit',userConfirmationRequired:candidate.owner.userConfirmationRequired,selected:candidate.owner.selected})
+ return result
+}
+
 /** Recover a locally parsed object when its own source quote explicitly
  * places the object before a delivery verb. The action, recipient and time
  * remain owned by that single quoted instruction. */
@@ -96,9 +188,9 @@ export function retainLocalOwnedWeekdayDeadlines(input:RecognitionResult,source:
  return result
 }
 
-/** Preserve an explicitly linked selection follow-up as conditional source
- * context. It is not a new appointment and never claims that the reader was
- * selected. Ambiguous ownership and multiple potential actions stay unchanged. */
+/** Preserve an explicitly linked selection follow-up as an independently
+ * completable conditional action. Alternatives remain descriptive source facts:
+ * no candidate is promoted to a confirmed appointment or personal deadline. */
 export function retainLocalConditionalFollowup(input:RecognitionResult,source:string,zone?:string):RecognitionResult {
  const tasks=[...input.standaloneTasks,...input.milestones.flatMap(stage=>[...stage.tasks,...stage.workPackages.flatMap(group=>group.tasks)])]
  if(tasks.length!==1||input.events.length||!/^(?:提交|递交|上传|发送|交|申请|报名|填写|核对)$/u.test(tasks[0].actionVerb))return input
@@ -106,13 +198,17 @@ export function retainLocalConditionalFollowup(input:RecognitionResult,source:st
  const owners=[...new Map(citations.flatMap(quote=>{const at=source.indexOf(quote);return at>=0&&at===source.lastIndexOf(quote)?[[String(at)+':'+String(at+quote.length),{quote,at,end:at+quote.length}] as const]:[]})).values()]
  const candidates=[...source.matchAll(/[^。！？；;\n]+/gu)].flatMap(part=>{
   const quote=part[0].trim(),at=part.index!+part[0].indexOf(quote)
-  if(!/(?:根据|依据|按照)[^，,。；;\n]{0,20}(?:材料|资料|报名信息|申请信息|提交内容)[^。；;\n]{0,30}(?:筛选|选拔|审核)/u.test(quote)||!/(?:部分|若干|一些|入选|通过)/u.test(quote)||/(?:不再|不|未|取消|无需|禁止)(?:再)?(?:筛选|选拔|参加)/u.test(quote))return []
+  const selectionProcess=/(?:筛选|选拔|审核)[^。；;\n]{0,20}(?:部分|若干|一些|入选|入围|通过)/u.test(quote)
+   ||/(?:通知|邀请)(?:部分|若干|一些)(?:同学|学生|申请人|报名者|人员)/u.test(quote)
+   ||/(?:根据|依据|按照)[^，,。；;\n]{0,20}(?:材料|资料|报名信息|申请信息|提交内容)[^。；;\n]{0,30}(?:筛选|选拔|审核)/u.test(quote)&&/(?:部分|若干|一些|入选|通过)/u.test(quote)
+  const selectedPeople=/(?:入选|入围|录取|获选|通过审核|筛选通过|被选中|被通知)(?:者|人员|同学|学生)/u.test(quote)
+  if(!selectionProcess&&!selectedPeople||/(?:不再|不|未|取消|无需|禁止)(?:再)?(?:筛选|选拔|通知|邀请|参加|进行|出席)/u.test(quote))return []
   const days=[...quote.matchAll(/(?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天]/gu)]
   if(days.length!==2)return []
   const suffix=quote.slice(days[1].index!+days[1][0].length),target=/(?:参加|进行|出席|接受|安排)\s*([^，,。；;！？\n]{2,24})/u.exec(suffix)?.[1]?.trim()
   if(!target)return []
   const choice=sourceWeekdayAlternatives(source,{object:target,evidence:[quote]})
-  return choice&&source.indexOf(quote)===source.lastIndexOf(quote)?[{quote,at,choice}]:[]
+  return choice&&source.indexOf(quote)===source.lastIndexOf(quote)?[{quote,at,choice,target}]:[]
  })
  if(candidates.length!==1)return input
  const candidate=candidates[0],prior=owners.filter(owner=>owner.end<=candidate.at&&candidate.at-owner.end<=180)
@@ -120,13 +216,18 @@ export function retainLocalConditionalFollowup(input:RecognitionResult,source:st
  const item={actionVerb:task.actionVerb,actionObject:task.actionObject,evidence:citations}
  const timezone=zone??input.timePoints.find(point=>point.timezone)?.timezone??'Asia/Shanghai'
  const formatted=formatSourceWeekdayAlternatives(source,candidate.choice,[item],input.createdAt,timezone)
- const line=`后续安排（筛选后适用）：${candidate.quote}；备选时间：${formatted??candidate.choice.raw+'（日期待确认）'}`
- if(task.description.includes(candidate.quote))return input
- if(task.description.length+line.length+1>800||task.evidenceIds.length>=20||input.evidence.length>=120||candidate.quote.length>500)return input
+ const dates=formatted??candidate.choice.raw+'（日期待确认）'
+ const line=`后续安排（筛选后适用）：${candidate.quote}；备选时间：${dates}`
+ if(task.description.length+line.length+1>800||task.evidenceIds.length>=20||input.evidence.length>=120||candidate.quote.length>500||input.standaloneTasks.length>=20)return input
  const result=structuredClone(input),owner=[...result.standaloneTasks,...result.milestones.flatMap(stage=>[...stage.tasks,...stage.workPackages.flatMap(group=>group.tasks)])][0]
  const id=`local-followup:${candidate.at}`
  if(!result.evidence.some(ref=>ref.id===id))result.evidence.push({id,sourceId:result.evidence[0]?.sourceId??'source',quote:candidate.quote,quotedText:candidate.quote,textStart:candidate.at,textEnd:candidate.at+candidate.quote.length,field:'description',extractionMethod:'parser',confidence:1})
- owner.description=[owner.description,line].filter(Boolean).join('\n');owner.evidenceIds=[...new Set([...owner.evidenceIds,id])]
+ if(!owner.description.includes(candidate.quote))owner.description=[owner.description,line].filter(Boolean).join('\n')
+ owner.evidenceIds=[...new Set([...owner.evidenceIds,id])]
+ // The source establishes that only selected people participate, but not
+ // whether this user is among them. Keep the condition and both candidates,
+ // without creating a dependency on the earlier submission's completion.
+ result.standaloneTasks.push({tempId:id+':action',parentTempId:null,hierarchyType:'task',title:'参加'+candidate.target,actionVerb:'参加',actionObject:candidate.target,description:`适用条件待确认：${candidate.quote}\n备选时间：${dates}`,completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:[id],confidence:1,inferenceLevel:'strong_inference',userConfirmationRequired:true,selected:false,sourceStatus:'uncertain'})
  return result
 }
 
@@ -212,11 +313,15 @@ export function retainLocalOwnedEventTimes(input:RecognitionResult,source:string
 export function retainLocalSeparateDirective(input:RecognitionResult,source:string,zone?:string):RecognitionResult {
  const tasks=[...input.standaloneTasks,...input.milestones.flatMap(stage=>[...stage.tasks,...stage.workPackages.flatMap(group=>group.tasks)])]
  if(!tasks.length||input.events.length||input.evidence.length>117||input.standaloneTasks.length>=20)return input
- const pieces=[...source.matchAll(/(?:^|[。！？\n])\s*(?:另外|此外)[，,]\s*([^。！？；;\n]+)/gu)]
+ const pieces=[...source.matchAll(/(?:^|[。！？；;\n])\s*(?:(?:另外|此外)[，,]\s*|另请\s*)([^。！？；;\n]+)/gu)]
  if(pieces.length!==1)return input
  const part=pieces[0],quote=part[1].trim(),at=part.index!+part[0].lastIndexOf(quote),prior=source.slice(0,part.index!)
- if(!/(?:请|须|需|应|务必)[^。！？\n]{0,45}(?:提交|递交|填写|上传|交|申请|领取|归还|缴费)/u.test(prior)||/(?:无需|无须|不必|不要|不得|禁止|取消|另行通知|待定|如果|若|例如)/u.test(quote))return input
- const match=/^(?:请|须|需|应|务必)?\s*((?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天]\s*(?:(?:早上|上午|中午|下午|晚上)\s*)?(?:\d{1,2}[:：]\d{2})?\s*(?:之前|以前|前))?\s*(归还|缴清|提交|递交|上传|领取)\s*([^，,。；;！？\n]{2,40})$/u.exec(quote)
+ const citedPrior=tasks.some(task=>task.actionVerb&&task.actionObject&&task.evidenceIds.some(id=>{
+  const evidence=input.evidence.find(ref=>ref.id===id)?.quote??''
+  return evidence.split(/[。！？；;\n]/u).some(clause=>Boolean(clause&&prior.includes(clause)&&clause.includes(task.actionVerb)&&clause.includes(task.actionObject)))
+ }))
+ if(!citedPrior||/(?:无需|无须|不必|不要|不得|禁止|取消|另行通知|待定|如果|若|例如)/u.test(quote))return input
+ const match=/^(?:请|须|需|应|务必)?\s*(?:于|在)?\s*((?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天]\s*(?:(?:早上|上午|中午|下午|晚上)\s*)?(?:\d{1,2}[:：]\d{2})?\s*(?:之前|以前|前))?\s*(归还|缴清|提交|递交|上传|领取)\s*([^，,。；;！？\n]{2,40})$/u.exec(quote)
  if(!match||tasks.some(task=>task.actionVerb===match[2]&&task.actionObject===match[3].trim()))return input
  const [,raw,verb,objectText]=match,object=objectText.trim()
  if(!object||/(?:老师|学院|组织方|工作人员)(?:负责|将|会)/u.test(quote))return input

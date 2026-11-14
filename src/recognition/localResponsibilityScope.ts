@@ -1,10 +1,11 @@
 import type {RecognitionResult,TaskSuggestionV2} from './types'
+import {parseDirectSourceTime} from '../../cloudflare/direct-source-time.mjs'
 
 /** Local fallback: keep a clearly attributed later-party operation as source
  * context of the single preceding reader action. An unfamiliar role, multiple
  * possible parents, personal participation, and unresolved references are left
  * untouched. This never executes on an AI result. */
-export function scopeLocalOtherPartyActions(input:RecognitionResult,source:string):RecognitionResult {
+export function scopeLocalOtherPartyActions(input:RecognitionResult,source:string,sourceTimezone?:string):RecognitionResult {
  if(input.modelName!=='local-rules')return input
  const result=structuredClone(input)
  const lists=[result.standaloneTasks,...result.milestones.flatMap(stage=>[stage.tasks,...stage.workPackages.map(group=>group.tasks)])]
@@ -23,6 +24,7 @@ export function scopeLocalOtherPartyActions(input:RecognitionResult,source:strin
  const parent=candidates[0],parentQuote=quote(parent),parentAt=position(parentQuote)
  const recipient=/(?:提交给|交给|发给|递交给|给)([^，,。；;\s]{1,12})/u.exec(parentQuote)?.[1]
  const removed=new Set<string>()
+ let markedRole=false
  for(const child of all){
   if(child.tempId===parent.tempId)continue
   const text=quote(child),at=position(text)
@@ -42,6 +44,34 @@ export function scopeLocalOtherPartyActions(input:RecognitionResult,source:strin
   // when its outcome is reported to participants in the same cited clause.
   const laterActor=/^\s*([\p{Script=Han}]{2,12}?)(?:将|会)(?:在|于)?[^，,。；;\n]{0,36}?(?:审核|评审|复核|汇总|报送|上报|受理|发放|发证|公布结果)/u.exec(text)?.[1]
   const linkedOutcome=at>parentAt&&laterActor&&/(?:结果|进度)[^。；;\n]{0,24}(?:通知|反馈|告知|公布)/u.test(text)?laterActor:null
+  // A coordinated verb can inherit the named recipient as its subject:
+  // "交给某负责人，该负责人汇总并报送". The current user's role is
+  // unknown, so retain it as a conditional action rather than a universal
+  // obligation, with the recipient's own source-backed time if present.
+  const comma=Math.max(source.lastIndexOf('，',at),source.lastIndexOf(',',at)),prefix=comma>=0?source.slice(comma+1,at):''
+  const actorPrefix=prefix.trim(),actorAt=comma+1+prefix.indexOf(actorPrefix)
+  const inherited=Boolean(recipient&&actorPrefix.startsWith(recipient)&&(process.test(actorPrefix)||/(?:核对|校验|整理)/u.test(actorPrefix))&&/^\s*(?:并|同时|以及)/u.test(text)&&at>parentAt)
+  if(inherited){
+   const roleQuote=source.slice(actorAt,at+text.length),eid=`local-actor-scope:${actorAt}:${at}`
+   if(!roleQuote||roleQuote.length>500||source.indexOf(roleQuote)!==source.lastIndexOf(roleQuote)||child.evidenceIds.length>=20||result.evidence.length>=119)continue
+   const line=`适用条件待确认：${roleQuote}`
+   if(child.description.length+line.length+1>800)continue
+   if(!result.evidence.some(ref=>ref.id===eid))result.evidence.push({id:eid,sourceId:result.evidence[0]?.sourceId??'source',quote:roleQuote,quotedText:roleQuote,textStart:actorAt,textEnd:actorAt+roleQuote.length,field:'description',extractionMethod:'parser',confidence:1})
+   child.description=[child.description,line].filter(Boolean).join('\n');child.evidenceIds=[...new Set([...child.evidenceIds,eid])]
+   child.selected=false;child.userConfirmationRequired=true;child.sourceStatus='uncertain'
+   const dates=[...roleQuote.matchAll(/(?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天]\s*(?:(?:上午|中午|下午|晚上|早上)\s*)?(?:\d{1,2}\s*[:：]\s*\d{2})?\s*(?:之前|以前|前)/gu)]
+   if(dates.length===1&&!child.timePointTempIds.length&&result.evidence.length<120){
+    const raw=dates[0][0],start=actorAt+dates[0].index!,timezone=sourceTimezone??result.timePoints.find(point=>point.timezone)?.timezone??'Asia/Shanghai'
+    const parsed=parseDirectSourceTime(raw,{type:'task_deadline',referenceTime:result.createdAt,timezone})
+    if(parsed.normalizedValue&&!parsed.needsConfirmation){
+     const timeId=eid+':time',timeEvidence=eid+':time-evidence'
+     result.evidence.push({id:timeEvidence,sourceId:result.evidence[0]?.sourceId??'source',quote:raw,quotedText:raw,textStart:start,textEnd:start+raw.length,field:'deadline',extractionMethod:'parser',confidence:1})
+     result.timePoints.push({tempId:timeId,type:'task_deadline',rawText:raw,normalizedValue:parsed.normalizedValue,timezone:parsed.timezone,isAllDay:parsed.isAllDay,precision:parsed.precision,needsConfirmation:false,relatedTaskTempIds:[child.tempId],relatedMaterialTempIds:[],evidenceIds:[timeEvidence],confidence:1,selected:true})
+     child.timePointTempIds.push(timeId)
+    }
+   }
+   markedRole=true;continue
+  }
   if(at<=parentAt&&!scopedPrior)continue
   const actor=by?.[1]??(at>parentAt&&recipient&&text.trim().startsWith(recipient)?recipient:scopedPrior??scopedLater??linkedOutcome)
   if(!actor||mightBeReader.test(actor))continue
@@ -76,7 +106,7 @@ export function scopeLocalOtherPartyActions(input:RecognitionResult,source:strin
   }
   parent.description=description;parent.evidenceIds=evidence;removed.add(child.tempId)
  }
- if(!removed.size)return input
+ if(!removed.size)return markedRole?result:input
  for(const list of lists)for(let index=list.length-1;index>=0;index--)if(removed.has(list[index].tempId))list.splice(index,1)
  const eventPoints=new Set(result.events.flatMap(event=>[event.startTimePointTempId,event.endTimePointTempId]).filter(Boolean))
  result.timePoints=result.timePoints.filter(point=>!point.relatedTaskTempIds.some(id=>removed.has(id))||point.relatedTaskTempIds.some(id=>!removed.has(id))||point.relatedMaterialTempIds.length>0||eventPoints.has(point.tempId))

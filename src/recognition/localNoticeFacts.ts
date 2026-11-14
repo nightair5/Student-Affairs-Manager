@@ -3,10 +3,10 @@ export const LOCAL_NOTICE_FACTS_VERSION = 'local-notice-facts-1.3.0'
 import {documentFormats} from '../../cloudflare/notice-delivery-roles.mjs'
 export function localDelivery(text: string): {verb: string; sourceVerb: string; object: string; channel: string} | null {
   const source = text.replace(/[（(][^（）()]*[）)]/gu, '')
-  const matches = [...source.matchAll(/(?:把|将)\s*([^，,；;。！？\n]{1,60}?)\s*(提交|递交|报送|上传|发送|交到|交至|发到|发至)\s*([^，,；;。！？\n]{1,60})/gu)]
-  const direct = [...source.matchAll(/(提交|递交|报送|上传|发送)\s*([^，,；;。！？\n]{1,60}?)\s*(?:至|到|给)\s*([^，,；;。！？\n]{1,60})/gu)]
-  const candidates = matches.map(m => ({verb: /^交/u.test(m[2]) ? '提交' : /^发/u.test(m[2]) ? '发送' : m[2], sourceVerb: m[2].replace(/[到至]$/u,''), object: m[1].trim(), channel: m[3].replace(/^(?:到|至|给)\s*/u, '').trim()}))
-    .concat(direct.map(m => ({verb: m[1], sourceVerb: m[1], object: m[2].trim(), channel: m[3].trim()})))
+  const matches = [...source.matchAll(/(?:把|将)\s*([^，,；;。！？\n]{1,60}?)\s*(提交|递交|报送|上传|发送|交到|交至|交给|发到|发至|发给)\s*([^，,；;。！？\n]{1,60})/gu)]
+  const direct = [...source.matchAll(/(提交|递交|报送|上传|发送|(?<![开出催蒸])发(?!送|布|放|现|展|生|表|明)|(?<![提递上移转])交(?!给|到|至|流|换|通|接|易|往|叉|友|付))\s*([^，,；;。！？\n]{1,60}?)\s*(?:至|到|给)\s*([^，,；;。！？\n]{1,60})/gu)]
+  const candidates = matches.map(m => ({verb: /^交/u.test(m[2]) ? '提交' : /^发/u.test(m[2]) ? '发送' : m[2], sourceVerb: m[2].replace(/[到至给]$/u,''), object: m[1].trim(), channel: m[3].replace(/^(?:到|至|给)\s*/u, '').trim()}))
+    .concat(direct.map(m => ({verb: m[1]==='发'?'发送':m[1], sourceVerb: m[1], object: m[2].trim(), channel: m[3].trim()})))
   // A directly addressed “请周日交资料给老师” is a handoff. Requiring
   // the complete object-and-recipient grammar avoids matching the last
   // character of “提交至平台” as a new verb.

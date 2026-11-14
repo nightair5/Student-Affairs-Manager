@@ -9,7 +9,7 @@ import {completeNumberedActions} from './directNumberedActions'
 import {retainLocalEventDetails} from './localEventDetails'
 import {retainSourceEventContext} from './retainSourceEventContext'
 import {recoverLabeledLocalEvent} from './directLabeledEvent'
-import {completeParallelSessions,linkFollowingFormChannel,linkReferencedEventActions} from './directParallelSessions'
+import {completeParallelSessions,linkFollowingFormChannel,linkReferencedEventActions,retainNamedEventRegistration,retainForEventRegistration} from './directParallelSessions'
 import {projectLocalDeliveryRoles} from './deliveryRoleProjection'
 import {localActionExplicitlyNegated} from './localActionPolarity'
 import {localMaterialOwnership} from './localMaterialOwnership'
@@ -18,7 +18,7 @@ import {boundLocalResult} from './localResultCapacity'
 import {scopeLocalOtherPartyActions} from './localResponsibilityScope'
 import {retainLocalConditionalMaterials} from './localConditionalMaterials'
 import {indexLocalSections} from './localSectionScope'
-import {repairLocalDeliveryOwnership,retainLocalOwnedWeekdayDeadlines,retainLocalConditionalFollowup,retainLocalCitedAttendance,retainLocalOwnedEventTimes,retainLocalSeparateDirective,retainLocalRecruitmentGroups,retainLocalRecruitmentFlow,retainLocalJointGoal,retainLocalLocationCorrection} from './localScopeRepair'
+import {repairLocalDeliveryOwnership,retainLocalOwnedWeekdayDeadlines,retainLocalConditionalFollowup,retainLocalCitedAttendance,retainLocalOwnedEventTimes,retainLocalSeparateDirective,retainLocalRecruitmentGroups,retainLocalRecruitmentFlow,retainLocalJointGoal,retainLocalLocationCorrection,retainLocalUndatedClockEvent,detachOtherActorTime,retainCoordinatedAction} from './localScopeRepair'
 import {isEventEligibility} from '../../cloudflare/event-eligibility.mjs'
 import {sourceActionWeekday,sourceWeekdayAlternatives,formatSourceWeekdayAlternatives} from '../../cloudflare/source-action-weekday.mjs'
 
@@ -26,7 +26,14 @@ import {sourceActionWeekday,sourceWeekdayAlternatives,formatSourceWeekdayAlterna
 export function improveDirectFallback(input:RecognitionResult,source:string,options:{scopeAware?:boolean;timezone?:string}={}):RecognitionResult {
  const actions=removeDuplicatedActionEvents(improveLocalActions(retainLocalOwnedWeekdayDeadlines(repairLocalDeliveryOwnership(input,source,options.timezone),source,options.timezone),source,options))
  const improved=retainLocalEventDetails(retainSourceEventContext(recoverLabeledLocalEvent(completeNumberedActions(completeDirectLocalFacts(projectLocalDeliveryRoles(actions,source),source),source),source),source),source)
- const result=boundLocalResult(retainLocalConditionalMaterials(scopeLocalOtherPartyActions(clearUndatedSingleEventRevision(attachExplicitSharedGoal(linkReferencedEventActions(linkFollowingFormChannel(completeParallelSessions(removeLocalSectionHeadings(localMaterialOwnership(localSubmissionChoices(repairLocalDeliveryOwnership(improved,source,options.timezone),source,{inlineSharedObject:options.scopeAware,timezone:options.timezone}),source)),source,true,options.timezone),source),source),source),source),source),source))
+ const choices=localSubmissionChoices(repairLocalDeliveryOwnership(improved,source,options.timezone),source,{inlineSharedObject:options.scopeAware,timezone:options.timezone})
+ const sections=removeLocalSectionHeadings(localMaterialOwnership(choices,source))
+ const sessions=completeParallelSessions(sections,source,true,options.timezone)
+ const registration=retainForEventRegistration(retainNamedEventRegistration(sessions,source,options.timezone),source,options.timezone)
+ const linked=linkReferencedEventActions(linkFollowingFormChannel(registration,source),source)
+ const grouped=attachExplicitSharedGoal(linked,source)
+ const actorScope=scopeLocalOtherPartyActions(clearUndatedSingleEventRevision(grouped,source),source,options.timezone)
+ const result=boundLocalResult(retainLocalConditionalMaterials(actorScope,source))
  const rows=source.split(/\r?\n/u).map(line=>line.trim()).filter(line=>/^[\p{Script=Han}\d]{1,12}场[：:]/u.test(line)&&!/^(?:报名|申请|提交|缴费)/u.test(line))
  if(rows.length>1&&result.events.length<rows.length){
   const reason='部分内容尚未完整整理（活动场次），请核对原文'
@@ -50,7 +57,8 @@ export function improveDirectFallback(input:RecognitionResult,source:string,opti
  adjusted=retainLocalRecruitmentFlow(adjusted,source,options.timezone)
  adjusted=retainLocalJointGoal(adjusted,source)
  adjusted=retainLocalOwnedEventTimes(adjusted,source,options.timezone)
- return retainLocalSeparateDirective(adjusted,source,options.timezone)
+ adjusted=retainLocalUndatedClockEvent(adjusted,source)
+ return detachOtherActorTime(retainCoordinatedAction(retainLocalSeparateDirective(adjusted,source,options.timezone),source),source)
 }
 
 /** Preserve only a source-cited weekday for the task which owns its action. */
@@ -321,7 +329,20 @@ function improveLocalActions(input:RecognitionResult,source:string,options:{scop
   if(!verb&&registration){verb=registration[2];object=registration[1].replace(/^(?:报名|登记|申请)/u,'')||registration[1]}
   const routed=/(?:平台|系统)(提交|上传|填写)([^，,；;]{2,45})/u.exec(plain)
   if(routed&&(!verb||/申请|报名/u.test(verb))){verb=routed[1];object=routed[2].trim()}
-  if(!verb){const m=/(?:请|须|需|应|可|有意|自愿|学生|同学)[^。；]{0,40}?(申请|申报|报名|提交|递交|报送|上传|填写|登记|预约|缴费|领取)\s*([^，,；;：:]{1,55})/u.exec(plain);if(m){verb=m[1];object=m[2].replace(/[（(][^）)]*[）)]/gu,'').replace(/^(?:本次|此次|该项)/u,'').split(/至|到|并|后|前|进行|即可/u)[0].trim()}}
+  // A labelled method can itself contain an imperative ("报名方式：填写…").
+  // Capture the stated object rather than manufacturing one from the heading.
+  if(!verb&&localSectionHeading.test(q)){
+   const labelled=/^\s*(填写|填报|提交|递交|上传|登记|预约|领取)\s*([^，,；;：:。！？\n]{2,55})/u.exec(plain)
+   if(labelled){verb=labelled[1];object=labelled[2].split(/至|到|给|并|后|前|进行|即可/u)[0].trim()}
+  }
+  // State words inside an addressed audience (“未登记的同学”) describe
+  // who should act. Prefer the predicate after that audience instead of
+  // mistaking the embedded state verb for the requested action.
+  if(!verb){
+   const addressed=/(?:请|由)([^，,。；;\n]{1,24}?(?:学生|同学|人员|成员|班长|负责人))(?:须|需|应|请)?\s*(提交|递交|报送|上传|发送|填写|登记|预约|缴费|领取)\s*([^，,；;：:。！？\n]{2,55})/u.exec(plain)
+   if(addressed){verb=addressed[2];object=addressed[3].split(/至|到|给|并|后|前|进行|即可/u)[0].trim()}
+  }
+  if(!verb){const m=/(?:请|须|需|应|可|有意|自愿|学生|同学)[^。；]{0,40}?(申请|申报|报名|提交|递交|报送|上传|填写|登记|预约|缴费|领取|交(?!给|到|至|流|换|通|接|易|往|叉|友|付))\s*([^，,；;：:]{1,55})/u.exec(plain);if(m){verb=m[1];object=m[2].replace(/[（(][^）)]*[）)]/gu,'').replace(/^(?:本次|此次|该项)/u,'').split(/至|到|并|后|前|进行|即可/u)[0].trim()}}
   if(!verb){const m=/^\s*(?:并|以及|同时)(?:请)?(提交|递交|报送|上传|发送|填写|登记|领取|缴费|申请|报名)\s*([^，,；;：:。！？\n]{2,55})/u.exec(plain);if(m){verb=m[1];object=m[2].split(/至|到|给|并|后|前|进行|即可/u)[0].trim()}}
   if(!verb){const m=/(?:^|[，,]|后|分钟)(?:请(?:大家|同学们)?(?:准时)?|需要|须|应|需)?参加([^。；，,]{2,40})/u.exec(plain);if(m&&!/^(?:者|人员|资格|条件|对象)|的同学|的学生/u.test(m[1])){verb='参加';object=m[1].trim()}}
   if(/申请者须|^申请截止|^材料截止|^三、申请截止/u.test(q))continue
@@ -330,10 +351,24 @@ function improveLocalActions(input:RecognitionResult,source:string,options:{scop
   if(localActionExplicitlyNegated(q,verb,object))continue
   const actionClause=q.split(/[，,；;]/u).find(c=>c.includes(verb!))??q
   if(/取消|作废|禁止|不得|无需|无须|不必|不再|请勿/u.test(actionClause.replace(/取消[^，。；]{0,10}资格|不得兼得/gu,'')))continue
-  if(!registration&&/^(?:至|到|在|于|所需|相关|以下|的材料|申请$|材料$|表$)|系统|[（(]/u.test(object)&&subject){object=subject}
+  // A directly named object is stronger than a guessed notice-wide topic.
+  // For example, "在线报名表" begins with 在 but is still the object of
+  // "填写"; replacing it with a heading invents a different delivery.
+  const literalAction=(plain.replace(/\s/gu,'')).includes((verb+object).replace(/\s/gu,''))
+  if(!registration&&!literalAction&&/^(?:至|到|在|于|所需|相关|以下|的材料|申请$|材料$|表$)|系统|[（(]/u.test(object)&&subject){object=subject}
   object=object.replace(/交$/u,'').replace(/(?:截止时间|截止日期|时间为|时间：).*$/u,'').replace(/(?:的通知|有关事项|相关事宜)$/u,'').trim()
   if(object.length<2||object.length>70||!source.includes(object))continue
   if(/^(?:申请|申报|报名)$/u.test(verb)&&subject&&(/^(?:申请|申报|报名|资料|材料|信息|所需)/u.test(object)||object.length>26))object=subject
+  // A source topic or a noun phrase such as "报名同学的活动" is not an
+  // instruction to register. Require the literal predicate/object pair, or
+  // a separately parsed object-before-verb delivery, within this same span.
+  const nominalPerson=/^(?:同学|学生|人员|者|人)(?:的|们)/u.test(object)&&/^(?:报名|申请|申报|登记)$/u.test(verb)
+  const supportedForward=plain.replace(/\s/gu,'').includes((verb+object).replace(/\s/gu,''))
+  const supportedDelivery=Boolean(delivery&&delivery.verb===verb&&delivery.object===object)
+  // An explicit registration system opening may justify an optional reading
+  // or registration suggestion; it does not prove that every reader must apply.
+  const availability=/^(?:报名|申请|申报)$/u.test(verb)&&object===subject&&/(?:报名|申请|申报)(?:系统|平台)[^。；;\n]{0,70}(?:开放|开启|开通)/u.test(q)
+  if(nominalPerson||!supportedForward&&!supportedDelivery&&!registration&&!choice&&!availability)continue
   if(tasks.some(t=>(t.actionVerb===verb||/申请|申报/u.test(t.actionVerb)&&/申请|申报/u.test(verb!))&&t.actionObject===object))continue
   const id=`local-direct-${span.at}`,eids=[evidence(q,span.at,'description')]
   if(!q.includes(object)&&heading.includes(object))eids.push(evidence(heading,0,'description'))
@@ -348,7 +383,7 @@ function improveLocalActions(input:RecognitionResult,source:string,options:{scop
   const isConditional=options.scopeAware?Boolean(realEligibility):/符合|参评|面向|对象|申请条件|自愿|有意|仅限|推荐名额|申请者|本科生|研究生|获得[^，。]{0,20}同学/u.test(source)
   const eligibility=options.scopeAware?realEligibility:spans.find(s=>/符合|面向|对象|申请条件|自愿|仅限|申请者/u.test(s.text));if(isConditional&&eligibility)eids.push(evidence(eligibility.text,eligibility.at,'description'))
   const taskTitle=registration&&!delivery&&verb===registration[2]?`完成${object}${verb}`:verb+object+(/提交|报送|上传/u.test(verb)&&/奖学金$|助学金$/u.test(object)?'申请材料':'')
-  const t:TaskSuggestionV2={tempId:id,parentTempId:null,hierarchyType:'task',title:cleanDirectTopic(taskTitle),actionVerb:verb,actionObject:object,description:q+(isConditional?'\n适用条件待确认：'+(eligibility?.text??q):''),completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:eids,confidence:1,inferenceLevel:'strong_inference',userConfirmationRequired:true,selected:!isConditional}
+  const t:TaskSuggestionV2={tempId:id,parentTempId:null,hierarchyType:'task',title:cleanDirectTopic(taskTitle),actionVerb:verb,actionObject:object,description:q+(isConditional?'\n适用条件待确认：'+(eligibility?.text??q):''),completionCriteria:[],estimatedMinutes:null,statusSuggestion:'todo',prioritySuggestion:'medium',dependencyTempIds:[],materialTempIds:[],timePointTempIds:[],evidenceIds:eids,confidence:1,inferenceLevel:availability?'optional_suggestion':'strong_inference',userConfirmationRequired:true,selected:!isConditional&&!availability}
   const own=cutoff(q),formCutoffs=allCutoffs.filter(s=>/纸质|电子/u.test(object!)&&s.at>span.at&&s.at-span.at<200&&/纸质|电子/u.test(s.text))
   const uniqueCutoff=allCutoffs.length===1?allCutoffs[0]:null
   const between=uniqueCutoff?source.slice(Math.min(uniqueCutoff.at,span.at),Math.max(uniqueCutoff.at,span.at)):''

@@ -43,7 +43,7 @@ export function retainLocalEventDetails(result:RecognitionResult,source:string):
   speakerContinuation=false
   if(/^(?:时间|地点|主办|报名|个人简介|嘉宾简介)[：:]?/u.test(quote))contentSection=false
   if(/(?:主讲|报告人|主讲嘉宾|讲师)(?:为|是|[：:]|由)|(?:老师|教授|研究员|记者)主讲/u.test(quote)){details.push({label:'主讲人',quote,start});continue}
-  if(noticeSection||/(?:提前[^。]{0,10}(?:入场|到场)|(?:参与|参加).{0,15}(?:学时|集活)|参与人数|扫码|扫描.{0,5}二维码|现场咨询|有意向|感兴趣|本次活动.{0,15}报名|报名(?:方式|链接|二维码)|名额有限|先到先得|(?:自行解决|解决).{0,10}(?:入校|入馆)|现场.{0,12}(?:互动|赠书|获赠))/u.test(quote)){details.push({label:'参加须知',quote,start});continue}
+  if(noticeSection||/(?:提前[^。]{0,10}(?:入场|到场)|(?:请|须|需|应|建议)(?:已报名|报名|参加|参与|入场|到场|现场)[^。；;\n]{0,20}(?:携带|带上)[^。；;\n]{1,45}|(?:参与|参加).{0,15}(?:学时|集活)|参与人数|扫码|扫描.{0,5}二维码|现场咨询|有意向|感兴趣|本次活动.{0,15}报名|报名(?:方式|链接|二维码)|名额有限|先到先得|(?:自行解决|解决).{0,10}(?:入校|入馆)|现场.{0,12}(?:互动|赠书|获赠))/u.test(quote)){details.push({label:'参加须知',quote,start});continue}
   if(contentSection||/(?:将|主要|针对|围绕).{0,60}(?:讲解|介绍|分享|展开|播放)/u.test(quote)||/现场.{0,12}播放/u.test(quote)){details.push({label:'活动内容',quote,start});continue}
   if(event.tempId==='local-labelled-event'&&quote.length>=12&&!/^【[^】]+】$/u.test(quote)&&!/^【[^】]+】.*$/u.test(quote)&&!/^(?:\[[^\]\n]{1,8}\])+$/u.test(quote)&&!/(?:请|须|需|应|务必)[^。；\n]{0,35}(?:填写|提交|报名|登记|上传|申请|预约|缴费)/u.test(quote)){
    // With one explicitly labelled event, source prose is useful activity

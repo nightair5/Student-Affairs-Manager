@@ -23,7 +23,7 @@ const flatTasks = (r: RecognitionResult) => [...r.standaloneTasks, ...r.mileston
 const compact = (s: string) => s.normalize('NFKC').replace(/[\s\p{P}\p{S}]+/gu, '')
 const cancelled = /取消|作废|废止|不再(?:举办|举行|提交|报名|申请|参加|出席)|禁止|(?:不得|不要|请勿|不能|不可)(?:提交|报名|申请|参加|出席|领取)|(?:无需|无须|不必|不用|不需要)(?:再|另行)?(?:提交|报名|申请|参加|出席|领取|填写|上传)/u
 const conditional = /(?:若|如果|如已|如需|符合.{0,18}条件|有意|自愿|入选后|录取后|(?:取得|获得)(?:相关|参赛|录取)?资格后|已缴费|放弃修读|仅限|限.{0,10}学生)/u
-const deadline = /截止|最迟|不晚于|不得(?:晚于|迟于)|之前|以前|前(?:[，,。；;\s]|将|把|须|需|请|提交|交到|交至|送至|送到|递交|发送|寄送|上交|完成|报送|报名|申请|办理|领取|上传|填写|登记|预约|归还|缴清|$)|(?:\d{1,2}(?:日|号|点|时|分)|\d{1,2}:\d{2})\s*前(?:通过|在线)|于.{0,32}(?:提交|交至|交到|报送|发送|寄送|上交)/u
+const deadline = /截止|最迟|不晚于|不得(?:晚于|迟于)|之前|以前|前(?:[，,。；;\s]|将|把|须|需|请|为[^，,。；;\n]{1,24}报名|提交|交到|交至|交(?!流|换|通|接|易|往|叉|友|付)|送至|送到|递交|发送|寄送|上交|完成|报送|汇总|核对|校验|整理|报名|申请|办理|领取|上传|填写|登记|预约|归还|缴清|$)|(?:\d{1,2}(?:日|号|点|时|分)|\d{1,2}:\d{2})\s*前(?:通过|在线)|于.{0,32}(?:提交|交至|交到|报送|发送|寄送|上交)/u
 const alternatives = /任选|备选|可选择|任一|(?:日|号|\d)\s*(?:或|、).{0,18}(?:日|号)/u
 const recordTasks = (r: RecognitionResult) => new Map(flatTasks(r).map(t => [t.tempId, t]))
 
@@ -165,11 +165,13 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     if(result.modelName==='local-rules'&&own&&ownWeekdays.length===1){
       return parseDirectSourceTime(ownWeekdays[0][0]+' '+p.rawText,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
     }
-    const weekdays=[...sourceText.matchAll(weekdayPattern)]
-    const weekdayAnchor=own&&weekdays.length===1&&refs.find(ref=>ref.at<=own.at&&ref.quote.includes(weekdays[0][0]))
-    if(result.modelName==='local-rules'&&own&&ownWeekdays.length===0&&weekdayAnchor){
-      const between=sourceText.slice(weekdayAnchor.at,own.at)
-      if(!/(?:另有|另外|另请|取消|改期|延期|报名|提交|缴费|截止)/u.test(between))return parseDirectSourceTime(weekdays[0][0]+' '+p.rawText,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
+    const anchors=own?[...new Map(refs.flatMap(ref=>ref.at<=own.at?[...ref.quote.matchAll(weekdayPattern)].map(day=>[`${ref.at+day.index!}:${day[0]}`,{day:day[0],at:ref.at+day.index!}] as const):[])).values()]:[]
+    if(result.modelName==='local-rules'&&own&&ownWeekdays.length===0&&anchors.length===1){
+      const anchor=anchors[0],between=sourceText.slice(anchor.at,own.at)
+      const interveningDays=[...between.matchAll(weekdayPattern)]
+      // Another task can have a weekday elsewhere in the notice. Only a date
+      // inside this event's cited heading-to-row span can affect ownership.
+      if(interveningDays.length===1&&!/(?:另有|另外|另请|取消|改期|延期|报名|提交|缴费|截止|(?:\d{4}年)?\d{1,2}月\d{1,2}[日号])/u.test(between))return parseDirectSourceTime(anchor.day+' '+p.rawText,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
     }
     const ownDates=own?[...own.quote.matchAll(/(?:\d{4}年)?\d{1,2}月\d{1,2}[日号]/gu)]:[]
     if(result.modelName==='local-rules'&&own&&ownDates.length===1){
