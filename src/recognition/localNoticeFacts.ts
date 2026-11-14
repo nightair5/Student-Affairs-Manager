@@ -36,10 +36,15 @@ export function localDelivery(text: string): {verb: string; sourceVerb: string; 
   return unique.length === 1 && unique[0].object && unique[0].channel ? unique[0] : null
 }
 export function localEventLocation(text: string): {name: string; location: string} | null {
-  const matches = [...text.matchAll(/在\s*([^，,；;。！？\n]{1,35}?)\s*(?:召开|举行|举办|参加|开展|观看|开)([^，,；;。！？\n]{1,60})/gu)]
-  if (matches.length !== 1) return null
-  const [, location, name] = matches[0]
-  return {name: name.trim(), location: location.trim()}
+  const forward = [...text.matchAll(/在\s*([^，,；;。！？\n]{1,35}?)\s*(?:召开|举行|举办|参加|开展|进行|观看|开)([^，,；;。！？\n]{1,60})/gu)]
+    .map(match => ({location: match[1].trim(), name: match[2].trim()}))
+  // Here the location modifies the event noun, rather than preceding an
+  // attendance verb. The occurrence predicate is necessary: a place alone
+  // does not turn a submission, description or cancelled event into a meeting.
+  const nominal = [...text.matchAll(/在\s*([^，,；;。！？\n]{1,35}?)的\s*([^，,；;。！？\n]{2,40}?)\s*(?:照常|正常|继续)?(?:举行|举办|开展|进行)(?=$|[，,；;。！？\n])/gu)]
+    .map(match => ({location: match[1].trim(), name: match[2].trim()}))
+  const matches = [...forward, ...nominal]
+  return matches.length === 1 ? matches[0] : null
 }
 /** A place explicitly labelled inside this event's own quotation. Never use a
  * document-wide location or turn a pending announcement into a real place. */

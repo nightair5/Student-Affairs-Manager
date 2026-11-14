@@ -84,7 +84,7 @@ function parseAnchor(
 }
 
 function isRangeContinuation(content: string, index: number): boolean {
-  return /(?:-|–|—|至|到)\s*$/u.test(content.slice(Math.max(0, index - 6), index))
+  return /(?:-|－|–|—|至|到)\s*(?:(?:次日|翌日|第二天)\s*)?$/u.test(content.slice(Math.max(0, index - 16), index))
 }
 
 function findTemporalAnchors(content: string): TemporalAnchor[] {
@@ -105,7 +105,12 @@ function parseTemporal(
   const anchors = findTemporalAnchors(content)
   if (anchors.slice(1).some((anchor, index) => /或|任选|备选|择一/u.test(content.slice(anchors[index].index + anchors[index].text.length, anchor.index)))) return null
   const anchor = anchors[0]
-  return anchor ? parseAnchor(anchor.text, previousContext, now, timezone) : null
+  if (!anchor) return null
+  // A range is one temporal fact. In particular, the next day's clock must
+  // neither create a second action nor be parsed relative to the input day.
+  const tail = content.slice(anchor.index + anchor.text.length)
+  const range = new RegExp(`^\\s*[-－–—至到]\\s*(?:(?:次日|翌日|第二天)\\s*)?${clockSource}`, 'u').exec(tail)
+  return parseAnchor(anchor.text + (range?.[0] ?? ''), previousContext, now, timezone)
 }
 
 function inferMaterials(content: string): string[] {

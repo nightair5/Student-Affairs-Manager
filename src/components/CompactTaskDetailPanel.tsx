@@ -13,7 +13,7 @@ import {MaterialFactsList} from './MaterialFactsList'
 import {MaterialEditor} from './MaterialEditor'
 import {SourceNoticeContext} from './SourceNoticeContext'
 
-export function CompactTaskDetailPanel({task,sources,sourceContext,onClose,onComplete,onUpdate,onSaveTaskPatch,editDraft,onEditDraft,materialEditDrafts,onEditMaterialDraft,onSaveMaterial,onDelete,onDirectEdit,onScheduleTask,canonicalMaterials,canonicalGoalMaterials,semanticContent,onAdvanced,linkedEvent,eventTimeHint}:TaskDetailPanelProps&{onAdvanced:()=>void}){
+export function CompactTaskDetailPanel({task,sources,sourceContext,onClose,onComplete,onRestore,onUpdate,onSaveTaskPatch,editDraft,onEditDraft,materialEditDrafts,onEditMaterialDraft,onSaveMaterial,onDelete,onDirectEdit,onScheduleTask,canonicalMaterials,canonicalGoalMaterials,semanticContent,onAdvanced,linkedEvent,eventTimeHint}:TaskDetailPanelProps&{onAdvanced:()=>void}){
   const initialDate=flowEditValue(task.deadline||task.directDate)
   const linked=sources.filter(s=>task.sourceIds.includes(s.id))
   const publicNotes=taskPublicDescription(task)
@@ -48,6 +48,6 @@ export function CompactTaskDetailPanel({task,sources,sourceContext,onClose,onCom
       <section className="detail-primary-section" aria-label="备注"><label className="compact-notes-label">备注<textarea aria-label="备注" placeholder="添加备注" value={notes} rows={notes?3:2} onChange={e=>{setNotes(e.target.value);onEditDraft?.('description',e.target.value===publicNotes?undefined:e.target.value)}} onBlur={()=>{if(notes!==publicNotes)void savePatch({description:notes})}}/></label></section>
       <details className="detail-more"><summary>更多 <ChevronDown size={15}/></summary><button type="button" className="text-button" onClick={onAdvanced}>提醒与导出到手机日历</button>{semanticContent}<section className="compact-source"><h3>查看原文</h3>{linked.map(s=><div key={s.id}><strong>{s.title}</strong><p>{s.rawText||s.content||s.contentPreview}</p></div>)}</section>{task.history.length>0&&<details><summary>修改记录</summary><ul>{task.history.slice(-8).map(h=><li key={h.id}>{h.field}：{h.after}</li>)}</ul></details>}</details>
     </div>
-    <footer className="detail-footer"><button className="text-button danger-text" type="button" disabled={!onDelete||busy} onClick={()=>{setError('');void onDelete?.().catch(reason=>setError(reason instanceof Error&&reason.message.startsWith('更改已保存')?reason.message:'没有删除成功，请重试。'))}}><Trash2 size={16}/>删除</button><button className="primary-button" type="button" disabled={task.status==='已完成'||busy} onClick={()=>onComplete(task.id)}><CheckCircle2 size={17}/>{task.status==='已完成'?'已完成':'完成'}</button></footer>
+    <footer className="detail-footer"><button className="text-button danger-text" type="button" disabled={!onDelete||busy} onClick={()=>{setError('');void onDelete?.().catch(reason=>setError(reason instanceof Error&&reason.message.startsWith('更改已保存')?reason.message:'没有删除成功，请重试。'))}}><Trash2 size={16}/>删除</button><button className="primary-button" type="button" disabled={busy||(task.status==='已完成'&&!onRestore)} onClick={()=>task.status==='已完成'?onRestore?.(task.id):onComplete(task.id)}><CheckCircle2 size={17}/>{task.status==='已完成'?(onRestore?'恢复未完成':'已完成'):'完成'}</button></footer>
   </aside></div>
 }

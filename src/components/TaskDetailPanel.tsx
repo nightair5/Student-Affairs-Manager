@@ -70,6 +70,7 @@ export interface TaskDetailPanelProps {
   sources: Source[]
   onClose: () => void
   onComplete: (taskId: string) => void
+  onRestore?: (taskId: string) => void
   onUpdate: (taskId: string, patch: Partial<Task>) => void
   onSaveTaskPatch?: (taskId: string, patch: Partial<Task>) => Promise<void>
   editDraft?: { title?: string; description?: string }

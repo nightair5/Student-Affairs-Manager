@@ -256,7 +256,8 @@ export function buildLocalRecognition(input: RecognitionInput): RecognitionResul
     // invited to participate.
     const invitation=localAttendanceDirective(item.evidence)||/(?:欢迎|邀请|建议)[^。；;\n]{0,24}(?:参加|出席|到场)/u.test(item.evidence)
     const organiserOnly=Boolean(watchedGathering&&localOrganizerOnlyEvent(item.evidence,watchedGathering.name))
-    const heldGathering=Boolean(watchedGathering&&/(?:举行|举办|召开)/u.test(item.evidence)
+    const heldGathering=Boolean(watchedGathering&&(invitation||/(?:举行|举办|召开|进行)/u.test(item.evidence))
+      &&!/^(?:提交|递交|上传|发送|填写|报名|申请|缴费|领取|下载|打印)/u.test(watchedGathering.name)
       &&(invitation||!organiserOnly&&!/^(?:评审|审核|审查|复核|汇总|报送|公布|公示)/u.test(watchedGathering.name)))
     const eventCandidate=Boolean(meeting)||isWatchedEvent||heldGathering||(eventPattern.test(task.title)||namedGathering) && !/准备|制作|撰写|完成/u.test(task.title)
     const isEvent=eventCandidate&&(!organiserOnly||invitation)

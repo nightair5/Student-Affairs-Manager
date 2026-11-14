@@ -12,8 +12,9 @@ import {sourceSupportsObjectParts} from '../../cloudflare/two-step-contextual-it
 import {alignRecognitionEvidence} from '../../cloudflare/source-text-index.mjs'
 import {convertSemanticNotice} from './directSemanticNotice'
 import {isSemanticNoticeVersion} from './semanticNoticeVersion'
-import {localActionExplicitlyNegated,localBackgroundNotUserAction,localHistoricalEventOnly} from './localActionPolarity'
+import {localActionExplicitlyNegated,localBackgroundNotUserAction,localHistoricalEventOnly,localEventCancelledByReference} from './localActionPolarity'
 import {localTimeRoleConflict,timeSourceContext} from './directTimeSafety'
+import {localSameDayTime,localDeliveryReferenceForTask,localEventYearUnresolved} from './localReferencedFacts'
 
 export const DIRECT_MODE_VERSION = 'direct-mode-1'
 export type DirectTag = '时间待定' | '如符合条件' | '待确认'
@@ -91,7 +92,8 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     if (!text || !object || !compact(text).includes(object)&&!compositeObject || !t.actionVerb.trim() || /待核对|待确认事项/u.test(t.title)) {
       omitted.push({ id: t.tempId, reason: 'OBJECT_OR_ACTION_NOT_GROUNDED' }); return []
     }
-    if (isCancelled(text, t.actionObject) || result.modelName==='local-rules'&&localActionExplicitlyNegated(text,t.actionVerb,t.actionObject)) { omitted.push({id:t.tempId,reason:'CANCELLED_OR_PROHIBITED'}); return [] }
+    const formReference=localDeliveryReferenceForTask(result,sourceText,t)
+    if (!formReference&&(isCancelled(text, t.actionObject) || result.modelName==='local-rules'&&localActionExplicitlyNegated(text,t.actionVerb,t.actionObject))) { omitted.push({id:t.tempId,reason:'CANCELLED_OR_PROHIBITED'}); return [] }
     if (result.modelName==='local-rules'&&localBackgroundNotUserAction(text,t.actionVerb,t.actionObject)) { omitted.push({id:t.tempId,reason:'BACKGROUND_NOT_USER_ACTION'}); return [] }
     const voluntaryOnly=(s:string)=>options.scopeAware&&/(?:有意愿|有意向|有意|感兴趣|自愿|愿意|欢迎|希望参加)/u.test(s)&&!isEventEligibility(s)
     const citedConditions=[...t.description.matchAll(/(?:适用条件待确认|资格待确认|适用条件)[:：]([^\n]+)/gu)]
@@ -117,6 +119,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     const text = context(e.evidenceIds), name = compact(e.title)
     const cores=(e.title.includes(' · ')?e.title.split(' · '):e.title.replace(/(?:参加|关于|召开|举行|出席)/gu,'').split(/和|与|及|暨/u)).map(compact).filter(Boolean)
     if(result.modelName==='local-rules'&&localHistoricalEventOnly(text,e.title)){omitted.push({id:e.tempId,reason:'HISTORICAL_BACKGROUND_NOT_EVENT'});return []}
+    if(result.modelName==='local-rules'&&localEventCancelledByReference(text,e.title)){omitted.push({id:e.tempId,reason:'EVENT_CANCELLED_BY_SOURCE_REFERENCE'});return []}
     if (!text || !name || !cores.length || !cores.every(word=>compact(text).includes(word)) || cores.some(core=>isCancelled(text,core,eventDetailContract))) { omitted.push({id:e.tempId,reason:'EVENT_UNGROUNDED_OR_CANCELLED'}); return [] }
     // A submission call is not itself a scheduled event. Keep an explicitly
     // held activity even when its date is unknown; only isolate a title that
@@ -222,17 +225,25 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     // own action and object; a later handler's date remains a separate fact.
     const handoffCutoff=/_deadline$/u.test(p.type)&&tasks.some(task=>p.relatedTaskTempIds.includes(task.tempId)&&task.actionVerb==='交'&&task.actionObject
       &&quotes(p.evidenceIds).some(quote=>['给','到','至'].some(destination=>compact(quote).includes(`${compact(raw)}前交${compact(task.actionObject)}${destination}`))))
-    const risky = alternatives.test(roleText) || (/_deadline$/u.test(p.type) && (!deadline.test(roleText)&&!applicationCutoff&&!handoffCutoff || /办理时段|开放时间|领取时段/u.test(roleText) && !/截止|最迟/u.test(roleText)))
+    // A closed delivery-form reference retains its own explicit cutoff even
+    // when the second clause elides the material name. The proof must belong
+    // to this task and cite this exact time; it cannot donate a sibling date.
+    const referencedCutoff=/_deadline$/u.test(p.type)&&tasks.some(task=>p.relatedTaskTempIds.includes(task.tempId)
+      &&localDeliveryReferenceForTask(result,sourceText,task)?.time===raw)
+    const risky = alternatives.test(roleText) || (/_deadline$/u.test(p.type) && (!deadline.test(roleText)&&!applicationCutoff&&!handoffCutoff&&!referencedCutoff || /办理时段|开放时间|领取时段/u.test(roleText) && !/截止|最迟/u.test(roleText)))
     const weekdayRaw=raw.replace(/^\s*(?:活动|会议|讲座|培训)?时间[：:]\s*/u,'')
     const prefix=text.slice(0,Math.max(0,text.indexOf(raw)))
     const clause=prefix.slice(Math.max(...['。','；',';','，',',','！','!','？','?'].map(mark=>prefix.lastIndexOf(mark)))+1)
     const eventTimeLabel=/^\s*(?:活动|会议|讲座|培训)?时间[：:]\s*周/u.test(raw)||/(?:^|\s)(?:活动|会议|讲座|培训)?时间[：:]\s*$/u.test(clause)
     const inferredWeekday=p.type==='event_start'&&(p.tempId==='local-direct-optional-event:start'||eventDetailContract&&eventIds.has(p.tempId)&&eventTimeLabel&&!/(?:报名|申请|提交|缴费|预约|截止|截至)/u.test(clause)&&Boolean(sameWeekdayTime(weekdayRaw,result.createdAt,p.timezone)))
-    if (unsupported || risky || result.modelName==='local-rules'&&localTimeRoleConflict(p,sourceText) || deadlineConflicts.has(p.tempId)||p.relatedTaskTempIds.some(id=>deadlineConflicts.has(id))||!p.normalizedValue || p.needsConfirmation && p.precision !== 'date_only'&&!inferredWeekday) return unknown()
+    const ambiguousLocalYear=result.modelName==='local-rules'&&eventIds.has(p.tempId)&&localEventYearUnresolved(sourceText,raw)
+    if (unsupported || risky || ambiguousLocalYear || result.modelName==='local-rules'&&localTimeRoleConflict(p,sourceText) || deadlineConflicts.has(p.tempId)||p.relatedTaskTempIds.some(id=>deadlineConflicts.has(id))||!p.normalizedValue || p.needsConfirmation && p.precision !== 'date_only'&&!inferredWeekday) return unknown()
     const nextDayAnchor=anchoredNextDay(p)
     if(p.type==='event_end'&&/(?:次日|翌日)/u.test(raw)&&!nextDayAnchor)return unknown()
     if(p.normalizedValue){
-      let parsed=parseDirectSourceTime(raw,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone,inheritedDate:nextDayAnchor})
+      const sameDayOwner=result.modelName==='local-rules'?events.find(event=>event.startTimePointTempId===p.tempId||event.endTimePointTempId===p.tempId):undefined
+      const sameDay=sameDayOwner?localSameDayTime(sourceText,sameDayOwner.title,raw,result.createdAt,p.timezone):null
+      let parsed=sameDay?.parsed??parseDirectSourceTime(raw,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone,inheritedDate:nextDayAnchor})
       const correction=/(?:改为|调整为|更正为|延期至|现为)([^。；;\n]*)/u.exec(text)
       if(correction)parsed=parseDirectSourceTime(correction[1],{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})
       else if(parsed.dateKind==='none')parsed=inlineSessionTime(p)??(inferredWeekday?sameWeekdayTime(weekdayRaw,result.createdAt,p.timezone):null)??parseDirectSourceTime(text,{type:p.type,referenceTime:result.createdAt,timezone:p.timezone})

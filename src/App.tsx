@@ -2317,6 +2317,7 @@ function App({ runtime, ordinaryEnvironment }: { runtime?: MainlineRuntime; ordi
           sources={sources}
           onClose={() => setSelectedTaskId(null)}
           onComplete={handleComplete}
+          onRestore={!runtime?handleRestoreTask:undefined}
           onUpdate={handleUpdateTask}
           editDraft={taskEditDrafts[selectedTask.id]}
           onEditDraft={(field,value)=>updateTaskEditDrafts(current=>{const item={...current[selectedTask.id]};if(value===undefined)delete item[field];else item[field]=value;const next={...current};if(Object.keys(item).length)next[selectedTask.id]=item;else delete next[selectedTask.id];return next})}

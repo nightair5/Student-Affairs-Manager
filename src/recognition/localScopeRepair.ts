@@ -161,7 +161,12 @@ export function retainLocalOwnedWeekdayDeadlines(input:RecognitionResult,source:
     const days=[...clause.matchAll(/(?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天]\s*(?:(?:凌晨|早上|上午|中午|下午|傍晚|晚上|夜间)\s*)?(?:\d{1,2}\s*[:：]\s*\d{2})?\s*(?:之前|以前|前)/gu)]
     if(days.length!==1)return []
     const directive=/(?:请|须|需|应|务必|并在|并于)/u.test(clause)
-    const directCommand=clause.replace(/\s/gu,'').startsWith(days[0][0].replace(/\s/gu,'')+task.actionVerb)
+    const beforeDay=clause.slice(0,days[0].index!).replace(/\s/gu,'')
+    const readerSubject=/^(?:(?:已|未)?(?:报名|申请|登记|注册|入选|入围|参赛)(?:成功)?(?:的)?(?:同学|学生|人员|者)|同学|学生|申请人|本人)$/u.test(beforeDay)
+    // A stated reader subject does not weaken a direct "weekday before +
+    // action" cutoff. Match the action after its own date, never a later
+    // recipient's processing or a different step in the sentence.
+    const directCommand=(beforeDay===''||readerSubject)&&clause.slice(days[0].index!).replace(/\s/gu,'').startsWith(days[0][0].replace(/\s/gu,'')+task.actionVerb)
     if(!directive&&!directCommand)return []
     const afterDay=clause.slice(days[0].index!+days[0][0].length,clause.indexOf(task.actionVerb))
     if(/(?:审核|评审|复核|通知|汇总|审批|筛选|报送)[^，,。；;\n]{0,20}(?:后|再|之后)/u.test(afterDay))return []
@@ -172,8 +177,10 @@ export function retainLocalOwnedWeekdayDeadlines(input:RecognitionResult,source:
   if(unique.length!==1)continue
   const {raw,start}=unique[0],timezone=zone??result.timePoints.find(point=>point.timezone)?.timezone??'Asia/Shanghai'
   const parsed=parseDirectSourceTime(raw,{type:'task_deadline',referenceTime:result.createdAt,timezone})
-  const existing=result.timePoints.filter(point=>point.type.endsWith('_deadline')&&point.relatedTaskTempIds.includes(task.tempId)&&point.normalizedValue)
-  if(!parsed.normalizedValue||parsed.needsConfirmation||existing.length>1||existing.some(point=>!raw.replace(/\s/gu,'').startsWith(point.rawText.replace(/\s/gu,'')))||result.evidence.length>=120)continue
+  // Assembly may leave the same cited weekday point unresolved. Update that
+  // point in place instead of appending a competing known/unknown pair.
+  const existing=result.timePoints.filter(point=>point.type.endsWith('_deadline')&&point.relatedTaskTempIds.includes(task.tempId))
+  if(!parsed.normalizedValue||parsed.needsConfirmation||existing.length>1||existing.some(point=>!point.rawText||point.relatedTaskTempIds.some(id=>id!==task.tempId)||!raw.replace(/\s/gu,'').startsWith(point.rawText.replace(/\s/gu,'')))||result.evidence.length>=120)continue
   const eid=`local-owned-deadline:${start}`,tid=`local-owned-time:${start}`
   if(!result.evidence.some(ref=>ref.id===eid))result.evidence.push({id:eid,sourceId:result.evidence[0]?.sourceId??'source',quote:raw,quotedText:raw,textStart:start,textEnd:start+raw.length,field:'deadline',extractionMethod:'parser',confidence:1})
   if(existing.length){
