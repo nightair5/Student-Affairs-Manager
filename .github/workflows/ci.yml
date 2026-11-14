@@ -19,6 +19,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  pilot-node20:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run test:pilot
+
   current-product:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -37,6 +48,10 @@ jobs:
       - run: npm ci
       - name: Current product and service regressions
         run: npm run test:product
+        env:
+          TZ: ${{ matrix.timezone }}
+      - name: Invitation, quota and revocation regressions
+        run: npm run test:pilot
         env:
           TZ: ${{ matrix.timezone }}
       - name: Scoped notice and source clock configuration

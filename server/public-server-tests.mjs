@@ -9,7 +9,13 @@ import { createWorker } from '../cloudflare/worker.mjs'
 import { EventEmitter } from 'node:events'
 import { gzipSync } from 'node:zlib'
 import { callPinnedLookup, createPinnedHttpsFetch, resolvePublicNodeHostname } from './pinned-fetch.mjs'
-import { createPublicServer, loadPublicConfig } from './public-server.mjs'
+import { createPublicServer, loadPublicConfig as loadPilotAwareConfig } from './public-server.mjs'
+
+// Historical adapter tests exercise explicit public mode; pilot gates have their
+// own end-to-end suite and are enabled by default in a normal deployment.
+function loadPublicConfig(env = {}, cwd) {
+  return loadPilotAwareConfig({ SAM_PILOT_ENABLED: 'false', ...env }, cwd)
+}
 
 function statusWithPath(baseUrl, path, headers = {}) {
   const url = new URL(baseUrl)

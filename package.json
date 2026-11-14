@@ -28,6 +28,7 @@
     "test:all": "node scripts/candidate11-checks.mjs all",
     "test:product": "node scripts/candidate11-checks.mjs current-product",
     "test:safety": "node scripts/candidate11-checks.mjs current-safety",
+    "test:pilot": "node --test server/pilot.node-test.mjs",
     "test:historical": "node scripts/candidate11-checks.mjs historical",
     "eval:recognition": "vitest run src/recognition/evaluation.test.ts",
     "eval:multimodal:lib": "node --test scripts/multimodal-evaluation-lib.node-test.mjs",
