@@ -14,6 +14,7 @@ import {applySemanticGoalRelations} from './semantic-goal-relations.mjs'
 import {timeRoleContext,parseWindowWithDailyHours,sourceTimeModality} from './semantic-time-context.mjs'
 import {sourceOptionalMaterialClause,sourceParagraphContext,sourceSectionLocation,sourceMaterialInlineFormats} from './semantic-source-context.mjs'
 import {isEventEligibility} from './event-eligibility.mjs'
+import {sourceActionWeekday,sourceWeekdayAlternatives} from './source-action-weekday.mjs'
 
 const object = value => Boolean(value && typeof value === 'object' && !Array.isArray(value))
 const text = (value, max=160) => typeof value === 'string' ? value.trim().slice(0,max) : ''
@@ -26,7 +27,7 @@ export const SEMANTIC_GOAL_CONTEXT_V129_COMPILER_VERSION='semantic-notice-compil
 export const SEMANTIC_MATTER_COMPILER_VERSION='semantic-notice-compiler-1.0.30'
 export const SEMANTIC_PRESERVATION_COMPILER_VERSION='semantic-notice-compiler-1.0.31'
 export const SEMANTIC_ROLE_SCOPE_COMPILER_VERSION='semantic-notice-compiler-1.0.32'
-export const SEMANTIC_PARTICIPATION_COMPILER_VERSION='semantic-notice-compiler-1.0.34'
+export const SEMANTIC_PARTICIPATION_COMPILER_VERSION='semantic-notice-compiler-1.0.35'
 // Full-width ASCII maps one UTF-16 unit to one unit; source offsets remain valid.
 const foldWidth = value => value.replace(/[！-～]/gu,c=>String.fromCharCode(c.charCodeAt(0)-0xfee0))
 const hasLiteral = (source,value) => Boolean(value && compact(source).includes(compact(value)))
@@ -566,6 +567,26 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     if(kind==='task')entity.dependencyTempIds=list(item.dependsOn,20,40).flatMap(key=>{const dependency=keys.get(key);if(dependency?.kind!=='task'){note('RELATION',item.key,'DEPENDENCY_NOT_FOUND');return []}if(refinedContract&&!sourceSupportedDependency(source,dependency.item,item)){note('RELATION',item.key,'DEPENDENCY_NOT_SOURCE_GROUNDED');return []}return [dependency.entity.tempId]})
     const sharedDay=kind==='event'?modelOwnedSharedDay(source,item,{allowSectionHeading:unifiedContract}):null
     const timeEntries=kind==='task'?combineExplicitWindowEntries(source,item).map(entry=>sourceOpenEndedWindow(source,item,entry)??entry):(Array.isArray(item.times)?item.times.slice(0,20):[])
+    // A source directive to act on a day is neither a submission deadline nor
+    // a personal plan. Preserve it independently, including its original day
+    // period; a choice of materials in the same clause is not a date choice.
+    const actionDay=participationEnabled&&kind==='task'?sourceActionWeekday(source,item):null
+    if(actionDay){
+      for(let index=timeEntries.length-1;index>=0;index--){
+        const entry=timeEntries[index]
+        if(['start','deadline'].includes(entry?.role)&&typeof entry.raw==='string'&&(compact(entry.raw).includes(compact(actionDay.raw))||compact(actionDay.raw).startsWith(compact(entry.raw))))timeEntries.splice(index,1)
+      }
+      timeEntries.push({role:'source-action',raw:actionDay.raw,sourceRecovered:true})
+    }
+    const candidateDays=participationEnabled&&kind==='task'?sourceWeekdayAlternatives(source,item):null
+    if(candidateDays){
+      const dates=candidateDays.days.map(day=>parseDirectSourceTime(day,{type:'event_start',referenceTime,timezone}))
+      if(dates.every(day=>day.normalizedValue&&!day.needsConfirmation)){
+        const id=evidence(candidateDays.raw,'description',item.key,candidateDays.start)
+        const line=`原文备选时间：${candidateDays.days.map((day,index)=>`${day}（${dates[index].normalizedValue}）`).join('或')}（按整理日期推算，尚未确定）`
+        if(id&&!entity.description.includes(line)&&entity.description.length+line.length+1<=800){entity.description=[entity.description,line].filter(Boolean).join('\n');entity.evidenceIds=[...new Set([...entity.evidenceIds,id])].slice(0,20)}
+      }
+    }
     if(participationEnabled&&!timeEntries.some(entry=>entry?.role===(kind==='task'?'deadline':'start'))){
       const recovered=citedWeekdayTime(source,item,kind)
       if(recovered&&timeEntries.length<20){timeEntries.push(recovered);audit.facts.push({role:'source_cited_weekday',item:item.key,raw:recovered.raw})}
@@ -577,7 +598,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
     const windowOwners=new Set(timeEntries.filter(entry=>entry?.role==='window'&&typeof entry.raw==='string'&&locateSourceQuote(entry.raw,source)).flatMap(actionOwners))
     const distinctActionDeadline=entry=>entry?.role==='deadline'&&actionParts.length>1&&actionOwners(entry).length===1&&windowOwners.size===1&&!windowOwners.has(actionOwners(entry)[0])
     for(const entry of timeEntries) {
-      if(!object(entry)||!['deadline','start','end','window'].includes(entry.role))continue
+      if(!object(entry)||!['deadline','start','end','window','source-action'].includes(entry.role))continue
       const rawTime=text(entry.raw,160)
       // A single instant copied into both roles is not evidence of an end.
       // Preserve a genuine range even when the model cites it for both roles.
@@ -684,7 +705,7 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
           if(dateEvidenceId){parseText=inherited.literal+span.literal;audit.facts.push({item:item.key,role:'source_context_year',raw:inherited.literal,sourceStart:inherited.start,sourceEnd:inherited.end})}
         }
       }
-      const eid=evidence(span.literal,'deadline',item.key,span.start),role=entry.role==='deadline'?'task_deadline':entry.role==='end'?'event_end':'event_start'
+      const eid=evidence(span.literal,entry.role==='source-action'?'description':'deadline',item.key,span.start),role=entry.role==='deadline'?'task_deadline':entry.role==='end'?'event_end':'event_start'
       if(!eid)continue
       if(distinctActionDeadline(entry)){
         const line='截止说明（仅限该行动）：'+span.literal
@@ -734,6 +755,13 @@ export function compileSemanticNotice(raw,{source,referenceTime,timezone='Asia/S
       }
       if(!value)note('TIME',item.key,previous?'OBSOLETE_TIME':alternative?'TIME_ALTERNATIVES_UNRESOLVED':unsafeDeadline?'UNSAFE_DEADLINE_ROLE':modality==='tentative'?'TIME_TENTATIVE_NOT_CONFIRMED':modality==='suggested'?'TIME_SUGGESTION_NOT_DEADLINE':'TIME_UNRESOLVED')
       const point={tempId:'sem-p'+(result.timePoints.length+1),type:role,rawText:span.literal,normalizedValue:value,timezone,isAllDay:value?parsed.isAllDay:false,precision:value?parsed.precision:'vague',needsConfirmation:!value,relatedTaskTempIds:kind==='task'?[entity.tempId]:[],relatedMaterialTempIds:[],evidenceIds:[...new Set([eid,dateEvidenceId,...(nextDayStart?.evidenceIds??[])].filter(Boolean))].slice(0,20),confidence:.8,selected:Boolean(value)}
+      if(entry.role==='source-action'){
+        point.tempId='sem-action-time-'+(result.timePoints.length+1)
+        result.timePoints.push(point);entity.timePointTempIds.push(point.tempId)
+        entity.evidenceIds=[...new Set([...entity.evidenceIds,eid])].slice(0,20)
+        audit.facts.push({item:item.key,role:'source_action',raw:span.literal,value,sourceStart:span.start,sourceEnd:span.end})
+        continue
+      }
       if(entry.role==='window'&&alternative){
         // A proposed survey slot is not an opening time or an appointment.
         // Keep its literal meaning in the already saved description instead.

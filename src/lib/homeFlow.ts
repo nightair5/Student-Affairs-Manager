@@ -150,18 +150,18 @@ export function pendingGroupedTask(task:Task,members:readonly Task[]):boolean {
 export function homeFlow(tasks:Task[],events:Event[],now=new Date(),linked:Readonly<Record<string,Event>>={},timeZone='Asia/Shanghai'){
   const relatedDate=(t:Task)=>t.sourceWindowLabel?t.sourceWindowEnd:linked[t.id]?.startAt
   const visibleTasks=visibleChoiceTasks(tasks)
-  const ready=getExecutableTasks(visibleTasks,now),dated=(t:Task)=>Boolean(t.deadline||t.plannedStart||t.directDate||relatedDate(t))
+  const ready=getExecutableTasks(visibleTasks,now),dated=(t:Task)=>Boolean(t.deadline||t.plannedStart||t.directDate||t.sourceActionAt||relatedDate(t))
   const priorityDifference=(a:Task,b:Task)=>calculateTaskPriority(b,tasks,now).score-calculateTaskPriority(a,tasks,now).score
   const byPriority=(a:Task,b:Task)=>priorityDifference(a,b)||a.createdAt.localeCompare(b.createdAt)||a.id.localeCompare(b.id)
   const today=localDateKey(now,timeZone),end=addDateOnlyDays(today,7)
   // A later personal plan must not hide a deadline which falls today.
-  const firstDate=(t:Task)=>[t.plannedStart||t.directDate,t.deadline,relatedDate(t)].filter((value):value is string=>Boolean(value)).map(value=>localDateKey(value,timeZone)).sort()[0]??''
+  const firstDate=(t:Task)=>[t.plannedStart||t.directDate,t.deadline,t.sourceActionAt,relatedDate(t)].filter((value):value is string=>Boolean(value)).map(value=>localDateKey(value,timeZone)).sort()[0]??''
   // For a day with incomplete precision, preserve its existing priority slot.
   // Never interpret an unspecified clock time as midnight. Sort only the
   // clock-bearing slots amongst themselves, avoiding a non-transitive comparator.
   const firstTime=(t:Task):number|null=>{
     const day=firstDate(t)
-    const values=[t.plannedStart||t.directDate,t.deadline,relatedDate(t)].filter((value):value is string=>Boolean(value)&&localDateKey(value!,timeZone)===day)
+    const values=[t.plannedStart||t.directDate,t.deadline,t.sourceActionAt,relatedDate(t)].filter((value):value is string=>Boolean(value)&&localDateKey(value!,timeZone)===day)
     if(!values.length||values.some(isDateOnly))return null
     const dates=values.map(value=>parseBusinessDateTime(value,timeZone))
     if(dates.some(value=>!value))return null
@@ -185,9 +185,9 @@ export function homeFlow(tasks:Task[],events:Event[],now=new Date(),linked:Reado
     const plan=t.plannedStart||t.directDate
     // Preserve existing placement for old overdue tasks with a future plan,
     // while ensuring an actual deadline today remains visible today.
-    if(plan)return localDateKey(plan,timeZone)<=today||Boolean(t.deadline&&localDateKey(t.deadline,timeZone)===today)
-    const date=t.deadline||relatedDate(t)
-    return Boolean(date&&localDateKey(date,timeZone)<=today)
+    if(plan)return localDateKey(plan,timeZone)<=today||Boolean(t.deadline&&localDateKey(t.deadline,timeZone)===today)||Boolean(t.sourceActionAt&&localDateKey(t.sourceActionAt,timeZone)===today)
+    const dates=[t.deadline,t.sourceActionAt,relatedDate(t)]
+    return dates.some(date=>Boolean(date&&localDateKey(date,timeZone)<=today))
   }
   const upcoming=events.filter(e=>{
     const state=eventTimingState(e,now,timeZone)

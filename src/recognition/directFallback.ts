@@ -19,6 +19,7 @@ import {scopeLocalOtherPartyActions} from './localResponsibilityScope'
 import {retainLocalConditionalMaterials} from './localConditionalMaterials'
 import {indexLocalSections} from './localSectionScope'
 import {isEventEligibility} from '../../cloudflare/event-eligibility.mjs'
+import {sourceActionWeekday,sourceWeekdayAlternatives} from '../../cloudflare/source-action-weekday.mjs'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string,options:{scopeAware?:boolean}={}):RecognitionResult {
@@ -38,6 +39,37 @@ export function improveDirectFallback(input:RecognitionResult,source:string,opti
   const reason='部分内容尚未完整整理：选择方式及各自时间请查看原通知。'
   if(!result.quality.reviewReasons.includes(reason))result.quality.reviewReasons.push(reason)
   result.quality.needsHumanReview=true
+ }
+ return retainLocalActionWeekdays(result,source)
+}
+
+/** Preserve only a source-cited weekday for the task which owns its action. */
+function retainLocalActionWeekdays(input:RecognitionResult,source:string):RecognitionResult {
+ const result=structuredClone(input)
+ const tasks=[...result.standaloneTasks,...result.milestones.flatMap(stage=>[...stage.tasks,...stage.workPackages.flatMap(group=>group.tasks)])]
+ for(const task of tasks){
+  const citations=task.evidenceIds.flatMap(id=>{const ref=result.evidence.find(value=>value.id===id);return ref?.quote?[ref.quote]:[]})
+  const item={actionVerb:task.actionVerb,actionObject:task.actionObject,evidence:citations}
+  const action=sourceActionWeekday(source,item)
+  if(action&&!result.timePoints.some(point=>point.relatedTaskTempIds.includes(task.tempId)&&point.tempId.startsWith('local-action-time-'))){
+   const timezone=result.timePoints.find(point=>point.timezone)?.timezone??'Asia/Shanghai'
+   const parsed=parseDirectSourceTime(action.raw,{type:'event_start',referenceTime:result.createdAt,timezone})
+   if(parsed.normalizedValue&&!parsed.needsConfirmation){
+    const eid=`local-action-evidence-${action.start}`,id=`local-action-time-${action.start}-${task.tempId}`
+    if(!result.evidence.some(ref=>ref.id===eid))result.evidence.push({id:eid,sourceId:result.evidence[0]?.sourceId??'source',quote:action.raw,quotedText:action.raw,textStart:action.start,textEnd:action.end,field:'deadline',extractionMethod:'parser',confidence:1})
+    if(!result.timePoints.some(point=>point.tempId===id))result.timePoints.push({tempId:id,type:'event_start',rawText:action.raw,normalizedValue:parsed.normalizedValue,timezone,isAllDay:parsed.isAllDay,precision:parsed.precision,needsConfirmation:false,relatedTaskTempIds:[task.tempId],relatedMaterialTempIds:[],evidenceIds:[eid],confidence:1,selected:true})
+    if(!task.timePointTempIds.includes(id))task.timePointTempIds.push(id)
+   }
+  }
+  const alternatives=sourceWeekdayAlternatives(source,item)
+  if(alternatives){
+   const timezone=result.timePoints.find(point=>point.timezone)?.timezone??'Asia/Shanghai'
+   const dates=alternatives.days.map(day=>parseDirectSourceTime(day,{type:'event_start',referenceTime:result.createdAt,timezone}))
+   if(dates.every(day=>day.normalizedValue&&!day.needsConfirmation)){
+    const line=`原文备选时间：${alternatives.days.map((day,index)=>`${day}（${dates[index].normalizedValue}）`).join('或')}（按整理日期推算，尚未确定）`
+    if(!task.description.includes(line)&&task.description.length+line.length+1<=800)task.description=[task.description,line].filter(Boolean).join('\n')
+   }
+  }
  }
  return result
 }
@@ -325,7 +357,7 @@ function improveLocalActions(input:RecognitionResult,source:string,options:{scop
   if(chosen&&/申请|申报|报名/u.test(chosen.text)&&!/截止|截至|[日号点分\d]前/u.test(chosen.text)&&/逾期[^。；]{0,20}(?:不再受理|不予受理|不受理)/u.test(source)){chosen.text=source;chosen.at=0}
   if(chosen){const p=chosen.p,tid=id+'-deadline',eid=evidence(chosen.text,chosen.at,'deadline');r.timePoints.push({tempId:tid,type:'task_deadline',rawText:chosen.text,normalizedValue:p.normalizedValue,timezone:p.timezone,isAllDay:p.isAllDay,precision:p.precision,needsConfirmation:false,relatedTaskTempIds:[id],relatedMaterialTempIds:[],evidenceIds:[eid],confidence:1,selected:true});t.timePointTempIds.push(tid)}
   const channel=choice?null:delivery?.channel??localSubmissionChannel(q)
-  if(channel||choice){const mid=id+'-material',req=localMaterialRequirements(q);r.materials.push({tempId:mid,name:object,required:true,formatRequirements:req.formats,namingRequirements:req.naming,quantity:null,submissionChannel:channel,relatedTaskTempIds:[id],evidenceIds:eids,confidence:1,selected:true});t.materialTempIds.push(mid)}
+  if(channel||choice){const mid=id+'-material',req=localMaterialRequirements(q),existing=r.materials.find(material=>material.tempId===mid);if(!existing)r.materials.push({tempId:mid,name:object,required:true,formatRequirements:req.formats,namingRequirements:req.naming,quantity:null,submissionChannel:channel,relatedTaskTempIds:[id],evidenceIds:eids,confidence:1,selected:true});if(!existing||existing.name===object&&existing.relatedTaskTempIds.includes(id))t.materialTempIds.push(mid)}
   tasks.push(t)
  }
  if(tasks.length){r.standaloneTasks=tasks.filter(t=>!subject||!tasks.some(other=>other!==t&&/申请|申报/u.test(other.actionVerb)&&other.actionObject===subject&&t.actionVerb==='填写'&&!/表|报告|论文/u.test(t.actionObject))).filter(t=>!tasks.some(other=>other!==t&&/提交|报送|上传/u.test(other.actionVerb)&&/申请|申报/u.test(t.actionVerb)&&t.actionObject===other.actionObject&&JSON.stringify(t.timePointTempIds.map(id=>r.timePoints.find(p=>p.tempId===id)?.normalizedValue))===JSON.stringify(other.timePointTempIds.map(id=>r.timePoints.find(p=>p.tempId===id)?.normalizedValue))));r.milestones=[];const ids=new Set(r.standaloneTasks.map(t=>t.tempId));r.materials=r.materials.filter(m=>m.relatedTaskTempIds.some(id=>ids.has(id)));const eventTimes=new Set(r.events.flatMap(e=>[e.startTimePointTempId,e.endTimePointTempId]));r.timePoints=r.timePoints.filter(p=>eventTimes.has(p.tempId)||p.relatedTaskTempIds.some(id=>ids.has(id)));r.sourceSummary.title=tasks[0].title}

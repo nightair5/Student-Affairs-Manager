@@ -67,7 +67,7 @@ function dayLabel(dateKey: string): string {
 }
 
 function agendaRole(role: string | undefined): string {
-  return role==='both'?'计划与截止':role==='plan'?'个人计划':role==='deadline'?'原文截止':role==='window'?'办理时段':'时间'
+  return role==='both'?'计划与截止':role==='multiple'?'多个时间':role==='plan'?'个人计划':role==='deadline'?'原文截止':role==='source'?'原文办理时间':role==='window'?'办理时段':'时间'
 }
 
 function itemTime(value: string): string {

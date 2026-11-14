@@ -146,6 +146,10 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     },now)
     plan.operationId += ':direct:'+workspaceSnapshotHash(now)
     plan.create.evidenceRefs=plan.create.evidenceRefs.filter(e=>!w.evidenceRefs.some(x=>x.id===e.id))
+    // This is a source-side action date, not an event or a user's plan. The
+    // canonical time point stays attached to the original task and batch.
+    plan.create.timePoints=plan.create.timePoints.map(point=>point.type==='event_start'&&!point.eventId&&point.taskId&&point.relatedTaskIds.includes(point.taskId)&&/^(?:direct-copy-)?(?:sem-action-time-|local-action-time-)/u.test(String(point.legacyData?.recognitionTempId))
+      ?{...point,legacyData:{...point.legacyData,sourceTimeRole:'source_action'}}:point)
     const tags=new Map(converted.items.map(i=>[i.tempId,i.tags]))
     plan.create.tasks=plan.create.tasks.map(t=>({...t,needsReview:Boolean(tags.get(String(t.legacyData?.recognitionTempId))?.length),legacyData:{...t.legacyData,directTags:tags.get(String(t.legacyData?.recognitionTempId))??[],directMode:DIRECT_MODE_VERSION}}))
     plan.create.events=plan.create.events.map(e=>({...e,needsReview:Boolean(tags.get(String(e.legacyData?.recognitionTempId))?.length),legacyData:{...e.legacyData,directTags:tags.get(String(e.legacyData?.recognitionTempId))??[],directMode:DIRECT_MODE_VERSION,sourceId:s.id}}))

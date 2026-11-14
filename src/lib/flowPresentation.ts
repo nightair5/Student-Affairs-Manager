@@ -15,7 +15,10 @@ export function flowTaskDate(task:Task,timeZone='Asia/Shanghai'):string {
   const plan=task.plannedStart||task.directDate
   const windowLabel=task.sourceWindowLabel?`${task.sourceWindowChoiceBranch?`方式${task.sourceWindowChoiceBranch}的`:'办理'}时段：${task.sourceWindowLabel}`:''
   const deadline=task.deadline?`${flowDate(task.deadline,timeZone)} 截止${task.sourceWeekdayInferred?'（按整理日期推算）':''}`:task.sourceDeadlineLabel&&/另行通知|另行公布|待通知/u.test(task.sourceDeadlineLabel)?'截止时间另行通知':''
-  const parts=[plan?`${flowDate(plan,timeZone)} 计划`:'',deadline,windowLabel].filter(Boolean)
+  const period=task.sourceActionAt&&isDateOnly(task.sourceActionAt)?task.sourceActionRaw?.match(/凌晨|清晨|早上|上午|中午|下午|傍晚|晚上|夜间|夜里/u)?.[0]??'':''
+  const sourceAction=task.sourceActionAt?`原文办理：${flowDate(task.sourceActionAt,timeZone)}${period}${task.sourceActionWeekdayInferred?'（按整理日期推算）':''}`:''
+  const alternatives=task.description.split(/\r?\n/u).find(line=>line.startsWith('原文备选时间：'))??''
+  const parts=[plan?`${flowDate(plan,timeZone)} 计划`:'',deadline,sourceAction,windowLabel,alternatives].filter(Boolean)
   if(parts.length)return parts.join(' · ')
   if(task.sourceDeadlineLabel&&/另行通知|另行公布|待通知/u.test(task.sourceDeadlineLabel))return '截止时间另行通知'
   return '未设日期'

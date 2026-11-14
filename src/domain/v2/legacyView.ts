@@ -382,6 +382,8 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
     const legacy = v7Record<LegacyTask>(item.legacyData)
     const sourceIds = sourceIdsForTask(item)
     const deadline = taskDeadline(workspace, item.id)
+    const sourceAction=workspace.timePoints.find(point=>point.type==='event_start'&&!point.eventId&&point.legacyData?.sourceTimeRole==='source_action'
+      &&point.taskId===item.id&&point.relatedTaskIds.includes(item.id)&&point.normalizedValue&&!point.needsConfirmation)
     const handling=canonicalHandlingWindow(workspace,item)?.row
     const resolvedWindow=sourceWindowDisplayLabel(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)??(handling?handlingWindowLabel(handling):undefined)
     const unresolvedWindow=sourceWindowUnresolvedLabel(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions)
@@ -417,6 +419,7 @@ export function workspaceV8ToLegacyView(workspace: WorkspaceV8): WorkspaceData {
       estimatedMinutesKnown: item.estimatedMinutes !== null,
       sourceDeadlineLabel: sourceDeadlineLabel(workspace, item.id),
       ...(sourceWeekdayInferred(preferredTaskDeadlinePoint(workspace, item.id)) ? { sourceWeekdayInferred: true } : {}),
+      ...(sourceAction?.normalizedValue?{sourceActionAt:sourceAction.normalizedValue,sourceActionRaw:sourceAction.rawText,...(sourceWeekdayInferred(sourceAction)?{sourceActionWeekdayInferred:true}:{})}:{}),
       sourceWindowLabel: windowLabel,
       sourceWindowStart: windowStart,
       sourceWindowChoiceBranch: sourceWindowChoiceBranch(item.id,item.legacyData?.sourceWindowDeclarations,workspace.timePoints,workspace.sourceVersions),

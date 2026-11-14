@@ -39,7 +39,7 @@ export function FlowTimeline({tasks,allTasks,events,workspace,eventActions={},ev
  const detailRef=useRef<HTMLElement>(null)
  const items=useMemo<Entry[]>(()=>{
    const now=new Date(clock)
-   const taskDate=(task:Task)=>timelineDate([task.plannedStart||task.directDate,task.deadline,sourceWindowActive(task,now)?now.toISOString():task.sourceWindowEnd,linked[task.id]?.startAt],timeZone)
+   const taskDate=(task:Task)=>timelineDate([task.plannedStart||task.directDate,task.deadline,task.sourceActionAt,sourceWindowActive(task,now)?now.toISOString():task.sourceWindowEnd,linked[task.id]?.startAt],timeZone)
    const visibleIds=new Set([...tasks.map(task=>task.id),...deferred.map(({task})=>task.id)])
    const all=allTasks??[...tasks,...deferred.map(({task})=>task)]
    const eventIds=new Set(events.map(event=>event.id))
@@ -112,7 +112,7 @@ export function FlowTimeline({tasks,allTasks,events,workspace,eventActions={},ev
    const members=item.kind==='goal'?item.members:item.kind==='event'?eventActions[item.event.id]??[]:item.kind==='day'?item.events.flatMap(event=>eventActions[event.id]??[]):[]
    const pending=members.filter(task=>pendingGroupedTask(task,members))
    const pendingCount=new Set(pending.map(task=>task.sourceChoice?`choice:${task.sourceChoice.id}`:`task:${task.id}`)).size
-   const nearest=sortTimeline(pending.map(task=>({task,date:timelineDate([task.plannedStart||task.directDate,task.deadline,sourceWindowActive(task,new Date(clock))?new Date(clock).toISOString():task.sourceWindowEnd],timeZone)})),timeZone)[0]
+   const nearest=sortTimeline(pending.map(task=>({task,date:timelineDate([task.plannedStart||task.directDate,task.deadline,task.sourceActionAt,sourceWindowActive(task,new Date(clock))?new Date(clock).toISOString():task.sourceWindowEnd],timeZone)})),timeZone)[0]
    const countKey=(task:Task)=>task.sourceChoice?`choice:${task.sourceChoice.id}`:`task:${task.id}`
    const conditionalCount=new Set(pending.filter(isConditionalMatterTask).map(countKey)).size
    const regularCount=new Set(pending.filter(task=>!isConditionalMatterTask(task)).map(countKey)).size

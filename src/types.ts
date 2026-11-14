@@ -127,6 +127,10 @@ export interface Task {
   sourceDeadlineLabel?: string
   /** The source gives a weekday but no calendar date. */
   sourceWeekdayInferred?: boolean
+  /** Source-directed action date, separate from a deadline or personal plan. */
+  sourceActionAt?: string
+  sourceActionRaw?: string
+  sourceActionWeekdayInferred?: boolean
   /** Read-only display of an existing, source-verified operating window. */
   sourceWindowLabel?: string
   /** Read-only start of one source-verified operating window; not a personal plan. */

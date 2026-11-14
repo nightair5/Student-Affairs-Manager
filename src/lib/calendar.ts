@@ -22,7 +22,7 @@ export interface DaySummary {
 }
 
 export type CalendarTimelineItem =
-  | { kind: 'task'; id: string; title: string; at: string; task: Task; timeRole?: 'plan' | 'deadline' | 'both' | 'window' }
+  | { kind: 'task'; id: string; title: string; at: string; task: Task; timeRole?: 'plan' | 'deadline' | 'both' | 'window' | 'source' | 'multiple' }
   | { kind: 'event'; id: string; title: string; at: string; event: Event }
 
 const EXPLICIT_TIMEZONE_PATTERN = /(?:Z|[+-]\d{2}:\d{2})$/i
@@ -83,7 +83,7 @@ export function buildMonthCells(viewDate: Date, today = new Date(), timeZone = D
   })
 }
 
-type TaskCalendarDate = { at:string; role:'plan'|'deadline'|'both'|'window' }
+type TaskCalendarDate = { at:string; role:'plan'|'deadline'|'both'|'window'|'source'|'multiple' }
 
 /** A date-only value remains a day; a clock value is interpreted in the workspace timezone. */
 function validCalendarValue(value:string, timeZone:string):boolean {
@@ -95,6 +95,7 @@ function taskCalendarDates(task:Task, timeZone:string):TaskCalendarDate[] {
   const dates:TaskCalendarDate[]=[]
   if(plan&&validCalendarValue(plan,timeZone))dates.push({at:plan,role:'plan'})
   if(task.deadline&&validCalendarValue(task.deadline,timeZone))dates.push({at:task.deadline,role:'deadline'})
+  if(task.sourceActionAt&&validCalendarValue(task.sourceActionAt,timeZone))dates.push({at:task.sourceActionAt,role:'source'})
   if(!dates.length&&task.sourceWindowLabel&&task.sourceWindowEnd&&validCalendarValue(task.sourceWindowEnd,timeZone))dates.push({at:task.sourceWindowEnd,role:'window'})
   return dates
 }
@@ -102,13 +103,13 @@ function taskCalendarDates(task:Task, timeZone:string):TaskCalendarDate[] {
 function combineTaskDates(first:TaskCalendarDate,second:TaskCalendarDate,timeZone:string):TaskCalendarDate {
   const firstInstant=parseBusinessDateTime(first.at,timeZone),secondInstant=parseBusinessDateTime(second.at,timeZone)
   const at=!firstInstant?second.at:!secondInstant?first.at:firstInstant.getTime()<=secondInstant.getTime()?first.at:second.at
-  return {at,role:'both'}
+  return {at,role:first.role==='plan'&&second.role==='deadline'||first.role==='deadline'&&second.role==='plan'?'both':'multiple'}
 }
 
 export function taskCalendarEntryForDay(task:Task, day:string, timeZone=DEFAULT_WORKSPACE_TIMEZONE):TaskCalendarDate|undefined {
   const matches=taskCalendarDates(task,timeZone).filter(value=>localDateKey(value.at,timeZone)===day)
   if(matches.length<2)return matches[0]
-  return combineTaskDates(matches[0],matches[1],timeZone)
+  return matches.slice(1).reduce((first,second)=>combineTaskDates(first,second,timeZone),matches[0])
 }
 
 export function groupTasksByDate(tasks: Task[], timeZone=DEFAULT_WORKSPACE_TIMEZONE): Map<string, Task[]> {
@@ -126,7 +127,7 @@ export function groupTasksByDate(tasks: Task[], timeZone=DEFAULT_WORKSPACE_TIMEZ
 }
 
 /** A personal date determines placement; the original deadline remains on the task. */
-export function taskCalendarDate(task: Task): string { return task.plannedStart || task.directDate || task.deadline || (task.sourceWindowLabel?task.sourceWindowEnd:'') || '' }
+export function taskCalendarDate(task: Task): string { return task.plannedStart || task.directDate || task.deadline || task.sourceActionAt || (task.sourceWindowLabel?task.sourceWindowEnd:'') || '' }
 
 /** Calendar days overlapped by the actual event interval. Timed ends are exclusive. */
 export function eventCalendarDays(event:Pick<Event,'startAt'|'endAt'>,timeZone=DEFAULT_WORKSPACE_TIMEZONE,range?:{start:string;end:string}):string[] {
