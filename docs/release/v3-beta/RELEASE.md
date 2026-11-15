@@ -9,7 +9,7 @@
 
 完整本地 lint、typecheck、test、build、安全扫描、high 级审计、cloudflare dry-run 与 Node 服务测试通过；产品 2666 项通过、1 项跳过，Node 服务 17 项通过。沿用的 9 条 lint warning、10 项 moderate 依赖风险单列，未新增豁免。官方 IAB 在本轮新本机 origin 实测 1024/320px：一次保存、条件步骤完成/恢复/刷新、主动重复添加与撤销第二批、两场活动独立状态、跨午夜日历、条件材料正确归属；无页面 error 与横向溢出。备份往返和注入故障由独立仓库验证，不冒充浏览器实测。
 
-服务器 22 项站点与配置检查通过，188 个产物哈希与干净发布包构建完全一致；17 项服务测试、23 项语义回归、80 项受影响识别/日历/保存测试通过。官方 IAB 测试的全部 JS/CSS 与发布包一致；HTML/headers 只有换行与空白行差异，另增加正式 deployment.json。HTTPS、ACME、ICP 页脚、env 内容/600/root、非特权服务和 80/443 体积边界保持。本次无回滚，保留原 Nginx 默认名称警告与 Node 20 上仅开发依赖的 engine warning。模拟上游通过不代表真实 AI 识别。
+服务器 22 项站点与配置检查通过，188 个产物哈希与干净发布包构建完全一致；17 项服务测试、23 项语义回归、80 项受影响识别/日历/保存测试通过。官方 IAB 测试的全部 JS/CSS 与发布包一致；HTML/headers 只有换行与空白行差异，另增加正式 deployment.json。HTTPS、ACME、ICP 页脚、env 内容/600/root、非特权服务和 80/443 体积边界保持。本次无回滚，保留原 Nginx 默认名称警告与 现有依赖在 Node 20 上的 engine warning（本次服务器实际构建和服务测试通过）。模拟上游通过不代表真实 AI 识别。
 
 本次备份 `/root/sa-backups/20261115-215145-8dd17d3e/`；回滚到 beta.55：`bash /root/sa-backups/20261115-215145-8dd17d3e/rollback.sh`。注释标签 `v3.0.0-beta.56` 指向实际部署提交；证据 `.data/conditional-context-repair-20261115-210244/`，部署核验位于 `release56/`。
 
