@@ -32,20 +32,26 @@ export function localSameDayClock(source: string, title: string, raw: string) {
 }
 
 /** Resolve an explicit local date reference across sentence/line boundaries.
- * Only the immediately preceding sentence in the same section is an antecedent;
+ * A unique occurrence in the same bounded section is an antecedent;
  * a deadline, recurrence, revision or competing dates cannot donate a day.
  * Cancellation affects attendance, not the explicitly referenced day. */
 export function localSameDayTime(source: string, title: string, raw: string, referenceTime: string, timezone: string) {
   const own = localSameDayClock(source, title, raw)
   if (!own) return null
   const previous = source.slice(0, own.at)
-  const antecedent = previous.trimEnd().replace(/[。！？]\s*$/u, '')
-  const sentenceBoundary = Math.max(...['。', '！', '？'].map(mark => antecedent.lastIndexOf(mark))) + 1
   const headingBoundary=localSourceLines(previous).filter(line=>localHeading(line)).at(-1)?.end??0
-  const boundary = Math.max(sentenceBoundary,headingBoundary)
+  const boundary = headingBoundary
   const context = source.slice(boundary, own.at)
+  // Descriptive sentences and ordinary paragraph wrapping do not introduce a
+  // new date. A new section, another date or a non-event date does. Do not
+  // silently truncate a long scope and pretend the remaining date is unique.
+  if(context.length>1200)return null
   const days = [...context.matchAll(new RegExp(daySource, 'gu'))]
   if (days.length !== 1 || /(?:或者|或|备选|改为|改至|调整至|延期|另行|待定|每周|每星期|截止|截至|最迟|之前|以前|前(?:提交|上传|发送|填写|交|报名|申请))/u.test(context)) return null
+  const datedClause=context.split(/[。！？；;\n]/u).find(part=>part.includes(days[0][0]))??''
+  const timedOccurrence=new RegExp(`${daySource}\\s*${clockSource}(?:的)?[^，,。；;]{2,}`, 'u').test(datedClause)
+    &&!/(?:提交|上传|领取|缴费|申请|报名|报送|汇总)/u.test(datedClause)
+  if(!timedOccurrence&&!/(?:举行|举办|召开|开展|开设|开始|讲座|会议|活动|展览|分享会|工作坊)/u.test(datedClause))return null
   // A clock followed by "前" is also a cutoff when a channel intervenes
   // before its action ("17:00前在平台填写...").
   if (new RegExp(`${daySource}\\s*(?:${clockSource})?\\s*前`, 'u').test(context)) return null

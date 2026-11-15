@@ -66,8 +66,10 @@ export function localSubmissionChannel(text: string): string | null {
   const matches = [...text.matchAll(/(?:交到|交至|发到|发至|提交到|提交至|递交到|递交至|报送到|报送至|上传到|上传至|发送到|发送至)\s*([^，,；;。！？（）()\n]{1,60})/gu)].map(m => m[1].trim())
   // A channel can precede the action: “通过报名平台填写表格”.
   // Do not mistake “通过审核后在平台……” for the name of a channel.
-  const via = [...text.matchAll(/(?:通过|在)\s*([^，,；;。！？（）()\n]{0,30}?(?:平台|系统|邮箱|网站|小程序))\s*(?=提交|上传|填写|报名|申请|登记|申报)/gu)]
-    .map(m => m[1].trim()).filter(value => !/(?:审核|考试|考核|审批|验证)(?:通过|后)|后(?:在|使用|再|通过)/u.test(value))
+  // Look ahead so a leading time adjunct cannot swallow the later "向".
+  const via = [...text.matchAll(/(?=(?:通过|在|向)\s*([^，,；;。！？（）()\n]{0,30}?(?:平台|系统|邮箱|网站|小程序|窗口|服务台))\s*(?=提交|递交|发送|上传|填写|报名|申请|登记|申报))/gu)]
+    .filter(m => !/(?:审核|考试|考核|审批|验证)(?:通过|后)[^，,；;。！？\n]*$/u.test(text.slice(0,m.index)))
+    .map(m => m[1].trim()).filter(value => !/(?:审核|考试|考核|审批|验证)(?:通过|后)|后(?:在|使用|再|通过)|(?:之前|以前|前)(?:向|在|通过)/u.test(value))
   matches.push(...via)
   const unique = [...new Set(matches)]
   return unique.length === 1 ? unique[0] : null

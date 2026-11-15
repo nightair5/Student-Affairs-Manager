@@ -12,7 +12,7 @@ import {sourceSupportsObjectParts} from '../../cloudflare/two-step-contextual-it
 import {alignRecognitionEvidence} from '../../cloudflare/source-text-index.mjs'
 import {convertSemanticNotice} from './directSemanticNotice'
 import {isSemanticNoticeVersion} from './semanticNoticeVersion'
-import {localActionExplicitlyNegated,localBackgroundNotUserAction,localHistoricalEventOnly,localEventCancelledByReference} from './localActionPolarity'
+import {localActionExplicitlyNegated,localBackgroundNotUserAction,localHistoricalEventOnly,localEventCancelledByReference,localParticipationContext} from './localActionPolarity'
 import {localTimeRoleConflict,timeSourceContext} from './directTimeSafety'
 import {localSameDayTime,localDeliveryReferenceForTask,localEventYearUnresolved} from './localReferencedFacts'
 
@@ -68,7 +68,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
   // Only a clause that describes attendance can qualify a local event. An
   // unrelated "if you have questions" or a cancelled registration must not
   // become an event eligibility label merely because it appears nearby.
-  const localEventCondition=(text:string,eventTitle:string)=>text.split(/[。；;！？\n]/u).some(clause=>{
+  const localEventCondition=(text:string,eventTitle:string)=>localParticipationContext(text).split(/[。；;！？\n]/u).some(clause=>{
     const qualification=/(?:仅(?:对|供|面向|限)|符合.{0,18}(?:条件|资格)|入选后|录取后|(?:入选|录取|获选)(?:者|人员|同学|学生)|通过审核|审核通过|已(?:报名|登记|注册|缴费|预约)|持(?:有|学生证|证|卡)|凭(?:学生证|证件|卡)|限.{0,10}(?:学生|同学|人员))/u
     if(!qualification.test(clause)||!isEventEligibility(clause)||/取消(?:报名|预约|注册|资格)/u.test(clause))return false
     const otherEvents=result.events.filter(candidate=>candidate.title!==eventTitle).some(candidate=>compact(candidate.title)&&compact(clause).includes(compact(candidate.title)))
@@ -231,7 +231,13 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
     // to this task and cite this exact time; it cannot donate a sibling date.
     const referencedCutoff=/_deadline$/u.test(p.type)&&tasks.some(task=>p.relatedTaskTempIds.includes(task.tempId)
       &&localDeliveryReferenceForTask(result,sourceText,task)?.time===raw)
-    const risky = alternatives.test(roleText) || (/_deadline$/u.test(p.type) && (!deadline.test(roleText)&&!applicationCutoff&&!handoffCutoff&&!referencedCutoff || /办理时段|开放时间|领取时段/u.test(roleText) && !/截止|最迟/u.test(roleText)))
+    const addressedCutoff=result.modelName==='local-rules'&&/_deadline$/u.test(p.type)&&/(?:之前|以前|前)$/u.test(raw)
+      &&tasks.some(task=>p.relatedTaskTempIds.includes(task.tempId)&&task.actionVerb&&task.actionObject
+        &&quotes(p.evidenceIds).some(quote=>{
+          const at=quote.indexOf(raw),actionAt=quote.indexOf(task.actionVerb+task.actionObject,at+raw.length)
+          return at>=0&&actionAt>at&&/^(?:向|在|通过)[^，,。；;\n]{1,30}$/u.test(quote.slice(at+raw.length,actionAt).trim())
+        }))
+    const risky = alternatives.test(roleText) || (/_deadline$/u.test(p.type) && (!deadline.test(roleText)&&!applicationCutoff&&!handoffCutoff&&!referencedCutoff&&!addressedCutoff || /办理时段|开放时间|领取时段/u.test(roleText) && !/截止|最迟/u.test(roleText)))
     const weekdayRaw=raw.replace(/^\s*(?:活动|会议|讲座|培训)?时间[：:]\s*/u,'')
     const prefix=text.slice(0,Math.max(0,text.indexOf(raw)))
     const clause=prefix.slice(Math.max(...['。','；',';','，',',','！','!','？','?'].map(mark=>prefix.lastIndexOf(mark)))+1)
@@ -276,7 +282,7 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
   // the calendar entry as a related pair, not an unrelated “read this notice”.
   if (!tasks.length && events.length) for (const event of events) {
     // A host announcing an event is not a direction for this user to attend.
-    const attendanceContext=context(event.evidenceIds)
+    const attendanceContext=result.modelName==='local-rules'?localParticipationContext(context(event.evidenceIds)):context(event.evidenceIds)
     if(!/请[^。；\n]{0,50}(?:参加|出席)|(?:^|[，,])参加/u.test(attendanceContext))continue
     if(!/请[^。；\n]{0,50}(?:参加|出席)/u.test(attendanceContext)&&/(?:参加|出席)[^。；，,]{0,40}的(?:同学|学生|人员|人)/u.test(attendanceContext))continue
     const name=event.title.replace(/^(?:参加|出席)/u,''),id=`direct-attend:${event.tempId}`
@@ -331,6 +337,14 @@ export function convertDirectResult(input: RecognitionResult, sourceText: string
   }
   linkExplicitDependencies(tasks,sourceText)
   result.milestones=[];result.standaloneTasks=tasks;result.events=events;result.timePoints=times
+  // Only remove references to candidates explicitly rejected above. Keep
+  // the surviving goal and its evidence; unknown references still fail the
+  // normal validator. This changes the candidate graph, never saved records.
+  if(result.goalGroups){
+    const rejected=new Set(omitted.map(item=>item.id).filter(id=>!taskIds.has(id)))
+    result.goalGroups=result.goalGroups.map(group=>({...group,taskTempIds:group.taskTempIds.filter(id=>!rejected.has(id))}))
+      .filter(group=>group.taskTempIds.length>=2)
+  }
   const retainedIds=new Set([...tasks,...events,...times,...result.materials].map(e=>e.tempId))
   result.conflicts=result.conflicts.map(c=>({...c,entityTempIds:c.entityTempIds.filter(id=>retainedIds.has(id))}))
   result.projectMatch={decision:'standalone_task',matchedProjectId:null,suggestedProjectTitle:null,confidence:1,reasons:['负责人直达模式：独立添加，详情可追溯']}

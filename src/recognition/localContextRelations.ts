@@ -33,6 +33,9 @@ export function retainLocalObjectReferences(input:RecognitionResult,source:strin
       if(!/^(?:提交|上传|发送|递交|填写|交|归还|准备)$/u.test(task.actionVerb))return false
       const name=objectName(task)
       if(!demonstrative)return name===subject||subject.length>=2&&name.endsWith(subject)&&!['材料','文件','表格','报告','申请'].includes(subject)
+      // One action can name several documents. A singular "该材料" still
+      // has multiple possible antecedents even though there is only one task.
+      if(/(?:和|与|及|、|或者)/u.test(name))return false
       const kind=subject.slice(1)
       if(kind==='表'||kind==='表格'){if(!name.endsWith('表'))return false}
       else if(!['材料','文件'].includes(kind)&&!name.endsWith(kind))return false
@@ -90,10 +93,14 @@ export function retainLocalScopedGoals(input:RecognitionResult,source:string):Re
   if(input.modelName!=='local-rules')return input
   const tasks=tasksOf(input),lines=localSourceLines(source),headings=lines.filter(line=>localHeading(line))
   const scopes:Array<LocalSourceSpan&{title:string}>=[]
+  // A generic section label describes a facet of its enclosing goal. A
+  // separately named subject still closes that goal; dates and titles are
+  // never used on their own to merge independent subjects.
+  const facet=(title:string)=>/^(?:(?:办理|提交|申请|报名|材料|资料|操作|补充)(?:说明|须知|要求|流程|方式|步骤|时间)|说明|须知|要求|附件)$/u.test(title)
   for(const [index,line] of headings.entries()){
     const title=localHeading(line)!
     if(title.length<4||!/(?:申请|申报|认定|评选|报销|预约|借用|办理|验收|登记)$/u.test(title)||/^(?:本次|相关|有关|统一|各类|各项|所有|个人)?(?:申请|申报|登记|办理)$/u.test(title))continue
-    scopes.push({...line,title,end:headings[index+1]?.start??source.length})
+    scopes.push({...line,title,end:headings.slice(index+1).find(next=>!facet(localHeading(next)!))?.start??source.length})
   }
   for(const match of source.matchAll(/(?:^|[。！？\n])\s*((?:参加|参与)([^，,。！？\n]{3,40}?(?:评选|比赛|竞赛|申报)))[，,]\s*(?=请)/gu)){
     const start=match.index!+match[0].indexOf(match[1]),tail=source.slice(start),stop=tail.search(/[。！？\n]/u)

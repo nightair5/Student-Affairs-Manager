@@ -43,10 +43,27 @@ export function localBackgroundNotUserAction(text:string,verb:string,object:stri
  if(!clauses.length)return false
  return clauses.every(clause=>{
   const at=clause.indexOf(object),before=clause.slice(0,at)
+  // An explanation can mention an obligation while explicitly denying that
+  // it follows ("不代表需要提交..."). Scope the denial to the same comma
+  // clause; a later "请提交..." remains a separate positive directive.
+  const actionAt=clause.indexOf(verb+object)
+  const own=actionAt>=0?clause.slice(Math.max(clause.lastIndexOf('，',actionAt),clause.lastIndexOf(',',actionAt))+1):clause
+  const ownAction=own.indexOf(verb+object)
+  if(ownAction>=0&&/(?:不代表|不表示|不意味着)[^，,。；;]{0,40}$/u.test(own.slice(0,ownAction)))return true
+  // A relational statement about attending A and B is not itself a new
+  // imperative to attend the entire comparison as one malformed object.
+  if(/不代表|不表示|不意味着/u.test(object)&&ownAction>=0&&!/请|须|务必|应当/u.test(own.slice(0,ownAction)))return true
   // An already-completed registration can modify the audience of another
   // instruction (“已报名同学携带…”); it is not an instruction to register.
   if(/^(?:报名|登记|申请)$/u.test(verb)&&/^(?:同学|学生|人员|成员|志愿者)(?:携带|准备|参加|填写|提交|领取)/u.test(object)&&/(?:已|曾|未)(?:经)?(?:报名|登记|申请)\s*$/u.test(before))return true
   if(/(?:请|务必|须|需要|应当|请大家|请同学)[^。；]{0,30}$/u.test(before))return false
+  if(/^(?:工作|类别|流程|要求|安排)$/u.test(object)&&actionAt>=0
+    &&/(?:的|不是|不属于)[^，,。；;]{0,10}$/u.test(clause.slice(0,actionAt)))return true
+  // In a nominal date label, the parser can make the suffix itself an
+  // action object ("领取" + "日"). That is neither a deliverable nor an
+  // instruction. A genuine imperative with a concrete object is retained.
+  if(/^(?:日|日期|时间|时段|阶段|流程)$/u.test(object)&&clause.includes(verb+object)
+    &&/(?:为|是|设为)[^，,。；;]{0,30}$/u.test(clause.slice(0,clause.indexOf(verb+object))))return true
   // “报名成功/报名流程/报名网站” describes a state or a noun phrase,
   // not an instruction whose object is “成功/流程/网站”. A separate
   // reader-directed action in the same source is handled independently.
@@ -54,6 +71,18 @@ export function localBackgroundNotUserAction(text:string,verb:string,object:stri
   if(verb==='准备'&&/(?:围绕|介绍|讲解|探讨|讨论|内容包括|内容涵盖)/u.test(before))return true
   return verb==='核对'&&!/(?:核对|核实|检查|确认|查看)/u.test(clause)&&/(?:^|[，,])[^，,]{1,30}不负责(?:提供|安排|组织)/u.test(clause.trim())
  })
+}
+
+/** Exclude explanatory comparisons from attendance/eligibility inference.
+ * Keep other comma clauses, including a separately stated invitation. */
+export function localParticipationContext(text:string):string {
+ if(!/不代表|不表示|不意味着/u.test(text))return text
+ return text.split(/[。；;！？\n]/u).map(sentence=>sentence.split(/[，,]/u).flatMap(clause=>{
+    const at=clause.search(/不代表|不表示|不意味着/u)
+    if(at<0)return [clause]
+    const later=/(?:但|仍然|仍)请[^。；;]+/u.exec(clause.slice(at))
+    return later?[later[0]]:[]
+  }).join('，')).join('；')
 }
 
 /** A cited past biography is not a present invitation. A separately cited

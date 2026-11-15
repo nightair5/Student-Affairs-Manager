@@ -25,6 +25,7 @@ import {retainLocalSameDayEvents,retainLocalDeliveryReferences} from './localRef
 import {retainLocalOrganizerContext} from './localOrganizerContext'
 import {retainLocalNamedRequirements} from './localNamedRequirements'
 import {retainLocalObjectReferences,retainLocalScopedGoals} from './localContextRelations'
+import {retainLocalScopedDirectives} from './localDirectiveScope'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string,options:{scopeAware?:boolean;timezone?:string}={}):RecognitionResult {
@@ -52,7 +53,7 @@ export function improveDirectFallback(input:RecognitionResult,source:string,opti
   if(!result.quality.reviewReasons.includes(reason))result.quality.reviewReasons.push(reason)
   result.quality.needsHumanReview=true
  }
- let adjusted=retainLocalActionWeekdays(result,source,options.timezone)
+ let adjusted=retainLocalActionWeekdays(retainLocalScopedDirectives(result,source,options.timezone??'Asia/Shanghai'),source,options.timezone)
  adjusted=retainLocalOwnedWeekdayDeadlines(adjusted,source,options.timezone)
  adjusted=retainLocalLocationCorrection(adjusted,source,options.timezone)
  adjusted=retainLocalCitedAttendance(adjusted,source,options.timezone)
@@ -64,6 +65,7 @@ export function improveDirectFallback(input:RecognitionResult,source:string,opti
  adjusted=retainLocalUndatedClockEvent(adjusted,source)
  adjusted=detachOtherActorTime(retainCoordinatedAction(retainLocalSeparateDirective(adjusted,source,options.timezone),source),source)
  adjusted=retainLocalSameDayEvents(adjusted,source,options.timezone??'Asia/Shanghai')
+ adjusted=retainLocalConditionalMaterials(adjusted,source)
  return retainLocalScopedGoals(retainLocalObjectReferences(retainLocalNamedRequirements(retainLocalOrganizerContext(retainLocalDeliveryReferences(adjusted,source,options.timezone??'Asia/Shanghai'),source),source),source),source)
 }
 
