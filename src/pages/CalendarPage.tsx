@@ -194,7 +194,7 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
               const dayEvents = eventByDate.get(cell.dateKey) ?? []
               const summary = summarizeCalendarDay(directMode?matterDaySummaryTasks(dayTasks,tasks):dayTasks, dayEvents,cell.dateKey,timeZone)
               if (dateViews && summary && dayTasks.some(task => isDateOnly(task.deadline))) {
-                const timed = summarizeCalendarDay(dayTasks.filter(task => !isDateOnly(task.deadline)), dayEvents)
+                const timed = summarizeCalendarDay(dayTasks.filter(task => !isDateOnly(task.deadline)), dayEvents,cell.dateKey,timeZone)
                 summary.timeLabel = timed ? `含仅日期事项；时刻 ${timed.timeLabel}` : '仅日期'
               }
               if (isolatedTimezone && summary) {
@@ -212,15 +212,15 @@ export function CalendarPage({ directMode,onCompleteTask,onScheduleTask,taskChan
                 cell.isToday && 'today',
               ].filter(Boolean).join(' ')
               const accessibleSummary = summary
-                ? `${summary.total} 项，${summary.timeLabel==='仅日期'?'仅日期，具体时刻未说明':'最早 '+summary.timeLabel}，${summary.headline}`
+                ? `${summary.total} 项，${summary.timeLabel==='仅日期'?'仅日期，具体时刻未说明':/延续/u.test(summary.timeLabel)?summary.timeLabel:'最早 '+summary.timeLabel}，${summary.headline}`
                 : '无事项'
               return <button key={cell.dateKey} className={className} type="button" onClick={() => { setSelectedDateKey(cell.dateKey); setAgendaMode('selected') }} aria-pressed={selected} aria-current={cell.isToday ? 'date' : undefined} aria-label={`${dayLabel(cell.dateKey)}，${accessibleSummary}`}>
                 <span className="calendar-date"><strong>{cell.day}</strong>{cell.isToday && <em>今天</em>}</span>
                 {summary
-                  ? <span className="calendar-day-summary">
+                  ? <span className={`calendar-day-summary${/延续/u.test(summary.timeLabel)?' has-continuation':''}`}>
                       <strong className="calendar-summary-full">{summary.headline}</strong>
                       <strong className="calendar-summary-compact">{summary.compactHeadline}</strong>
-                      <small className="calendar-meta-full">{summary.active ? `${summary.taskCount} 项任务 · ${summary.eventCount} 个事件 · ${summary.timeLabel}` : `${summary.completed} 项已完成`}</small>
+                      <small className="calendar-meta-full">{summary.active ? `${summary.timeLabel} · ${summary.active} 项` : `${summary.completed} 项已完成`}</small>
                       <small className="calendar-meta-compact">{summary.active ? `${summary.timeLabel}·${summary.active}项` : `${summary.completed}项完成`}</small>
                       {summary.riskCount > 0 && <em>{summary.riskCount} 项需留意</em>}
                     </span>

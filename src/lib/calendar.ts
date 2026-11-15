@@ -231,18 +231,26 @@ function compactTitle(title: string, limit = 4): string {
   return [...title.trim()].slice(0, limit).join('')
 }
 
+function eventDaySummary(event:Event,day:string|undefined,timeZone:string) {
+  const start=event.startAt!
+  const continuation=day&&localDateKey(start,timeZone)<day&&event.endAt&&!isDateOnly(start)&&eventCalendarDays(event,timeZone,{start:day,end:day}).length>0
+  if(!continuation)return {title:event.title,at:day&&localDateKey(start,timeZone)!==day?day:start,timeLabel:undefined as string|undefined}
+  const endsToday=localDateKey(event.endAt!,timeZone)===day&&!isDateOnly(event.endAt!)
+  return {title:event.title,at:day+'T00:00',timeLabel:endsToday?'延续至 '+workspaceTimeLabel(event.endAt!,timeZone):'跨日延续'}
+}
+
 export function summarizeCalendarDay(tasks: Task[], events: Event[], day?:string, timeZone=DEFAULT_WORKSPACE_TIMEZONE): DaySummary | null {
   if (!tasks.length && !events.length) return null
   const sorted = [...tasks].sort((a, b) => new Date(taskCalendarDate(a)).getTime() - new Date(taskCalendarDate(b)).getTime())
   const activeTasks = sorted.filter((task) => task.status !== '已完成')
   const activeItems = [
-    ...activeTasks.map((task) => ({ title: task.title, at: day?taskCalendarEntryForDay(task,day,timeZone)?.at??taskCalendarDate(task):taskCalendarDate(task) })),
-    ...events.filter((event) => event.startAt).map((event) => ({ title: event.title, at: day&&localDateKey(event.startAt!,timeZone)!==day?day:event.startAt! })),
+    ...activeTasks.map((task) => ({ title: task.title, at: day?taskCalendarEntryForDay(task,day,timeZone)?.at??taskCalendarDate(task):taskCalendarDate(task),timeLabel:undefined as string|undefined })),
+    ...events.filter((event) => event.startAt).map((event) => eventDaySummary(event,day,timeZone)),
   ].sort((a, b) => new Date(a.at).getTime() - new Date(b.at).getTime())
-  const fallback = sorted.map((task) => ({ title: task.title, at: taskCalendarDate(task) }))
+  const fallback = sorted.map((task) => ({ title: task.title, at: taskCalendarDate(task),timeLabel:undefined as string|undefined }))
   const focus = activeItems.length ? activeItems : fallback
   const timed=focus.filter(item=>!isDateOnly(item.at)),hasDateOnly=focus.some(item=>isDateOnly(item.at))
-  const timeLabel = timed.length?(hasDateOnly?'含仅日期事项；':'')+workspaceTimeLabel(timed[0].at,timeZone):'仅日期'
+  const timeLabel = timed.length?(hasDateOnly?'含仅日期事项；':'')+(timed[0].timeLabel??workspaceTimeLabel(timed[0].at,timeZone)):'仅日期'
   const riskCount = activeTasks.filter((task) => task.riskFlags.length > 0).length
     + events.filter((event) => event.needsConfirmation).length
   const active = activeItems.length

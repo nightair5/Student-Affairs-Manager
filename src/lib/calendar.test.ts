@@ -35,6 +35,16 @@ function calendarEvent(id: string, title: string, startAt: string | null, needsC
 }
 
 describe('calendar summaries', () => {
+  it('describes a timed continuation on its second day without changing source endpoints',()=>{
+    const event={...calendarEvent('night','夜间观测','2026-11-22T22:30'),endAt:'2026-11-23T00:15'}
+    const days=groupEventsByDate([event])
+    expect(summarizeCalendarDay([],days.get('2026-11-23')!, '2026-11-23')?.timeLabel).toBe('延续至 00:15')
+    expect(summarizeCalendarDay([],days.get('2026-11-22')!, '2026-11-22')?.timeLabel).toBe('22:30')
+    expect([event.startAt,event.endAt]).toEqual(['2026-11-22T22:30','2026-11-23T00:15'])
+    expect(groupEventsByDate([{...event,endAt:'2026-11-23T00:00'}]).has('2026-11-23')).toBe(false)
+    expect(summarizeCalendarDay([],[{...event,endAt:'2026-11-24T12:00'}],'2026-11-23')?.timeLabel).toBe('跨日延续')
+    expect(summarizeCalendarDay([],[calendarEvent('day','仅日期活动','2026-11-23')],'2026-11-23')?.timeLabel).toBe('仅日期')
+  })
   it('builds a stable six-week Monday-first month grid', () => {
     const cells = buildMonthCells(new Date(2026, 7, 1), new Date(2026, 7, 2))
     expect(cells).toHaveLength(42)

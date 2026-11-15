@@ -1,5 +1,6 @@
 import {parseDirectSourceTime} from '../../cloudflare/direct-source-time.mjs'
 import type {RecognitionResult, TaskSuggestionV2} from './types'
+import {localSourceLines,localHeading} from './localSourceContext'
 
 const daySource = '(?:(?:\\d{4}年)?\\d{1,2}月\\d{1,2}[日号]|(?:(?:本|这|下|上)(?:个)?)?(?:周|星期|礼拜)[一二三四五六日天]|今天|今日|明天|后天)'
 const clockSource = '(?:(?:凌晨|上午|下午|中午|晚上|早上)\\s*)?\\d{1,2}[:：][0-5]\\d'
@@ -30,18 +31,18 @@ export function localSameDayClock(source: string, title: string, raw: string) {
   return ownTime ? {raw: ownTime[1], clock: ownTime[2], at: owner.index! + owner[0].indexOf(ownTime[1])} : null
 }
 
-/** Resolve a local date reference, including across one sentence stop. Only
- * the immediately preceding sentence in this paragraph is an antecedent;
+/** Resolve an explicit local date reference across sentence/line boundaries.
+ * Only the immediately preceding sentence in the same section is an antecedent;
  * a deadline, recurrence, revision or competing dates cannot donate a day.
  * Cancellation affects attendance, not the explicitly referenced day. */
 export function localSameDayTime(source: string, title: string, raw: string, referenceTime: string, timezone: string) {
   const own = localSameDayClock(source, title, raw)
   if (!own) return null
   const previous = source.slice(0, own.at)
-  const paragraph = previous.lastIndexOf('\n') + 1
-  const withinParagraph = previous.slice(paragraph).trimEnd()
-  const antecedent = withinParagraph.replace(/[。！？]\s*$/u, '')
-  const boundary = paragraph + Math.max(...['。', '！', '？'].map(mark => antecedent.lastIndexOf(mark))) + 1
+  const antecedent = previous.trimEnd().replace(/[。！？]\s*$/u, '')
+  const sentenceBoundary = Math.max(...['。', '！', '？'].map(mark => antecedent.lastIndexOf(mark))) + 1
+  const headingBoundary=localSourceLines(previous).filter(line=>localHeading(line)).at(-1)?.end??0
+  const boundary = Math.max(sentenceBoundary,headingBoundary)
   const context = source.slice(boundary, own.at)
   const days = [...context.matchAll(new RegExp(daySource, 'gu'))]
   if (days.length !== 1 || /(?:或者|或|备选|改为|改至|调整至|延期|另行|待定|每周|每星期|截止|截至|最迟|之前|以前|前(?:提交|上传|发送|填写|交|报名|申请))/u.test(context)) return null
@@ -62,11 +63,17 @@ export function retainLocalSameDayEvents(input: RecognitionResult, source: strin
     if (!start) continue
     const clock = localSameDayClock(source, event.title, start.rawText)
     const proof = localSameDayTime(source, event.title, start.rawText, result.createdAt, timezone)
+    // Earlier parsers may have borrowed a date from a broad quotation. A
+    // same-day reference must pass this one scope check in every path.
+    if(clock&&!proof){
+      for(const point of result.timePoints.filter(p=>p.tempId===start.tempId||p.tempId===event.endTimePointTempId))Object.assign(point,{rawText:clock.raw,normalizedValue:null,needsConfirmation:true})
+    }
     if (clock && !proof && !event.description.includes('时间说明：')) {
       const line = `时间说明：${clock.clock}（日期待定）`
       if (event.description.length + line.length + 1 <= 800) event.description += '\n' + line
     }
     if (!proof || result.evidence.length > 118 || start.evidenceIds.length > 18) continue
+    event.description=event.description.split('\n').filter(line=>line!==`时间说明：${clock?.clock}（日期待定）`).join('\n')
     const refs = [proof, proof.anchor].map(span => {
       const id = `local-day-reference:${span.at}`
       if (!result.evidence.some(ref => ref.id === id)) result.evidence.push({id, sourceId: result.evidence[0]?.sourceId ?? 'source', quote: span.raw, quotedText: span.raw, textStart: span.at, textEnd: span.at + span.raw.length, field: 'deadline', extractionMethod: 'parser', confidence: 1})

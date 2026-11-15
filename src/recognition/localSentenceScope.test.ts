@@ -34,8 +34,10 @@ it('retains both endpoints of a second, cross-midnight event with a separately c
  expect(r.timePoints.find(p=>p.tempId===night.endTimePointTempId)?.normalizedValue).toBe('2026-11-23T00:15')
 })
 
-it('retains an owned clock when the day has alternatives, a revision, a paragraph break or a deadline antecedent',()=>{
- for(const prefix of ['周一或周二安排导览。','原定周一的导览改为周二。','周一举行导览。\n','请周二17:00前在平台填写信息。']){
+it('retains an owned clock when the day has alternatives, a revision, a new section or a deadline antecedent',()=>{
+ // Paragraph wrapping now preserves explicit references; a new section still
+ // blocks inheritance. Historical evaluation fixtures remain unchanged.
+ for(const prefix of ['周一或周二安排导览。','原定周一的导览改为周二。','周一举行导览。\n【另一项目】\n','请周二17:00前在平台填写信息。']){
   const source=prefix+'同日15:00在北馆的摄影展照常举行。'
   expect(localSameDayTime(source,'摄影展','15:00',referenceTime,timezone)).toBeNull()
   const r=recognize(source),event=r.events.find(e=>e.title==='摄影展')!

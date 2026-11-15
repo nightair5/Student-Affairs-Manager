@@ -85,3 +85,40 @@ it('keeps a failed new multi-action commit atomic and safely retries the same sa
  await commitDirectDraft(repo,handle.draftId,now)
  expect((await read()).tasks).toHaveLength(2);expect((await read()).events).toHaveLength(0)
 })
+
+it('persists scoped matter membership independently of member status, title, duplicate capture and backup',async()=>{
+ const {repo,add,read}=await setup()
+ const text='研究交流申请\n申请者请周二12:00前在学院平台填写申请表；周四18:30前把研究提纲PDF发送至 study@example.edu。\n研究提纲须本人签名，最多3页。'
+ await add(text,'group-first')
+ const before=await read(),view=workspaceV8ToLegacyView(before),first=view.tasks.find(t=>t.title.includes('填写'))!,other=view.tasks.find(t=>t.id!==first.id)!
+ expect(view.tasks).toHaveLength(2);expect(first.sourceGoal?.title).toBe('研究交流申请')
+ expect(first.sourceGoal?.id).toBe(other.sourceGoal?.id)
+ expect(before.extractionDrafts.some(d=>Array.isArray(d.legacyData?.directGoalGroups))).toBe(true)
+ const duplicate=await add(text,'group-second')
+ const both=workspaceV8ToLegacyView(await read()).tasks
+ expect(new Set(both.map(t=>t.sourceGoal?.id)).size).toBe(2)
+ await undoDirectBatchPreservingEdits(repo,duplicate.batch!.id,now)
+ expect((await read()).tasks).toEqual(before.tasks)
+ await commitTaskCommand(repo,{operationId:'group-step-done',taskId:first.id,expected:{status:'todo'},changes:{status:'completed'},changedAt:now})
+ let saved=workspaceV8ToLegacyView(await read())
+ expect(saved.tasks.find(t=>t.id===other.id)?.status).toBe('待开始')
+ expect(saved.tasks.find(t=>t.id===other.id)?.sourceGoal?.id).toBe(first.sourceGoal?.id)
+ await commitTaskCommand(repo,{operationId:'group-step-restore',taskId:first.id,expected:{status:'completed'},changes:{status:'todo'},changedAt:now})
+ await commitTaskCommand(repo,{operationId:'group-rename',taskId:first.id,expected:{title:first.title},changes:{title:'填写交流申请'},changedAt:now})
+ const roundtrip=importWorkspaceV8(exportWorkspaceV8(await read()));saved=workspaceV8ToLegacyView(roundtrip)
+ expect(saved.tasks.find(t=>t.id===first.id)).toMatchObject({title:'填写交流申请',deadline:'2026-11-17T12:00',sourceGoal:first.sourceGoal})
+ expect(saved.tasks.find(t=>t.id===other.id)?.deadline).toBe('2026-11-19T18:30')
+ expect(roundtrip.materials.map(m=>m.submissionChannel).sort()).toEqual(['study@example.edu','学院平台'].sort())
+ expect(validateWorkspaceV8(roundtrip).valid).toBe(true)
+})
+
+it('saves separately stated object channels without giving sibling tasks their material or cutoff',async()=>{
+ const {add,read}=await setup()
+ await add('请周四17:00前提交实验记录，同时归还借用仪器。实验记录须签名，仪器交至器材室。','object-scope')
+ const saved=importWorkspaceV8(exportWorkspaceV8(await read())),view=workspaceV8ToLegacyView(saved)
+ const record=view.tasks.find(t=>t.title.includes('提交'))!,equipment=view.tasks.find(t=>t.title.includes('归还'))!
+ expect(record.deadline).toBe('2026-11-19T17:00');expect(equipment.deadline).toBe('')
+ expect(saved.materials.find(m=>m.name==='借用仪器')).toMatchObject({submissionChannel:'器材室',relatedTaskIds:[equipment.id]})
+ expect(saved.materials.find(m=>m.name==='实验记录')?.submissionChannel).toBeNull()
+ expect(validateWorkspaceV8(saved).valid).toBe(true)
+})

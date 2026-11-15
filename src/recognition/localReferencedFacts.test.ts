@@ -30,12 +30,18 @@ it('uses only the cancelled event day for an explicit same-day continuing event'
  expect(r.events[0].endTimePointTempId).toBeNull()
 })
 
-it('keeps date references unresolved across a new paragraph or conflicting anchors',()=>{
+it('keeps date references unresolved across a new section or conflicting anchors',()=>{
  for(const text of [
-  '周一10:00校园导览。\n同日15:00在图书馆的书展照常举行。',
+  // A new heading closes scope; line wrapping alone now retains an explicit same-day reference.
+  '周一10:00校园导览。\n【另一个项目】\n同日15:00在图书馆的书展照常举行。',
   '周一或周二安排导览；同日15:00在图书馆的书展照常举行。',
   '原定周一的导览改为周二；同日15:00在图书馆的书展照常举行。',
  ])expect(localSameDayTime(text,'书展','15:00',referenceTime,timezone)).toBeNull()
+})
+
+it('retains an explicit same-day reference when a paragraph break only wraps the notice',()=>{
+ const text='周一10:00校园导览。\n同日15:00在图书馆的书展照常举行。'
+ expect(localSameDayTime(text,'书展','15:00',referenceTime,timezone)?.parsed.normalizedValue).toBe('2026-11-16T15:00')
 })
 
 it('retains the still-required form, elided material, channel and deadline without reviving the cancelled form',()=>{

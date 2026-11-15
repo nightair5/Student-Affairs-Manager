@@ -24,6 +24,7 @@ import {sourceActionWeekday,sourceWeekdayAlternatives,formatSourceWeekdayAlterna
 import {retainLocalSameDayEvents,retainLocalDeliveryReferences} from './localReferencedFacts'
 import {retainLocalOrganizerContext} from './localOrganizerContext'
 import {retainLocalNamedRequirements} from './localNamedRequirements'
+import {retainLocalObjectReferences,retainLocalScopedGoals} from './localContextRelations'
 
 /** Used only after local-rules recognition. No cloud answer is rewritten here. */
 export function improveDirectFallback(input:RecognitionResult,source:string,options:{scopeAware?:boolean;timezone?:string}={}):RecognitionResult {
@@ -63,7 +64,7 @@ export function improveDirectFallback(input:RecognitionResult,source:string,opti
  adjusted=retainLocalUndatedClockEvent(adjusted,source)
  adjusted=detachOtherActorTime(retainCoordinatedAction(retainLocalSeparateDirective(adjusted,source,options.timezone),source),source)
  adjusted=retainLocalSameDayEvents(adjusted,source,options.timezone??'Asia/Shanghai')
- return retainLocalNamedRequirements(retainLocalOrganizerContext(retainLocalDeliveryReferences(adjusted,source,options.timezone??'Asia/Shanghai'),source),source)
+ return retainLocalScopedGoals(retainLocalObjectReferences(retainLocalNamedRequirements(retainLocalOrganizerContext(retainLocalDeliveryReferences(adjusted,source,options.timezone??'Asia/Shanghai'),source),source),source),source)
 }
 
 /** Preserve only a source-cited weekday for the task which owns its action. */

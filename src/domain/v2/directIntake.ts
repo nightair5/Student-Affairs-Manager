@@ -175,7 +175,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
       if(members.some(member=>!member))continue
       const [owner,...others]=members as Array<typeof plan.create.tasks[number]>
       const group={version:'source-goal-group-1.0.0',id:`${d.id}:${goal.id}`,title:goal.title,sourceVersionId:v.id,quotations:quotes.filter((quote):quote is string=>Boolean(quote)),taskIds:[owner,...others].map(task=>task.id)}
-      if(result.promptVersion==='recognition-semantic-notice-3.12.0'){
+      if(result.promptVersion==='recognition-semantic-notice-3.12.0'||result.modelName==='local-rules'&&goal.id.startsWith('local-context-goal:')){
         // The capture's draft outlives its members. One authoritative relation
         // avoids losing the entire matter when its first task is deleted.
         directGoalGroups.push(group)
@@ -237,7 +237,7 @@ export async function commitDirectDraft(repo: Pick<CanonicalWorkspaceRepository,
     const next=applyDomainCommitPlan(prepared,plan,now)
     next.sources=next.sources.map(x=>x.id===s.id?{...x,legacyData:{...x.legacyData,directUndoneAt:null,...(intentionalRepeat?{duplicateReviewStatus:'保留为独立来源'}:{})}}:x)
     if(s.title==='手动粘贴消息'&&!d.acceptedEntityTempIds.length)next.sources=next.sources.map(x=>x.id===s.id?{...x,title:result.standaloneTasks[0]?.title??result.events[0]?.title??x.title}:x)
-    next.extractionDrafts=next.extractionDrafts.map(x=>x.id===d.id?{...x,legacyData:{...x.legacyData,directBatch:json(batch),...(result.promptVersion==='recognition-semantic-notice-3.12.0'?{directGoalGroups:json(directGoalGroups)}:{}),directConversion:json({version:DIRECT_MODE_VERSION,...(retention?{retentionVersion:DIRECT_RETENTION_VERSION}:{}),inputProvider:d.result?'stored-answer':'local-rules-from-preserved-source',omitted:converted.omitted,...(actionRecovery?{actionProjectionVersion:DIRECT_ACTION_PROJECTION_VERSION,sourceDerivedTaskIds:result.standaloneTasks.filter(t=>t.tempId.startsWith('direct-action-')).map(t=>t.tempId)}:{})})}}:x)
+    next.extractionDrafts=next.extractionDrafts.map(x=>x.id===d.id?{...x,legacyData:{...x.legacyData,directBatch:json(batch),...(directGoalGroups.length||result.promptVersion==='recognition-semantic-notice-3.12.0'?{directGoalGroups:json(directGoalGroups)}:{}),directConversion:json({version:DIRECT_MODE_VERSION,...(retention?{retentionVersion:DIRECT_RETENTION_VERSION}:{}),inputProvider:d.result?'stored-answer':'local-rules-from-preserved-source',omitted:converted.omitted,...(actionRecovery?{actionProjectionVersion:DIRECT_ACTION_PROJECTION_VERSION,sourceDerivedTaskIds:result.standaloneTasks.filter(t=>t.tempId.startsWith('direct-action-')).map(t=>t.tempId)}:{})})}}:x)
     receipt={batch,duplicate:false};return next
   })
   return receipt

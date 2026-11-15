@@ -3,6 +3,12 @@
   display: none;
 }
 
+.calendar-day-summary.has-continuation > .calendar-meta-full,
+.calendar-day-summary.has-continuation > .calendar-meta-compact {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
 @media (max-width: 900px) {
   .guide-backdrop {
     align-items: stretch;
