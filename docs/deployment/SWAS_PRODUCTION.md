@@ -2,7 +2,7 @@
 
 生效：2026-11-11，依据负责人本轮生产迁移交接。网站名为「个人事务整理工具」。此记录替代此前面向 apex 正式站的 Workers 部署与回滚说明。
 
-当前已核实生产（2026-11-15）：`v3.0.0-beta.55` / `a38f9a774dd044e0844822df931494e527dfc1e0`。备份 `/root/sa-backups/20261115-144900-a38f9a77/`；回滚到 beta.54：`bash /root/sa-backups/20261115-144900-a38f9a77/rollback.sh`。服务器完成精简源码包安装、Node 20 构建、188 个产物哈希及 22 项 HTTP/配置检查；实际版本见 [deployment.json](https://student-affairs.site/deployment.json)。新真实模型调用未运行，原模型默认不变。原 PR #15 保留为托管来源。
+当前已核实生产（2026-11-15）：`v3.0.0-beta.56` / `8dd17d3e757608b6d59b346d75f601acf8463729`。备份 `/root/sa-backups/20261115-215145-8dd17d3e/`；回滚到 beta.55：`bash /root/sa-backups/20261115-215145-8dd17d3e/rollback.sh`。服务器完成精简源码包安装、Node 20 构建、188 个产物哈希及 22 项 HTTP/配置检查，17 项服务、23 项语义和 80 项受影响来源保存测试通过；实际版本见 [deployment.json](https://student-affairs.site/deployment.json)。新真实模型调用未运行，原模型默认不变。原 PR #15 保留为托管来源。
 
 历史 beta.39 保护备份：`/root/sa-backups/20261112-001910-11090723-attempt3/`。当时回滚命令：`bash /root/sa-backups/20261112-001910-11090723-attempt3/rollback.sh`，不是当前发布回滚点。首次回滚记录位于 `/root/sa-backups/20261111-235702-11090723/`，未清理。
 
