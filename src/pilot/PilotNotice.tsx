@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-type PilotStatus = { allowed: boolean; phase: string; endsAt?: string; exportEndsAt?: string; dailyRemaining?: number }
+type PilotStatus = { allowed: boolean; phase: string; endsAt?: string; exportEndsAt?: string; dailyRemaining?: number; cloudEnabled?: boolean }
 
 function time(value?: string) {
   return value ? new Date(value).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', hour12: false }) : ''
@@ -26,7 +26,7 @@ export function PilotNotice() {
   const notice = !status.allowed
     ? '本轮访问已失效或结束。已打开的本地页面可能暂时保留；云端服务已不可使用。'
     : status.phase === 'export'
-      ? `测试已结束，云端功能已关闭。请在 ${time(status.exportEndsAt)} 前从项目档案导出本机备份。页面中已有的本地操作仍可能可用。`
-      : `邀请测试中，云端整理今日个人剩余 ${status.dailyRemaining ?? '—'} 次，另受全体额度限制；使用截至 ${time(status.endsAt)}，请在 ${time(status.exportEndsAt)} 前导出需要保留的数据。`
+      ? `测试已结束，云端功能已关闭。请在 ${time(status.exportEndsAt)} 前，在原浏览器打开「更多 → 项目 → 导出 JSON」保存备份。`
+      : `邀请测试截至 ${time(status.endsAt)}。${status.cloudEnabled ? `今日还能使用云端整理 ${status.dailyRemaining ?? '—'} 次。` : '当前使用本机整理。'}请在 ${time(status.exportEndsAt)} 前导出需要保留的数据。`
   return <aside role="status" style={{ padding: '10px 18px', background: '#eaf2ee', color: '#173c34', borderBottom: '1px solid #b8d2c5', fontSize: '14px', lineHeight: 1.5 }}>{notice}</aside>
 }

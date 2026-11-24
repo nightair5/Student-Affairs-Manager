@@ -4,8 +4,16 @@ import { dirname, join } from 'node:path'
 
 const digest = (value) => createHash('sha256').update(value).digest('hex')
 const random = () => randomBytes(24).toString('base64url')
-const dayKey = (now) => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).format(now)
+const dateFormat = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' })
+const dayKey = (now) => dateFormat.format(now)
 const integer = (value) => Number.isSafeInteger(value) && value > 0
+const count = (value) => Number.isSafeInteger(value) && value >= 0
+const record = (value) => value && typeof value === 'object' && !Array.isArray(value)
+const tokenPattern = /^[A-Za-z0-9_-]{32}$/u
+const emptyBudget = () => ({ limit: 0, settled: 0, pending: {}, paused: false })
+export const flashInputLimit = 1_048_576
+export const flashOutputLimit = 16_384
+export const flashPeakCostMicroCny = (input, output) => 2 * input + 8 * output
 
 function validate(state) {
   const zoned = (value) => typeof value === 'string' && /(?:Z|[+-]\d{2}:\d{2})$/u.test(value)
@@ -15,14 +23,19 @@ function validate(state) {
       !Number.isFinite(Date.parse(state.exportEndsAt)) || Date.parse(state.startsAt) >= Date.parse(state.endsAt) ||
       Date.parse(state.endsAt) >= Date.parse(state.exportEndsAt) || !integer(state.dailyUserLimit) ||
       !integer(state.dailyGlobalLimit) || !state.invites || !state.sessions || !state.usage) throw new Error('PILOT_STATE_INVALID')
-  const object = (v) => v && typeof v === 'object' && !Array.isArray(v)
-  const count = (v) => Number.isSafeInteger(v) && v >= 0
   const hash = (v) => /^[a-f0-9]{64}$/u.test(v)
   const label = (v) => /^P[0-9]{2,5}$/u.test(v)
-  if (!object(state.invites) || !object(state.sessions) || !object(state.usage) ||
-      Object.entries(state.invites).some(([k, v]) => !hash(k) || !object(v) || !label(v.label) || typeof v.revoked !== 'boolean') ||
-      Object.entries(state.sessions).some(([k, v]) => !hash(k) || !object(v) || !label(v.label)) ||
-      Object.entries(state.usage).some(([k, v]) => !/^\d{4}-\d{2}-\d{2}$/u.test(k) || !object(v) || !count(v.total) || !object(v.users) || Object.entries(v.users).some(([key, n]) => !label(key) || !count(n)))) throw new Error('PILOT_STATE_INVALID')
+  if (!record(state.invites) || !record(state.sessions) || !record(state.usage) ||
+      Object.entries(state.invites).some(([k, v]) => !hash(k) || !record(v) || !label(v.label) || typeof v.revoked !== 'boolean' || (v.redeemed !== undefined && typeof v.redeemed !== 'boolean')) ||
+      Object.entries(state.sessions).some(([k, v]) => !hash(k) || !record(v) || !label(v.label)) ||
+      Object.entries(state.usage).some(([k, v]) => !/^\d{4}-\d{2}-\d{2}$/u.test(k) || !record(v) || !count(v.total) || !record(v.users) || Object.entries(v.users).some(([key, n]) => !label(key) || !count(n)))) throw new Error('PILOT_STATE_INVALID')
+  if (state.modelBudget !== undefined) {
+    const budget = state.modelBudget
+    if (!record(budget) || !count(budget.limit) || !count(budget.settled) || typeof budget.paused !== 'boolean' ||
+        !record(budget.pending) || Object.entries(budget.pending).some(([id, amount]) => !tokenPattern.test(id) || !integer(amount))) {
+      throw new Error('PILOT_STATE_INVALID')
+    }
+  }
   return state
 }
 
@@ -64,17 +77,18 @@ export function initialize(file, options) {
     if (state) throw new Error('PILOT_ALREADY_EXISTS')
     const next = validate({ version: 1, status: 'open', startsAt: options.startsAt, endsAt: options.endsAt,
       exportEndsAt: options.exportEndsAt, dailyUserLimit: Number(options.dailyUserLimit), dailyGlobalLimit: Number(options.dailyGlobalLimit),
-      invites: {}, sessions: {}, usage: {} })
+      invites: {}, sessions: {}, usage: {}, modelBudget: { ...emptyBudget(), limit: options.modelBudgetMicroCny ?? 0 } })
     return { next, result: true }
   }, { create: true })
 }
 
-export function issueInvite(file, label) {
+export function issueInvite(file, label, now = new Date()) {
   if (!/^P[0-9]{2,5}$/u.test(label)) throw new Error('PILOT_BAD_LABEL')
   return withPilotState(file, (state) => {
+    if (!['pending', 'active'].includes(phase(state, now))) throw new Error('PILOT_ISSUE_ENDED')
     if (Object.values(state.invites).some((item) => item.label === label)) throw new Error('PILOT_DUPLICATE_LABEL')
     const code = random()
-    state.invites[digest(code)] = { label, revoked: false }
+    state.invites[digest(code)] = { label, revoked: false, redeemed: false }
     return { result: code }
   })
 }
@@ -100,26 +114,33 @@ function phase(state, now) {
   return time < Date.parse(state.endsAt) ? 'active' : 'export'
 }
 
+export function pilotPhase(file, now = new Date()) {
+  return withPilotState(file, (state) => ({ result: phase(state, now), write: false }))
+}
+
 export function redeem(file, code, now = new Date()) {
-  if (!/^[A-Za-z0-9_-]{32}$/u.test(code)) return null
+  if (!tokenPattern.test(code)) return null
   return withPilotState(file, (state) => {
     const invite = state.invites[digest(code)]
-    // Existing codes may be used again in the export window for data recovery.
-    if (!invite || invite.revoked || !['active', 'export'].includes(phase(state, now))) return { result: null, write: false }
+    const currentPhase = phase(state, now)
+    // During export, a returning tester can recover their session in the same browser.
+    if (!invite || invite.revoked || (currentPhase !== 'active' && !(currentPhase === 'export' && invite.redeemed))) {
+      return { result: null, write: false }
+    }
     for (const [key, session] of Object.entries(state.sessions)) if (session.label === invite.label) delete state.sessions[key]
     const token = random()
     state.sessions[digest(token)] = { label: invite.label }
+    invite.redeemed = true
     return { result: token }
   })
 }
 
 export function authorize(file, token, { now = new Date(), consume = false } = {}) {
-  if (!/^[A-Za-z0-9_-]{32}$/u.test(token || '')) return { allowed: false, phase: 'unauthorized' }
+  if (!tokenPattern.test(token || '')) return { allowed: false, phase: 'unauthorized' }
   return withPilotState(file, (state) => {
     const currentPhase = phase(state, now)
-    const session = state.sessions[digest(token)]
-    const invite = session && Object.values(state.invites).find((item) => item.label === session.label)
-    if (!session || !invite || invite.revoked || !['active', 'export'].includes(currentPhase)) return { result: { allowed: false, phase: currentPhase }, write: false }
+    const session = activeSession(state, token)
+    if (!session || !['active', 'export'].includes(currentPhase)) return { result: { allowed: false, phase: currentPhase }, write: false }
     if (consume && currentPhase !== 'active') return { result: { allowed: false, phase: currentPhase }, write: false }
     if (consume) {
       const day = dayKey(now)
@@ -129,7 +150,57 @@ export function authorize(file, token, { now = new Date(), consume = false } = {
     }
     const usage = state.usage[dayKey(now)]
     return { result: { allowed: true, phase: currentPhase, endsAt: state.endsAt, exportEndsAt: state.exportEndsAt,
-      dailyRemaining: Math.max(0, state.dailyUserLimit - (usage?.users?.[session.label] ?? 0)) }, write: consume }
+      dailyRemaining: Math.max(0, Math.min(state.dailyUserLimit - (usage?.users?.[session.label] ?? 0), state.dailyGlobalLimit - (usage?.total ?? 0))),
+      cloudEnabled: currentPhase === 'active' && modelBudgetAvailable(state.modelBudget) >= flashPeakCostMicroCny(flashInputLimit, flashOutputLimit) }, write: consume }
+  })
+}
+
+function activeSession(state, token) {
+  const session = state.sessions[digest(token)]
+  const invite = session && Object.values(state.invites).find((item) => item.label === session.label)
+  return invite && !invite.revoked ? session : null
+}
+
+function pendingTotal(budget) {
+  return Object.values(budget.pending).reduce((sum, amount) => sum + amount, 0)
+}
+
+function modelBudgetAvailable(budget) {
+  return !budget || budget.paused ? 0 : Math.max(0, budget.limit - budget.settled - pendingTotal(budget))
+}
+
+// All amounts are integer millionths of a yuan. Persist each reservation
+// before dispatch; a crash or unconfirmed provider usage keeps it reserved.
+export function reserveModelCost(file, token, maximum, now = new Date()) {
+  if (!tokenPattern.test(token || '') || !integer(maximum)) return null
+  return withPilotState(file, (state) => {
+    if (phase(state, now) !== 'active' || !activeSession(state, token) || modelBudgetAvailable(state.modelBudget) < maximum) {
+      return { result: null, write: false }
+    }
+    const id = random()
+    state.modelBudget.pending[id] = maximum
+    return { result: id }
+  })
+}
+
+export function settleModelCost(file, id, amount) {
+  if (!count(amount)) return false
+  return withPilotState(file, (state) => {
+    const budget = state.modelBudget
+    const reserved = budget?.pending[id]
+    if (!reserved) return { result: false, write: false }
+    delete budget.pending[id]
+    budget.settled += amount
+    if (amount > reserved) budget.paused = true
+    return { result: true }
+  })
+}
+
+export function pauseModel(file) {
+  return withPilotState(file, (state) => {
+    state.modelBudget ??= emptyBudget()
+    state.modelBudget.paused = true
+    return { result: true }
   })
 }
 
@@ -139,7 +210,11 @@ export function logout(file, token) {
 }
 
 export function summary(file, now = new Date()) {
-  return withPilotState(file, (state) => ({ write: false, result: { phase: phase(state, now), startsAt: state.startsAt, endsAt: state.endsAt,
-    exportEndsAt: state.exportEndsAt, dailyUserLimit: state.dailyUserLimit, dailyGlobalLimit: state.dailyGlobalLimit,
-    invites: Object.values(state.invites).map((item) => ({ label: item.label, revoked: item.revoked })), usage: state.usage } }))
+  return withPilotState(file, (state) => {
+    const budget = state.modelBudget ?? emptyBudget()
+    return { write: false, result: { phase: phase(state, now), startsAt: state.startsAt, endsAt: state.endsAt,
+      exportEndsAt: state.exportEndsAt, dailyUserLimit: state.dailyUserLimit, dailyGlobalLimit: state.dailyGlobalLimit,
+      modelBudget: { limitMicroCny: budget.limit, settledUpperMicroCny: budget.settled, reservedMicroCny: pendingTotal(budget), paused: budget.paused },
+      invites: Object.values(state.invites).map(({ label, revoked }) => ({ label, revoked })), usage: state.usage } }
+  })
 }

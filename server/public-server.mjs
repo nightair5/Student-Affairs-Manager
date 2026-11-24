@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { createWorker } from '../cloudflare/worker.mjs'
 import { createPinnedHttpsFetch, resolvePublicNodeHostname } from './pinned-fetch.mjs'
 import { createPilotHandler } from './pilot-http.mjs'
+import { createPilotModelBudget } from './pilot-model-budget.mjs'
 
 const MIME_TYPES = new Map([
   ['.css', 'text/css; charset=utf-8'],
@@ -24,6 +25,7 @@ const MIME_TYPES = new Map([
   ['.webp', 'image/webp'],
   ['.woff', 'font/woff'],
   ['.woff2', 'font/woff2'],
+  ['.wasm', 'application/wasm'],
 ])
 
 function numberFromEnv(value, fallback) {
@@ -100,12 +102,12 @@ async function fileExists(filePath) {
   }
 }
 
-function sendFile(response, filePath, method) {
+function sendFile(response, filePath, method, protectedFile = false) {
   const type = MIME_TYPES.get(extname(filePath).toLowerCase()) ?? 'application/octet-stream'
   const immutable = filePath.includes(`${sep}assets${sep}`)
   response.writeHead(200, {
     'content-type': type,
-    'cache-control': immutable ? 'public, max-age=31536000, immutable' : 'no-cache',
+    'cache-control': protectedFile ? 'private, no-store' : immutable ? 'public, max-age=31536000, immutable' : 'no-cache',
     'x-content-type-options': 'nosniff',
   })
   if (method === 'HEAD') {
@@ -122,7 +124,7 @@ function sendFile(response, filePath, method) {
   stream.pipe(response)
 }
 
-async function serveStatic(response, pathname, staticDir, method) {
+async function serveStatic(response, pathname, staticDir, method, protectedFile) {
   const root = resolve(staticDir)
   if (!existsSync(root)) {
     response.writeHead(503, { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' })
@@ -136,12 +138,12 @@ async function serveStatic(response, pathname, staticDir, method) {
     return
   }
   if (await fileExists(filePath)) {
-    sendFile(response, filePath, method)
+    sendFile(response, filePath, method, protectedFile)
     return
   }
   const nestedIndex = resolveInside(root, `${pathname.replace(/\/$/u, '')}/index.html`)
   if (nestedIndex && await fileExists(nestedIndex)) {
-    sendFile(response, nestedIndex, method)
+    sendFile(response, nestedIndex, method, protectedFile)
     return
   }
   if (extname(pathname)) {
@@ -151,7 +153,7 @@ async function serveStatic(response, pathname, staticDir, method) {
   }
   const indexPath = resolve(root, 'index.html')
   if (await fileExists(indexPath)) {
-    sendFile(response, indexPath, method)
+    sendFile(response, indexPath, method, protectedFile)
     return
   }
   response.writeHead(503, { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' })
@@ -292,15 +294,10 @@ function publicHeaders(response, httpsEnabled) {
   return headers
 }
 
-function createPinnedWorker() {
-  return createWorker({
-    fetcher: createPinnedHttpsFetch(),
-    resolveHostname: resolvePublicNodeHostname,
-  })
-}
-
-export function createPublicServer(config, worker = createPinnedWorker()) {
-  const pilot = config.pilotEnabled ? createPilotHandler(config.pilotFile) : null
+export function createPublicServer(config, worker, { fetcher = createPinnedHttpsFetch() } = {}) {
+  const pilot = config.pilotEnabled ? createPilotHandler(config.pilotFile, readBody) : null
+  const budget = config.pilotEnabled ? createPilotModelBudget(config.pilotFile, fetcher) : null
+  const apiWorker = worker ?? createWorker({ fetcher: budget?.fetch ?? fetcher, resolveHostname: resolvePublicNodeHostname })
   return createServer(async (nodeRequest, nodeResponse) => {
     try {
       if (!isAllowedHost(nodeRequest.headers.host || '', config)) {
@@ -314,9 +311,12 @@ export function createPublicServer(config, worker = createPinnedWorker()) {
         nodeResponse.end('Bad Request')
         return
       }
-      if (pilot && await pilot(nodeRequest, nodeResponse, url, trustedClientAddress(nodeRequest))) return
+      const access = pilot ? await pilot(nodeRequest, nodeResponse, url, trustedClientAddress(nodeRequest)) : null
+      if (access === true) return
       if (url.pathname === '/api' || url.pathname.startsWith('/api/')) {
-        const response = await worker.fetch(await toWebRequest(nodeRequest, url), config.workerEnv)
+        const request = await toWebRequest(nodeRequest, url)
+        const send = () => apiWorker.fetch(request, config.workerEnv)
+        const response = budget ? await budget.withSession(access?.token, send) : await send()
         const body = Buffer.from(await response.arrayBuffer())
         nodeResponse.writeHead(response.status, publicHeaders(response, config.httpsEnabled))
         nodeResponse.end(body)
@@ -327,7 +327,7 @@ export function createPublicServer(config, worker = createPinnedWorker()) {
         nodeResponse.end('Method Not Allowed')
         return
       }
-      await serveStatic(nodeResponse, url.pathname, config.staticDir, nodeRequest.method || 'GET')
+      await serveStatic(nodeResponse, url.pathname, config.staticDir, nodeRequest.method || 'GET', Boolean(pilot))
     } catch (error) {
       if (error?.code === 'PAYLOAD_TOO_LARGE') {
         if (!nodeResponse.headersSent) {
