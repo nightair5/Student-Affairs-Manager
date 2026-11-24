@@ -87,6 +87,7 @@ test('HTTP adapter gates page, assets, every API and enforces quotas before the 
   try {
     assert.equal((await call(port, '/')).status, 303)
     assert.equal((await call(port, '/assets/index.js')).status, 303)
+    assert.equal((await call(port, '/__pilot/login')).headers['referrer-policy'], 'same-origin')
     assert.equal((await call(port, '/api/deepseek/status')).status, 401)
     assert.equal((await call(port, '/api/source/fetch', { method: 'POST' })).status, 401)
     assert.equal((await call(port, '/__pilot/login', { method: 'POST', body: `code=${code}`, secure: false })).status, 403)

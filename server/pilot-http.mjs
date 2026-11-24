@@ -53,7 +53,7 @@ function renderEntry(phase, reportError = false) {
 
 function respond(res, status, body, type = 'application/json; charset=utf-8', extra = {}) {
   res.writeHead(status, { 'content-type': type, 'cache-control': 'no-store', 'x-content-type-options': 'nosniff',
-    'referrer-policy': 'no-referrer', 'x-frame-options': 'DENY', ...extra })
+    'referrer-policy': 'same-origin', 'x-frame-options': 'DENY', ...extra })
   res.end(body)
 }
 function cookie(request) {
