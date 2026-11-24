@@ -10,7 +10,7 @@ function renderEntry(phase, reportError = false) {
   const description = {
     pending: '本轮测试尚未开放。请以邀请人告知的开始时间为准。',
     active: '请输入个人邀请码。体验时请优先使用虚构或脱敏通知。',
-    export: '测试已结束。参加过本轮测试的同学可用原邀请码登录，在保存数据的原浏览器导出。',
+    export: '测试已结束。请在保存数据的原浏览器用原邀请码登录，进入备份下载页。',
     closed: '本轮的线上访问及导出窗口已关闭。已下载的备份仍可保存在你的设备上。',
     unavailable: '测试入口暂时无法使用，请稍后重试或联系邀请人。',
   }[phase]
@@ -102,9 +102,10 @@ export function createPilotHandler(file, readBody) {
       logout(file, token)
       respond(response, 200, '{}', undefined, { 'set-cookie': `${COOKIE}=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0` }); return true
     }
-    const result = authorize(file, token)
+    const now = new Date()
+    const result = authorize(file, token, { now })
     if (path === '/__pilot/status') {
-      respond(response, result.allowed ? 200 : 401, JSON.stringify(result)); return true
+      respond(response, result.allowed ? 200 : 401, JSON.stringify({ ...result, checkedAtMs: now.getTime() })); return true
     }
     if (!result.allowed) {
       if (api) respond(response, 401, '{"error":"PILOT_ACCESS_REQUIRED"}')

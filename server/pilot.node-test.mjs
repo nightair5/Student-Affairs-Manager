@@ -80,7 +80,7 @@ test('HTTP adapter gates page, assets, every API and enforces quotas before the 
   let upstream = 0
   const worker = { fetch: async () => { upstream++; return Response.json({ ok: true }) } }
   const config = loadPublicConfig({ SAM_PILOT_ENABLED: 'true', SAM_PILOT_STATE_FILE: file, SAM_STATIC_DIR: dir })
-  writeFileSync(path.join(dir, 'index.html'), 'test page')
+  writeFileSync(path.join(dir, 'index.html'), '<html><head></head><body>test page</body></html>')
   const server = createPublicServer(config, worker)
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve))
   const port = server.address().port
@@ -99,12 +99,17 @@ test('HTTP adapter gates page, assets, every API and enforces quotas before the 
     const home = await call(port, '/', { cookie })
     assert.equal(home.status, 200)
     assert.equal(home.headers['cache-control'], 'private, no-store')
+    assert.match(home.text, /<meta name="sam-pilot" content="enabled">/u)
     assert.equal((await call(port, '/api/deepseek/extract', { method: 'POST', cookie, body: '{}' })).status, 200)
     assert.equal((await call(port, '/api/deepseek', { method: 'POST', cookie, body: '{}' })).status, 200)
     assert.equal((await call(port, '/api/deepseek/extract-multimodal', { method: 'POST', cookie, body: '{}' })).status, 429)
     assert.equal(upstream, 2)
     withPilotState(file, (state) => { state.startsAt = new Date(Date.now() - 120000).toISOString(); state.endsAt = new Date(Date.now() - 60000).toISOString(); state.exportEndsAt = new Date(Date.now() + 60000).toISOString(); return {} })
     assert.equal((await call(port, '/', { cookie })).status, 200)
+    const exportStatus = JSON.parse((await call(port, '/__pilot/status', { cookie })).text)
+    assert.equal(exportStatus.phase, 'export')
+    assert.equal(exportStatus.cloudEnabled, false)
+    assert.ok(exportStatus.checkedAtMs < Date.parse(exportStatus.exportEndsAt))
     assert.equal((await call(port, '/api/source/fetch', { method: 'POST', cookie })).status, 403)
     assert.equal((await call(port, '/api/deepseek/extract', { method: 'POST', cookie })).status, 403)
     assert.equal(upstream, 2)
@@ -112,6 +117,10 @@ test('HTTP adapter gates page, assets, every API and enforces quotas before the 
     assert.equal((await call(port, '/api/deepseek/status', { cookie })).status, 401)
     assert.equal((await call(port, '/', { cookie })).status, 303)
     assert.equal((await call(port, '/__pilot/login', { method: 'POST', body: `code=${code}` })).status, 401)
+    closePilot(file)
+    const closed = await call(port, '/__pilot/status', { cookie })
+    assert.equal(closed.status, 401)
+    assert.equal(JSON.parse(closed.text).phase, 'closed')
   } finally { await new Promise((resolve) => server.close(resolve)); rmSync(dir, { recursive: true, force: true }) }
 })
 

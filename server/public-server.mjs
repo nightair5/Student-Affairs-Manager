@@ -102,9 +102,12 @@ async function fileExists(filePath) {
   }
 }
 
-function sendFile(response, filePath, method, protectedFile = false) {
+function sendFile(response, filePath, method, { protectedFile, workspaceEntry = false }) {
   const type = MIME_TYPES.get(extname(filePath).toLowerCase()) ?? 'application/octet-stream'
   const immutable = filePath.includes(`${sep}assets${sep}`)
+  const pilotHtml = protectedFile && workspaceEntry && method !== 'HEAD'
+    ? readFileSync(filePath, 'utf8').replace('<head>', '<head>\n    <meta name="sam-pilot" content="enabled">')
+    : null
   response.writeHead(200, {
     'content-type': type,
     'cache-control': protectedFile ? 'private, no-store' : immutable ? 'public, max-age=31536000, immutable' : 'no-cache',
@@ -112,6 +115,10 @@ function sendFile(response, filePath, method, protectedFile = false) {
   })
   if (method === 'HEAD') {
     response.end()
+    return
+  }
+  if (pilotHtml !== null) {
+    response.end(pilotHtml)
     return
   }
   const stream = createReadStream(filePath)
@@ -126,6 +133,7 @@ function sendFile(response, filePath, method, protectedFile = false) {
 
 async function serveStatic(response, pathname, staticDir, method, protectedFile) {
   const root = resolve(staticDir)
+  const indexPath = resolve(root, 'index.html')
   if (!existsSync(root)) {
     response.writeHead(503, { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' })
     response.end('Static build is missing. Run npm run build.')
@@ -138,12 +146,12 @@ async function serveStatic(response, pathname, staticDir, method, protectedFile)
     return
   }
   if (await fileExists(filePath)) {
-    sendFile(response, filePath, method, protectedFile)
+    sendFile(response, filePath, method, { protectedFile, workspaceEntry: filePath === indexPath })
     return
   }
   const nestedIndex = resolveInside(root, `${pathname.replace(/\/$/u, '')}/index.html`)
   if (nestedIndex && await fileExists(nestedIndex)) {
-    sendFile(response, nestedIndex, method, protectedFile)
+    sendFile(response, nestedIndex, method, { protectedFile, workspaceEntry: nestedIndex === indexPath })
     return
   }
   if (extname(pathname)) {
@@ -151,9 +159,8 @@ async function serveStatic(response, pathname, staticDir, method, protectedFile)
     response.end('Not Found')
     return
   }
-  const indexPath = resolve(root, 'index.html')
   if (await fileExists(indexPath)) {
-    sendFile(response, indexPath, method, protectedFile)
+    sendFile(response, indexPath, method, { protectedFile, workspaceEntry: true })
     return
   }
   response.writeHead(503, { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' })
