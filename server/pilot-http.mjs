@@ -9,7 +9,7 @@ function renderEntry(phase, reportError = false) {
   const heading = phase === 'closed' ? '本轮测试已结束' : '学生事务管家邀请测试'
   const description = {
     pending: '本轮测试尚未开放。请以邀请人告知的开始时间为准。',
-    active: '请输入个人邀请码。体验时请优先使用虚构或脱敏通知。',
+    active: '请输入个人邀请码。',
     export: '测试已结束。请在保存数据的原浏览器用原邀请码登录，进入备份下载页。',
     closed: '本轮的线上访问及导出窗口已关闭。已下载的备份仍可保存在你的设备上。',
     unavailable: '测试入口暂时无法使用，请稍后重试或联系邀请人。',
