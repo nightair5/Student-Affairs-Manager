@@ -1,4 +1,5 @@
-import { authorize, logout, pilotPhase, redeem } from './pilot-store.mjs'
+import { authorize, confirmPilotNotice, logout, pilotPhase, redeem, summary } from './pilot-store.mjs'
+import { PILOT_NOTICE_PATH, PILOT_NOTICE_VERSION, renderPilotNotice, renderPilotPage } from './pilot-notice.mjs'
 
 const COOKIE = 'sam_pilot'
 const costly = new Set(['/api/deepseek', '/api/deepseek/extract', '/api/deepseek/extract-multimodal'])
@@ -19,42 +20,23 @@ function renderEntry(phase, reportError = false) {
         <input id="code" name="code" autocomplete="off" autocapitalize="none" spellcheck="false" required maxlength="32">
         <button type="submit">${phase === 'export' ? '进入并导出' : '进入测试'}</button>
       </form>` : ''
-  return `<!doctype html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow">
-  <title>${heading}</title>
-  <style>
-    body { font: 16px/1.6 system-ui, sans-serif; background: #f4f7f4; color: #183b36; margin: 0; padding: 24px; }
-    main { max-width: 430px; margin: 6vh auto; background: white; padding: clamp(18px, 5vw, 30px); border: 1px solid #c7d9d2; border-radius: 12px; }
-    h1 { font-size: 24px; line-height: 1.35; }
-    input, button { box-sizing: border-box; width: 100%; font: inherit; padding: 12px; margin-top: 10px; }
-    button { background: #174c43; color: white; border: 0; border-radius: 6px; cursor: pointer; }
-    small { display: block; color: #4b625d; margin-top: 16px; }
-    .error { color: #872c19; }
-    footer { text-align: center; margin-top: 24px; }
-    a { color: #174c43; }
-  </style>
-</head>
-<body>
-  <main>
-    <h1>${heading}</h1>
-    <p>${description}</p>
+  return renderPilotPage(heading, `<p>${description}</p>
     ${reportError ? '<p class="error" role="alert">当前邀请码无法进入。请核对邀请码和访问时间。</p>' : ''}
     ${form}
     ${canEnter ? '<small>请勿转发邀请码。工作区保存在当前浏览器，请在导出窗口关闭前保存备份。</small>' : ''}
-  </main>
-  <footer><a href="https://beian.miit.gov.cn/">桂ICP备2026027233号-1</a></footer>
-</body>
-</html>`
+    <small><a href="${PILOT_NOTICE_PATH}">用户须知和免责声明</a></small>`)
 }
 
 function respond(res, status, body, type = 'application/json; charset=utf-8', extra = {}) {
   res.writeHead(status, { 'content-type': type, 'cache-control': 'no-store', 'x-content-type-options': 'nosniff',
     'referrer-policy': 'same-origin', 'x-frame-options': 'DENY', ...extra })
   res.end(body)
+}
+function redirect(response, location, extra = {}) {
+  respond(response, 303, '', 'text/plain; charset=utf-8', { location, ...extra })
+}
+function html(response, status, body) {
+  respond(response, status, body, 'text/html; charset=utf-8', { 'content-security-policy': pilotCsp })
 }
 function cookie(request) {
   const pairs = (request.headers.cookie || '').split(';').map((part) => part.trim().split('='))
@@ -65,7 +47,12 @@ function entryPage(file, response, error = false) {
   let phase
   try { phase = pilotPhase(file) } catch { phase = 'unavailable' }
   const status = phase === 'unavailable' ? 503 : error ? 401 : 200
-  respond(response, status, renderEntry(phase, error), 'text/html; charset=utf-8', { 'content-security-policy': pilotCsp })
+  html(response, status, renderEntry(phase, error))
+}
+function noticePage(file, response, now, options) {
+  let schedule
+  try { schedule = summary(file, now) } catch { /* The notice remains readable while the batch state is unavailable. */ }
+  html(response, options.error ? 400 : 200, renderPilotNotice(schedule, options))
 }
 function rateGuard() {
   const entries = new Map()
@@ -88,14 +75,13 @@ export function createPilotHandler(file, readBody) {
     const api = path === '/api' || path.startsWith('/api/')
     // Never accept credentials or sessions over cleartext, including the public IP.
     if (url.protocol !== 'https:') { respond(response, 403, '{"error":"HTTPS_REQUIRED"}'); return true }
-    if (path === '/__pilot/login' && request.method === 'GET') { entryPage(file, response); return true }
     if (path === '/__pilot/login' && request.method === 'POST') {
       if (request.headers.origin !== url.origin) { respond(response, 403, '{"error":"LOGIN_NOT_ALLOWED"}'); return true }
       if (!permitLogin(clientAddress)) { respond(response, 429, '尝试次数过多，请稍后再试。', 'text/plain; charset=utf-8'); return true }
       const form = new URLSearchParams((await readBody(request, 4096)).toString('utf8'))
       const session = redeem(file, form.get('code')?.trim() || '')
       if (!session) { entryPage(file, response, true); return true }
-      respond(response, 303, '', 'text/plain; charset=utf-8', { location: '/', 'set-cookie': `${COOKIE}=${session}; Path=/; HttpOnly; Secure; SameSite=Strict` }); return true
+      redirect(response, '/', { 'set-cookie': `${COOKIE}=${session}; Path=/; HttpOnly; Secure; SameSite=Strict` }); return true
     }
     if (path === '/__pilot/logout' && request.method === 'POST') {
       if (request.headers.origin !== url.origin) { respond(response, 403, '{"error":"ORIGIN_NOT_ALLOWED"}'); return true }
@@ -104,12 +90,38 @@ export function createPilotHandler(file, readBody) {
     }
     const now = new Date()
     const result = authorize(file, token, { now })
+    if (path === '/__pilot/login' && request.method === 'GET') {
+      if (result.phase === 'notice') redirect(response, PILOT_NOTICE_PATH)
+      else entryPage(file, response)
+      return true
+    }
+    if (path === PILOT_NOTICE_PATH) {
+      if (request.method === 'GET') {
+        noticePage(file, response, now, { confirmation: result.phase === 'notice', canReturn: result.allowed })
+      } else if (request.method === 'POST') {
+        if (request.headers.origin !== url.origin) respond(response, 403, '{"error":"ORIGIN_NOT_ALLOWED"}')
+        else if (result.allowed) redirect(response, '/')
+        else if (result.phase !== 'notice') redirect(response, '/__pilot/login')
+        else {
+          const form = new URLSearchParams((await readBody(request, 4096)).toString('utf8'))
+          const version = form.get('notice_version')
+          if (version !== PILOT_NOTICE_VERSION) noticePage(file, response, now, { confirmation: true, error: true })
+          else {
+            confirmPilotNotice(file, token, version)
+            redirect(response, '/')
+          }
+        }
+      } else respond(response, 405, '{"error":"METHOD_NOT_ALLOWED"}', undefined, { allow: 'GET, POST' })
+      return true
+    }
     if (path === '/__pilot/status') {
       respond(response, result.allowed ? 200 : 401, JSON.stringify({ ...result, checkedAtMs: now.getTime() })); return true
     }
     if (!result.allowed) {
-      if (api) respond(response, 401, '{"error":"PILOT_ACCESS_REQUIRED"}')
-      else respond(response, 303, '', 'text/plain; charset=utf-8', { location: '/__pilot/login' })
+      if (api) {
+        if (result.phase === 'notice') respond(response, 403, '{"error":"PILOT_NOTICE_REQUIRED","message":"请先阅读并确认用户须知。"}')
+        else respond(response, 401, '{"error":"PILOT_ACCESS_REQUIRED"}')
+      } else redirect(response, result.phase === 'notice' ? PILOT_NOTICE_PATH : '/__pilot/login')
       return true
     }
     if (api && result.phase === 'export') { respond(response, 403, '{"error":"PILOT_EXPORT_ONLY","message":"测试已结束，云端功能已关闭；请导出本机数据。"}'); return true }

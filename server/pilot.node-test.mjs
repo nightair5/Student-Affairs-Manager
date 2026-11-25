@@ -4,7 +4,8 @@ import http from 'node:http'
 import os from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
-import { authorize, closePilot, initialize, issueInvite, pauseModel, redeem, revokeInvite, summary, withPilotState } from './pilot-store.mjs'
+import { authorize, closePilot, confirmPilotNotice, initialize, issueInvite, pauseModel, redeem, reserveModelCost, revokeInvite, summary, withPilotState } from './pilot-store.mjs'
+import { PILOT_NOTICE_PATH, PILOT_NOTICE_VERSION } from './pilot-notice.mjs'
 import { createPublicServer, loadPublicConfig } from './public-server.mjs'
 
 function temp() { const dir = mkdtempSync(path.join(os.tmpdir(), 'sa-pilot-')); return { dir, file: path.join(dir, 'state.json') } }
@@ -18,6 +19,8 @@ test('codes and sessions are hashed, persistent, individually revocable and quot
     const a = redeem(file, code1), b = redeem(file, code2)
     const disk = readFileSync(file, 'utf8')
     for (const secret of [code1, code2, a, b]) assert.equal(disk.includes(secret), false)
+    assert.equal(confirmPilotNotice(file, a, PILOT_NOTICE_VERSION), true)
+    assert.equal(confirmPilotNotice(file, b, PILOT_NOTICE_VERSION), true)
     assert.equal(authorize(file, a, { consume: true }).allowed, true)
     assert.equal(authorize(file, a, { consume: true }).allowed, true)
     assert.equal(authorize(file, a, { consume: true }).phase, 'quota')
@@ -33,6 +36,31 @@ test('codes and sessions are hashed, persistent, individually revocable and quot
   } finally { rmSync(dir, { recursive: true, force: true }) }
 })
 
+test('existing sessions confirm the current notice once per invite and keep their usage', () => {
+  const { dir, file } = temp(), now = new Date()
+  try {
+    initialize(file, options(now.getTime()))
+    const code = issueInvite(file, 'P01', now)
+    const session = redeem(file, code, now)
+    const initial = readFileSync(file, 'utf8')
+    assert.deepEqual(authorize(file, session, { now, consume: true }), { allowed: false, phase: 'notice' })
+    assert.equal(reserveModelCost(file, session, 1, now), null)
+    assert.equal(confirmPilotNotice(file, session, '2000-01-01.1', now), false)
+    assert.equal(readFileSync(file, 'utf8'), initial)
+    assert.equal(confirmPilotNotice(file, session, PILOT_NOTICE_VERSION, now), true)
+    assert.deepEqual(summary(file, now).invites[0].noticeConfirmation, { version: PILOT_NOTICE_VERSION, confirmedAt: now.toISOString() })
+    assert.equal(authorize(file, session, { now, consume: true }).allowed, true)
+    const beforeRepeat = readFileSync(file, 'utf8')
+    assert.equal(confirmPilotNotice(file, session, PILOT_NOTICE_VERSION, new Date(now.getTime() + 5)), true)
+    assert.equal(readFileSync(file, 'utf8'), beforeRepeat)
+    const newSession = redeem(file, code, now)
+    assert.equal(authorize(file, newSession, { now }).dailyRemaining, 1)
+    assert.equal(authorize(file, session, { now }).allowed, false)
+    revokeInvite(file, 'P01')
+    assert.equal(confirmPilotNotice(file, newSession, PILOT_NOTICE_VERSION, now), false)
+  } finally { rmSync(dir, { recursive: true, force: true }) }
+})
+
 test('date boundaries allow export recovery without cloud quota and close after grace', () => {
   const { dir, file } = temp(), now = Date.now()
   try {
@@ -40,8 +68,10 @@ test('date boundaries allow export recovery without cloud quota and close after 
     const code = issueInvite(file, 'P01')
     const unusedCode = issueInvite(file, 'P02')
     const a = redeem(file, code, new Date(now))
+    assert.equal(authorize(file, a, { now: new Date(now) }).phase, 'notice')
     assert.equal(authorize(file, a, { now: new Date(now + 60000) }).phase, 'export')
     assert.equal(authorize(file, a, { now: new Date(now + 60000), consume: true }).allowed, false)
+    assert.equal(confirmPilotNotice(file, a, PILOT_NOTICE_VERSION, new Date(now + 60000)), false)
     const b = redeem(file, code, new Date(now + 60000))
     assert.equal(redeem(file, unusedCode, new Date(now + 60000)), null)
     assert.equal(authorize(file, a, { now: new Date(now + 60000) }).allowed, false)
@@ -56,6 +86,7 @@ test('daily limits reset at China midnight and state survives repeated store ins
     initialize(file, { startsAt: '2026-11-14T00:00:00+08:00', endsAt: '2026-11-17T00:00:00+08:00', exportEndsAt: '2026-11-18T00:00:00+08:00', dailyUserLimit: 1, dailyGlobalLimit: 1 })
     const code = issueInvite(file, 'P01', new Date('2026-11-15T23:59:59+08:00'))
     const token = redeem(file, code, new Date('2026-11-15T23:59:59+08:00'))
+    assert.equal(confirmPilotNotice(file, token, PILOT_NOTICE_VERSION, new Date('2026-11-15T23:59:59+08:00')), true)
     assert.equal(authorize(file, token, { now: new Date('2026-11-15T23:59:59+08:00'), consume: true }).allowed, true)
     assert.equal(authorize(file, token, { now: new Date('2026-11-15T23:59:59+08:00'), consume: true }).phase, 'quota')
     assert.equal(authorize(file, token, { now: new Date('2026-11-16T00:00:00+08:00'), consume: true }).allowed, true)
@@ -88,6 +119,10 @@ test('HTTP adapter gates page, assets, every API and enforces quotas before the 
     assert.equal((await call(port, '/')).status, 303)
     assert.equal((await call(port, '/assets/index.js')).status, 303)
     assert.equal((await call(port, '/__pilot/login')).headers['referrer-policy'], 'same-origin')
+    const preview = await call(port, PILOT_NOTICE_PATH)
+    assert.equal(preview.status, 200)
+    assert.match(preview.text, /用户须知和免责声明/u)
+    assert.doesNotMatch(preview.text, /name="notice_version"/u)
     assert.equal((await call(port, '/api/deepseek/status')).status, 401)
     assert.equal((await call(port, '/api/source/fetch', { method: 'POST' })).status, 401)
     assert.equal((await call(port, '/__pilot/login', { method: 'POST', body: `code=${code}`, secure: false })).status, 403)
@@ -96,6 +131,26 @@ test('HTTP adapter gates page, assets, every API and enforces quotas before the 
     assert.equal(login.status, 303)
     assert.match(login.headers['set-cookie'][0], /HttpOnly; Secure; SameSite=Strict/u)
     const cookie = login.headers['set-cookie'][0].split(';')[0]
+    assert.equal((await call(port, '/', { cookie })).headers.location, PILOT_NOTICE_PATH)
+    assert.equal((await call(port, '/__pilot/login', { cookie })).headers.location, PILOT_NOTICE_PATH)
+    assert.equal((await call(port, '/assets/index.js', { cookie })).headers.location, PILOT_NOTICE_PATH)
+    const requiredStatus = await call(port, '/__pilot/status', { cookie })
+    assert.equal(requiredStatus.status, 401)
+    assert.equal(JSON.parse(requiredStatus.text).phase, 'notice')
+    const requiredNotice = await call(port, PILOT_NOTICE_PATH, { cookie })
+    assert.equal(requiredNotice.status, 200)
+    assert.match(requiredNotice.text, /type="checkbox" name="notice_version" value="[0-9.\-]+" required/u)
+    assert.equal((await call(port, '/api/source/fetch', { method: 'POST', cookie })).status, 403)
+    const blocked = await call(port, '/api/deepseek/extract', { method: 'POST', cookie, body: '{}' })
+    assert.equal(blocked.status, 403)
+    assert.equal(JSON.parse(blocked.text).error, 'PILOT_NOTICE_REQUIRED')
+    assert.deepEqual(summary(file).usage, {})
+    assert.equal(upstream, 0)
+    const body = `notice_version=${PILOT_NOTICE_VERSION}`
+    assert.equal((await call(port, PILOT_NOTICE_PATH, { method: 'POST', cookie, body, origin: 'https://other.example' })).status, 403)
+    assert.equal((await call(port, PILOT_NOTICE_PATH, { method: 'POST', cookie })).status, 400)
+    assert.equal((await call(port, '/', { cookie })).headers.location, PILOT_NOTICE_PATH)
+    assert.equal((await call(port, PILOT_NOTICE_PATH, { method: 'POST', cookie, body })).headers.location, '/')
     const home = await call(port, '/', { cookie })
     assert.equal(home.status, 200)
     assert.equal(home.headers['cache-control'], 'private, no-store')
@@ -151,6 +206,9 @@ async function withMockModel(limit, fetcher, check) {
     const port = server.address().port
     const login = await call(port, '/__pilot/login', { method: 'POST', body: `code=${code}` })
     const cookie = login.headers['set-cookie'][0].split(';')[0]
+    const confirmation = await call(port, PILOT_NOTICE_PATH, { method: 'POST', cookie, body: `notice_version=${PILOT_NOTICE_VERSION}` })
+    assert.equal(confirmation.status, 303)
+    assert.equal(confirmation.headers.location, '/')
     const chat = () => call(port, '/api/deepseek', { method: 'POST', cookie, body: chatInput, type: 'application/json' })
     const status = () => call(port, '/api/deepseek/status', { cookie })
     const extract = (content) => call(port, '/api/deepseek/extract', { method: 'POST', cookie, type: 'application/json',

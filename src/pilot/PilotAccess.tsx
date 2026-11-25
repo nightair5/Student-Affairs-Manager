@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { IndexedDbWorkspaceRepository } from '../lib/repository'
 import './pilot.css'
 
-type PilotStatus = { allowed: false; closed: boolean } | {
+type PilotStatus = { allowed: false; phase: 'closed' | 'notice' | 'unauthorized' } | {
   allowed: true
   phase: 'active' | 'export'
   endsAt: string
@@ -19,7 +19,8 @@ async function readStatus(controller: AbortController): Promise<PilotStatus> {
     const response = await fetch('/__pilot/status', { cache: 'no-store', signal: controller.signal })
     if (response.status === 401) {
       const data: unknown = await response.json()
-      return { allowed: false, closed: Boolean(data && typeof data === 'object' && 'phase' in data && data.phase === 'closed') }
+      const phase = data && typeof data === 'object' && 'phase' in data ? data.phase : undefined
+      return { allowed: false, phase: phase === 'closed' || phase === 'notice' ? phase : 'unauthorized' }
     }
     if (!response.ok) throw new Error('PILOT_STATUS_UNAVAILABLE')
     const data: unknown = await response.json()
@@ -182,9 +183,11 @@ export function PilotAccess({ children }: { children: ReactNode }) {
 
   if (!status) return <PilotPage title="邀请测试"><p role="status">正在核对访问权限。</p></PilotPage>
   if (status === 'unavailable') return <PilotPage title="暂时无法核对权限"><p>请连接网络后刷新页面。</p></PilotPage>
-  if (!status.allowed) return <PilotPage title={status.closed ? '本轮测试已结束' : '访问权限已失效'}>
-    {status.closed ? <p>备份窗口已关闭。已下载的文件仍保存在你的设备上。</p> : <a href="/__pilot/login">返回邀请码入口</a>}
-  </PilotPage>
+  if (!status.allowed) {
+    if (status.phase === 'notice') return <PilotPage title="请先确认用户须知"><a href="/__pilot/notice">阅读用户须知和免责声明</a></PilotPage>
+    if (status.phase === 'closed') return <PilotPage title="本轮测试已结束"><p>备份窗口已关闭。已下载的文件仍保存在你的设备上。</p></PilotPage>
+    return <PilotPage title="访问权限已失效"><a href="/__pilot/login">返回邀请码入口</a></PilotPage>
+  }
   if (status.phase === 'export') return <PilotExport exportEndsAt={status.exportEndsAt} />
 
   return <>

@@ -1,6 +1,7 @@
 import { createHash, randomBytes } from 'node:crypto'
 import { closeSync, existsSync, fsyncSync, mkdirSync, openSync, readFileSync, renameSync, rmSync, rmdirSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
+import { PILOT_NOTICE_VERSION } from './pilot-notice.mjs'
 
 const digest = (value) => createHash('sha256').update(value).digest('hex')
 const random = () => randomBytes(24).toString('base64url')
@@ -25,8 +26,11 @@ function validate(state) {
       !integer(state.dailyGlobalLimit) || !state.invites || !state.sessions || !state.usage) throw new Error('PILOT_STATE_INVALID')
   const hash = (v) => /^[a-f0-9]{64}$/u.test(v)
   const label = (v) => /^P[0-9]{2,5}$/u.test(v)
+  const validConfirmation = (value) => value === undefined || (record(value) && typeof value.version === 'string' &&
+    /^\d{4}-\d{2}-\d{2}\.\d+$/u.test(value.version) && zoned(value.confirmedAt) && Number.isFinite(Date.parse(value.confirmedAt)))
   if (!record(state.invites) || !record(state.sessions) || !record(state.usage) ||
-      Object.entries(state.invites).some(([k, v]) => !hash(k) || !record(v) || !label(v.label) || typeof v.revoked !== 'boolean' || (v.redeemed !== undefined && typeof v.redeemed !== 'boolean')) ||
+      Object.entries(state.invites).some(([k, v]) => !hash(k) || !record(v) || !label(v.label) || typeof v.revoked !== 'boolean' ||
+        (v.redeemed !== undefined && typeof v.redeemed !== 'boolean') || !validConfirmation(v.noticeConfirmation)) ||
       Object.entries(state.sessions).some(([k, v]) => !hash(k) || !record(v) || !label(v.label)) ||
       Object.entries(state.usage).some(([k, v]) => !/^\d{4}-\d{2}-\d{2}$/u.test(k) || !record(v) || !count(v.total) || !record(v.users) || Object.entries(v.users).some(([key, n]) => !label(key) || !count(n)))) throw new Error('PILOT_STATE_INVALID')
   if (state.modelBudget !== undefined) {
@@ -139,26 +143,42 @@ export function authorize(file, token, { now = new Date(), consume = false } = {
   if (!tokenPattern.test(token || '')) return { allowed: false, phase: 'unauthorized' }
   return withPilotState(file, (state) => {
     const currentPhase = phase(state, now)
-    const session = activeSession(state, token)
-    if (!session || !['active', 'export'].includes(currentPhase)) return { result: { allowed: false, phase: currentPhase }, write: false }
+    const invite = activeInvite(state, token)
+    if (!invite || !['active', 'export'].includes(currentPhase)) return { result: { allowed: false, phase: currentPhase }, write: false }
+    if (currentPhase === 'active' && !noticeConfirmed(invite)) return { result: { allowed: false, phase: 'notice' }, write: false }
     if (consume && currentPhase !== 'active') return { result: { allowed: false, phase: currentPhase }, write: false }
     if (consume) {
       const day = dayKey(now)
       const usage = state.usage[day] ??= { total: 0, users: {} }
-      if (usage.total >= state.dailyGlobalLimit || (usage.users[session.label] ?? 0) >= state.dailyUserLimit) return { result: { allowed: false, phase: 'quota' }, write: false }
-      usage.total++; usage.users[session.label] = (usage.users[session.label] ?? 0) + 1
+      if (usage.total >= state.dailyGlobalLimit || (usage.users[invite.label] ?? 0) >= state.dailyUserLimit) return { result: { allowed: false, phase: 'quota' }, write: false }
+      usage.total++; usage.users[invite.label] = (usage.users[invite.label] ?? 0) + 1
     }
     const usage = state.usage[dayKey(now)]
     return { result: { allowed: true, phase: currentPhase, endsAt: state.endsAt, exportEndsAt: state.exportEndsAt,
-      dailyRemaining: Math.max(0, Math.min(state.dailyUserLimit - (usage?.users?.[session.label] ?? 0), state.dailyGlobalLimit - (usage?.total ?? 0))),
+      dailyRemaining: Math.max(0, Math.min(state.dailyUserLimit - (usage?.users?.[invite.label] ?? 0), state.dailyGlobalLimit - (usage?.total ?? 0))),
       cloudEnabled: currentPhase === 'active' && modelBudgetAvailable(state.modelBudget) >= flashPeakCostMicroCny(flashInputLimit, flashOutputLimit) }, write: consume }
   })
 }
 
-function activeSession(state, token) {
+function activeInvite(state, token) {
   const session = state.sessions[digest(token)]
   const invite = session && Object.values(state.invites).find((item) => item.label === session.label)
-  return invite && !invite.revoked ? session : null
+  return invite && !invite.revoked ? invite : null
+}
+
+function noticeConfirmed(invite) {
+  return invite?.noticeConfirmation?.version === PILOT_NOTICE_VERSION
+}
+
+export function confirmPilotNotice(file, token, version, now = new Date()) {
+  if (!tokenPattern.test(token || '') || version !== PILOT_NOTICE_VERSION) return false
+  return withPilotState(file, (state) => {
+    const invite = activeInvite(state, token)
+    if (phase(state, now) !== 'active' || !invite) return { result: false, write: false }
+    if (noticeConfirmed(invite)) return { result: true, write: false }
+    invite.noticeConfirmation = { version, confirmedAt: now.toISOString() }
+    return { result: true }
+  })
 }
 
 function pendingTotal(budget) {
@@ -174,7 +194,7 @@ function modelBudgetAvailable(budget) {
 export function reserveModelCost(file, token, maximum, now = new Date()) {
   if (!tokenPattern.test(token || '') || !integer(maximum)) return null
   return withPilotState(file, (state) => {
-    if (phase(state, now) !== 'active' || !activeSession(state, token) || modelBudgetAvailable(state.modelBudget) < maximum) {
+    if (phase(state, now) !== 'active' || !noticeConfirmed(activeInvite(state, token)) || modelBudgetAvailable(state.modelBudget) < maximum) {
       return { result: null, write: false }
     }
     const id = random()
@@ -215,6 +235,6 @@ export function summary(file, now = new Date()) {
     return { write: false, result: { phase: phase(state, now), startsAt: state.startsAt, endsAt: state.endsAt,
       exportEndsAt: state.exportEndsAt, dailyUserLimit: state.dailyUserLimit, dailyGlobalLimit: state.dailyGlobalLimit,
       modelBudget: { limitMicroCny: budget.limit, settledUpperMicroCny: budget.settled, reservedMicroCny: pendingTotal(budget), paused: budget.paused },
-      invites: Object.values(state.invites).map(({ label, revoked }) => ({ label, revoked })), usage: state.usage } }
+      invites: Object.values(state.invites).map(({ label, revoked, noticeConfirmation }) => ({ label, revoked, noticeConfirmation })), usage: state.usage } }
   })
 }
