@@ -135,7 +135,7 @@ export function redeem(file, code, now = new Date()) {
     const token = random()
     state.sessions[digest(token)] = { label: invite.label }
     invite.redeemed = true
-    return { result: token }
+    return { result: { token, exportEndsAt: state.exportEndsAt } }
   })
 }
 
@@ -145,7 +145,9 @@ export function authorize(file, token, { now = new Date(), consume = false } = {
     const currentPhase = phase(state, now)
     const invite = activeInvite(state, token)
     if (!invite || !['active', 'export'].includes(currentPhase)) return { result: { allowed: false, phase: currentPhase }, write: false }
-    if (currentPhase === 'active' && !noticeConfirmed(invite)) return { result: { allowed: false, phase: 'notice' }, write: false }
+    if (currentPhase === 'active' && !noticeConfirmed(invite)) {
+      return { result: { allowed: false, phase: 'notice', exportEndsAt: state.exportEndsAt }, write: false }
+    }
     if (consume && currentPhase !== 'active') return { result: { allowed: false, phase: currentPhase }, write: false }
     if (consume) {
       const day = dayKey(now)

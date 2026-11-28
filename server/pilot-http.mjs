@@ -2,6 +2,8 @@ import { authorize, confirmPilotNotice, logout, pilotPhase, redeem, summary } fr
 import { PILOT_NOTICE_PATH, PILOT_NOTICE_VERSION, renderPilotNotice, renderPilotPage } from './pilot-notice.mjs'
 
 const COOKIE = 'sam_pilot'
+const cookieAttributes = 'Path=/; HttpOnly; Secure; SameSite=Lax'
+const sessionPages = new Set(['/', '/__pilot/login', '/__pilot/status', PILOT_NOTICE_PATH])
 const costly = new Set(['/api/deepseek', '/api/deepseek/extract', '/api/deepseek/extract-multimodal'])
 const pilotCsp = "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
 
@@ -10,7 +12,7 @@ function renderEntry(phase, reportError = false) {
   const heading = phase === 'closed' ? '本轮测试已结束' : '学生事务管家邀请测试'
   const description = {
     pending: '本轮测试尚未开放。请以邀请人告知的开始时间为准。',
-    active: '请输入个人邀请码。',
+    active: '请输入个人邀请码。登录后，当前浏览器会记住登录状态。',
     export: '测试已结束。请在保存数据的原浏览器用原邀请码登录，进入备份下载页。',
     closed: '本轮的线上访问及导出窗口已关闭。已下载的备份仍可保存在你的设备上。',
     unavailable: '测试入口暂时无法使用，请稍后重试或联系邀请人。',
@@ -42,6 +44,9 @@ function cookie(request) {
   const pairs = (request.headers.cookie || '').split(';').map((part) => part.trim().split('='))
   const values = pairs.filter(([name]) => name === COOKIE).map(([, value]) => value)
   return values.length === 1 ? values[0] : ''
+}
+function sessionCookie(token, exportEndsAt) {
+  return `${COOKIE}=${token}; ${cookieAttributes}; Expires=${new Date(exportEndsAt).toUTCString()}`
 }
 function entryPage(file, response, error = false) {
   let phase
@@ -81,17 +86,22 @@ export function createPilotHandler(file, readBody) {
       const form = new URLSearchParams((await readBody(request, 4096)).toString('utf8'))
       const session = redeem(file, form.get('code')?.trim() || '')
       if (!session) { entryPage(file, response, true); return true }
-      redirect(response, '/', { 'set-cookie': `${COOKIE}=${session}; Path=/; HttpOnly; Secure; SameSite=Strict` }); return true
+      redirect(response, '/', { 'set-cookie': sessionCookie(session.token, session.exportEndsAt) }); return true
     }
     if (path === '/__pilot/logout' && request.method === 'POST') {
       if (request.headers.origin !== url.origin) { respond(response, 403, '{"error":"ORIGIN_NOT_ALLOWED"}'); return true }
       logout(file, token)
-      respond(response, 200, '{}', undefined, { 'set-cookie': `${COOKIE}=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0` }); return true
+      respond(response, 200, '{}', undefined, { 'set-cookie': `${COOKIE}=; ${cookieAttributes}; Max-Age=0` }); return true
     }
     const now = new Date()
     const result = authorize(file, token, { now })
+    // Upgrade existing browser sessions without reissuing them or extending the pilot deadline.
+    if (result.exportEndsAt && request.method === 'GET' && sessionPages.has(path)) {
+      response.setHeader('set-cookie', sessionCookie(token, result.exportEndsAt))
+    }
     if (path === '/__pilot/login' && request.method === 'GET') {
-      if (result.phase === 'notice') redirect(response, PILOT_NOTICE_PATH)
+      if (result.allowed) redirect(response, '/')
+      else if (result.phase === 'notice') redirect(response, PILOT_NOTICE_PATH)
       else entryPage(file, response)
       return true
     }
